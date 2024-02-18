@@ -252,7 +252,7 @@ function FormRegister({
           }  w-full rounded-[8px] text-white -mt-2`}
           disabled={!passwordValid}
         >
-          Login
+          Submit
         </button>
         <p className="text-[18px] text-[#646464]">
           Already have account?{" "}
