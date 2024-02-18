@@ -50,8 +50,8 @@ function Services() {
       <div className="w-full h-[229px] border-[1px] border-[#DCDCDC] rounded-[20px] p-[20px] flex flex-col gap-[24px] col-span-1">
         <div className="flex justify-between">
           <div className="w-[64px] h-[64px] bg-[#E7953E] rounded-[12.8px] flex justify-center items-center">
-            {/* <OSSIcons name={icon} /> */}
-            <p className="text-[38px] text-center">{icon}</p>
+            <OSSIcons name={icon} />
+            {/* <p className="text-[38px] text-center">{icon}</p> */}
           </div>
           <button>
             <OSSIcons name="RightArrow" />

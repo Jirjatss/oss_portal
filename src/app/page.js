@@ -3,7 +3,7 @@ import * as HomeComponent from "./components/home/Index";
 export default function Home() {
   return (
     <div className="bg-white">
-      <div className="w-full -mt-[80px]">
+      <div className="w-full -mt-[87px]">
         <HomeComponent.Hero />
       </div>
       <HomeComponent.Steps />

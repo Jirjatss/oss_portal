@@ -3,9 +3,9 @@ import React from "react";
 
 function Application() {
   return (
-    <div className="bg-[#2E2D2D] px-52 mt-24 flex gap-10">
+    <div className="bg-[#2E2D2D] px-48 mt-24 flex gap-10">
       <Image
-        src="/assets/ImageApp.png"
+        src="/assets/images/app.PNG"
         className="h-[325px]"
         width={900}
         height={325}
@@ -17,8 +17,18 @@ function Application() {
           and at any time!
         </h1>
         <div className="flex gap-3">
-          <Image src="/assets/appstore.png" width={220} height={40} alt="" />
-          <Image src="/assets/googlestore.png" width={220} height={10} alt="" />
+          <Image
+            src="/assets/images/appstore.png"
+            width={220}
+            height={40}
+            alt=""
+          />
+          <Image
+            src="/assets/images/googlestore.png"
+            width={220}
+            height={10}
+            alt=""
+          />
         </div>
       </div>
     </div>

@@ -109,8 +109,8 @@ function Faq() {
               </label>
               <input
                 type="text"
-                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D]"
-                placeholder="Adrian"
+                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] bg-transparent"
+                placeholder="Maria"
               />
             </div>
             <div>
@@ -119,29 +119,30 @@ function Faq() {
               </label>
               <input
                 type="text"
-                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D]"
-                placeholder="Thirteen"
+                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] bg-transparent"
+                placeholder="Gustao"
               />
             </div>
           </div>
           <div className="flex flex-col">
             <label className="text-[16px] font-thin text-[#646464] mb-1">
-              First Name
+              Email
             </label>
             <input
-              type="text"
-              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D]"
-              placeholder="Adrian"
+              type="email"
+              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] bg-transparent"
+              placeholder="M_Gustao@mail.com"
             />
           </div>
           <div className="flex flex-col">
             <label className="text-[16px] font-thin text-[#646464] mb-1">
               Topic
             </label>
-            <select class="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D]">
-              <option value="option1" selected>
-                Applicant
-              </option>
+            <select
+              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] bg-transparent"
+              defaultValue="Applicant"
+            >
+              <option value="Applicant">Applicant</option>
             </select>
           </div>
           <div className="flex flex-col">
@@ -149,7 +150,7 @@ function Faq() {
               Feedback
             </label>
             <textarea
-              className="border-b-[1px] border-[#F0F0F0] focus:outline-none  text-[18px] text-[#2E2D2D]"
+              className="border-b-[1px] border-[#F0F0F0] focus:outline-none  text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] bg-transparent"
               rows="3"
               value={message}
               onChange={handleChange}

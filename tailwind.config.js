@@ -8,7 +8,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: (theme) => ({
-        hero: 'url("/assets/imageTop.png")',
+        hero: 'url("/assets/images/imageTop.png")',
       }),
 
       fontFamily: {
@@ -28,6 +28,7 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/line-clamp"),
+    require("daisyui"),
     ({ addComponents }) => {
       addComponents({
         ".text-navbar": {
