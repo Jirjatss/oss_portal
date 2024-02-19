@@ -4,10 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import LanguageSelector from "../languangeSelector/LanguangeSelector";
 
 const Header = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
-  const lang = ["EN", "TP", "PT"];
   const pathname = usePathname();
 
   useEffect(() => {
@@ -51,13 +51,7 @@ const Header = () => {
       <div className="relative z-10 mt-1">
         <ul className="flex gap-7">
           <li className="flex m-auto">
-            <select className="w-full border-none bg-transparent text-gray-900 cursor-pointer p-2 rounded-lg font-thin">
-              {lang.map((e) => (
-                <option key={e} className="py-2">
-                  {e}
-                </option>
-              ))}
-            </select>
+            <LanguageSelector />
           </li>
           <li className="m-auto">
             <Link href="/login" className="text-[#1C25E7]">

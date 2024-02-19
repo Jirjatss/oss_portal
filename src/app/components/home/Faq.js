@@ -2,6 +2,12 @@
 import ReactHtmlParser from "react-html-parser";
 import { useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import CheckIcon from "@mui/icons-material/Check";
 
 function Faq() {
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -35,7 +41,32 @@ function Faq() {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
     },
   ];
+  const [selectedTopic, setSelectedTopic] = useState("Applicant");
   const [message, setMessage] = useState("");
+  const topic = [
+    {
+      topic: "Applicant",
+    },
+    {
+      topic: "Officer",
+    },
+  ];
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+    setMenuOpen(!menuOpen);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    setMenuOpen(false);
+  };
+
+  const handleChangeTopic = (e) => {
+    setSelectedTopic(e.topic);
+    handleClose();
+  };
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -138,12 +169,76 @@ function Faq() {
             <label className="text-[16px] font-thin text-[#646464] mb-1">
               Topic
             </label>
-            <select
-              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] bg-transparent"
-              defaultValue="Applicant"
-            >
-              <option value="Applicant">Applicant</option>
-            </select>
+            <div>
+              <Button
+                id="demo-positioned-button"
+                variant="text"
+                aria-controls={menuOpen ? "demo-positioned-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={menuOpen ? "true" : undefined}
+                onClick={handleClick}
+                className="text-gray-900 w-full text-start"
+                sx={{
+                  borderBottom: "1px solid #F0F0F0",
+                  color: "gray.900",
+                  justifyContent: "space-between",
+                  "& .MuiButton-endIcon": {
+                    marginInlineStart: "auto",
+                  },
+                  "&:hover": {
+                    backgroundColor: "transparent",
+                  },
+                }}
+                endIcon={
+                  menuOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />
+                }
+              >
+                <span
+                  className="capitalize text-start  text-[18px] text-[#2E2D2D]"
+                  style={{ textAlign: "left" }}
+                >
+                  {selectedTopic}
+                </span>
+              </Button>
+              <Menu
+                id="demo-positioned-menu"
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                className=""
+                onClose={handleClose}
+                anchorOrigin={{
+                  vertical: "bottom",
+                  horizontal: "left",
+                }}
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "left",
+                }}
+              >
+                {topic.map((e) => (
+                  <MenuItem
+                    className="text-gray-900 w-full text-start"
+                    key={e.topic}
+                    onClick={() => handleChangeTopic(e)}
+                    sx={{
+                      backgroundColor:
+                        selectedTopic === e.topic
+                          ? "transparent !important"
+                          : "inherit",
+                      fontWeight: selectedTopic === e.topic ? "bold" : "normal",
+                    }}
+                    selected={selectedTopic === e.topic}
+                  >
+                    <div className="flex gap-3">
+                      {e.topic}
+                      {selectedTopic === e.topic && (
+                        <CheckIcon fontSize="small" />
+                      )}
+                    </div>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </div>
           </div>
           <div className="flex flex-col">
             <label className="text-[16px] font-thin text-[#646464] mb-1">
