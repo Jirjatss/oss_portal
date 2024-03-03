@@ -1,5 +1,10 @@
 export const ossIcon = [
+  "KeyboardArrowUp",
   "Approve",
+  "AddImage",
+  "SearchFile",
+  "Bell",
+  "Calender",
   "RightArrow",
   "LeftArrow",
   "Accessibility",
@@ -11,4 +16,5 @@ export const ossIcon = [
   "EyeOn",
   "EyeOff",
   "Cancel",
+  "Trash",
 ];

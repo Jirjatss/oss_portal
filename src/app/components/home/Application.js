@@ -3,10 +3,10 @@ import React from "react";
 
 function Application() {
   return (
-    <div className="bg-[#2E2D2D] px-48 mt-24 flex gap-10">
+    <div className="bg-[#2E2D2D] px-28 mt-24 flex gap-10">
       <Image
-        src="/assets/images/app.PNG"
-        className="h-[325px]"
+        src="/assets/images/app.png"
+        className="h-[340px]"
         width={900}
         height={325}
         alt=""

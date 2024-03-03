@@ -4,5 +4,16 @@ import Services from "./Services";
 import Appointment from "./Appointment";
 import Application from "./Application";
 import Faq from "./Faq";
+import MyApplicant from "./MyApplicant";
+import Verif from "./Verif";
 
-export { Hero, Steps, Services, Appointment, Application, Faq };
+export {
+  Hero,
+  Steps,
+  Services,
+  Appointment,
+  Application,
+  Faq,
+  MyApplicant,
+  Verif,
+};

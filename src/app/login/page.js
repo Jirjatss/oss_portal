@@ -7,13 +7,25 @@ import FormForgotPassword from "../components/Form/FormForgotPassword";
 import ModalSendLinkPassword from "../components/Modal/ModalSendLinkPassword";
 import FormResetPassword from "../components/Form/FormResetPassword";
 import ModalSuccessResetPassword from "../components/Modal/ModalSuccessResetPassword";
+import { useRouter } from "next/navigation";
 
 function Login() {
-  const [password, setPassword] = useState("");
+  const router = useRouter();
+
   const [reenterPassword, setReenterPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showReenterPassword, setShowReenterPassword] = useState(false);
   const [formForgotPassword, setFormForgotPassword] = useState(false);
+  const [inputLogin, setInputLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChangeLoginInput = (name, text) => {
+    setInputLogin((input) => ({
+      ...input,
+      [name]: text,
+    }));
+  };
 
   const toggleReenterPasswordVisibility = () => {
     setShowReenterPassword(!showReenterPassword);
@@ -74,8 +86,8 @@ function Login() {
       ) : (
         <FormLogin
           onClick={togglePasswordVisibility}
-          password={password}
-          onChange={(e) => setPassword(e.target.value)}
+          password={inputLogin.password}
+          onChange={handleChangeLoginInput}
           showPassword={showPassword}
           forgotPassword={() => setFormForgotPassword(true)}
         />

@@ -1,15 +1,21 @@
 import React from "react";
+import {
+  FlowStep1,
+  FlowStep2,
+  FlowStep3,
+} from "../../../../public/assets/emoji";
+import Image from "next/image";
 
 const Steps = () => {
   return (
-    <div className="border-[#DCDCDC] border shadow-lg rounded-xl w-[1100px] h-[382px] m-auto -mt-12 bg-white p-12 justify-center">
+    <div className="border-[#DCDCDC] border shadow-lg rounded-xl mx-28 m-auto lg:-mt-12 mt-10 bg-white p-12 justify-center relative">
       <h1 className="text-[40px] px-3 leading-[57.6px] text-[#363131] text-center">
         <b>Easy Application</b> In Three Steps!
       </h1>
-      <div className="flex mt-7  w-[922px] m-auto justify-between">
+      <div className="flex mt-7 m-auto justify-between">
         <div className="w-[220px] h-[214px] flex justify-center items-center flex-col gap-2">
-          <div className="w-[72px] h-[72px] bg-[#E7953E] flex justify-center items-center rounded-[8px] p-10">
-            <p className="flex justify-center items-center text-[54px]">📋</p>
+          <div className=" bg-[#E7953E] flex justify-center items-center rounded-[8px] p-4">
+            <Image src={FlowStep1} width={55} height={50} alt={"Empty"} />
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
@@ -23,8 +29,8 @@ const Steps = () => {
         </div>
         <div className="w-[87.3px] text-black m-auto flex justify-center items-center border-[4px] border-dashed border-[#DCDCDC]"></div>
         <div className="w-[220px] h-[214px] flex justify-center items-center flex-col gap-2 ">
-          <div className="w-[72px] h-[72px] bg-[#E7953E] flex justify-center items-center rounded-[8px] p-10">
-            <p className="flex justify-center items-center text-[54px]">⏱</p>
+          <div className=" bg-[#E7953E] flex justify-center items-center rounded-[8px] p-4">
+            <Image src={FlowStep2} width={55} height={50} alt={"Empty"} />
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
@@ -37,8 +43,8 @@ const Steps = () => {
         </div>
         <div className="w-[87.3px] text-black m-auto flex justify-center items-center border-[4px] border-dashed border-[#DCDCDC]"></div>
         <div className="w-[220px] h-[214px] flex justify-center items-center flex-col gap-2 ">
-          <div className="w-[72px] h-[72px] bg-[#E7953E] flex justify-center items-center rounded-[8px] p-10">
-            <p className="flex justify-center items-center text-[54px]">☑️</p>
+          <div className=" bg-[#E7953E] flex justify-center items-center rounded-[8px] p-4">
+            <Image src={FlowStep3} width={55} height={50} alt={"Empty"} />
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">

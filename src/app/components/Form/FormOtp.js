@@ -59,7 +59,7 @@ function FormOtp({ onClick, onClickSubmit }) {
         <p className="text-[#2E2D2D] text-[18px] font-bold">Back</p>
       </button>
       <div className="flex flex-col gap-2">
-        <h1 className="text-[28px] font-bold capitalize">Input OTP Code</h1>
+        <h1 className="text-headForm capitalize">Input OTP Code</h1>
         <p className="font-thin text-[16px] text-[#646464]">
           OTP Code sent to your phone number registered
         </p>

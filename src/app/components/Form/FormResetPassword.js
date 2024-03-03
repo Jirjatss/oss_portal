@@ -81,18 +81,16 @@ function FormResetPassword({
         <p className="text-[#2E2D2D] text-[18px] font-bold">Back</p>
       </button>
       <div className="flex flex-col gap-2">
-        <h1 className="text-[28px] font-bold">Reset Your Password</h1>
+        <h1 className="text-headForm">Reset Your Password</h1>
       </div>
       <div className="flex flex-col text-start w-full">
-        <label className="text-[16px] font-thin text-[#646464] mb-1">
-          Password
-        </label>
+        <label className="text-label">Password</label>
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             value={password}
             onChange={handlePasswordChange}
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] w-full bg-transparent"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
             placeholder="••••••••••••"
           />
           {password !== "" && (
@@ -111,15 +109,13 @@ function FormResetPassword({
         </div>
       </div>
       <div className="flex flex-col text-start w-full">
-        <label className="text-[16px] font-thin text-[#646464] mb-1">
-          Reenter Password
-        </label>
+        <label className="text-label">Reenter Password</label>
         <div className="relative">
           <input
             type={showReenterPassword ? "text" : "password"}
             value={reenterPassword}
             onChange={handleReenterPasswordChange}
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] w-full bg-transparent"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
             placeholder="••••••••••••"
           />
           {reenterPassword !== "" && (

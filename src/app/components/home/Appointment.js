@@ -3,7 +3,7 @@ import { OSSIcons } from "../../../../public/assets/icons/parent";
 
 function Appointment() {
   return (
-    <div className="mt-24 flex px-52 text-black gap-10">
+    <div className="mt-24 flex px-28 text-black gap-10">
       <h1 className="text-[40px] capitalize w-[240px]">
         <b>Need meeting</b> with Officer?
       </h1>

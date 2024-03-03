@@ -76,29 +76,25 @@ function FormRegister({
   return (
     <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
       <div className="flex flex-col gap-2">
-        <h1 className="text-[28px] font-bold">Start Registering</h1>
+        <h1 className="text-headForm">Start Registering</h1>
       </div>
       <div className="flex flex-col gap-5 w-full">
         <div className="flex flex-col text-start w-full">
-          <label className="text-[16px] font-thin text-[#646464] mb-1">
-            Email
-          </label>
+          <label className="text-label">Email</label>
           <input
             type="email"
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] bg-transparent"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
             placeholder="M_Gustao@mail.com"
           />
         </div>
         <div className="flex flex-col text-start w-full">
-          <label className="text-[16px] font-thin text-[#646464] mb-1">
-            Password
-          </label>
+          <label className="text-label">Password</label>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={handlePasswordChange}
-              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] w-full bg-transparent"
+              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
               placeholder="••••••••••••"
             />
             {password !== "" && (
@@ -117,15 +113,13 @@ function FormRegister({
           </div>
         </div>
         <div className="flex flex-col text-start w-full">
-          <label className="text-[16px] font-thin text-[#646464] mb-1">
-            Reenter Password
-          </label>
+          <label className="text-label">Reenter Password</label>
           <div className="relative">
             <input
               type={showReenterPassword ? "text" : "password"}
               value={reenterPassword}
               onChange={handleReenterPasswordChange}
-              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] w-full bg-transparent"
+              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
               placeholder="••••••••••••"
             />
             {reenterPassword !== "" && (

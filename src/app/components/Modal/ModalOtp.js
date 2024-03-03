@@ -3,8 +3,8 @@ import { OSSIcons } from "../../../../public/assets/icons/parent";
 
 function ModalOtp({ onClick }) {
   return (
-    <dialog id="my_modal_1" class="modal">
-      <div class=" bg-white flex flex-col px-10 py-7 rounded-[20px]  relative">
+    <dialog id="my_modal_1" className="modal">
+      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px]  relative">
         <form method="dialog">
           <button className="absolute top-7 right-5" formMethod="dialog">
             <OSSIcons name={"Cancel"} fill="#2E2D2D" />

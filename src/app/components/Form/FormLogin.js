@@ -1,48 +1,74 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { login } from "@/app/store/actions/userAction";
 
-function FormLogin({
-  password,
-  showPassword,
-  onClick,
-  onChange,
-  forgotPassword,
-}) {
+function FormLogin({ forgotPassword }) {
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [inputLogin, setInputLogin] = useState({
+    email: "",
+    password: "",
+  });
+  const handleChangeLoginInput = (e) => {
+    const { value, name } = e.target;
+    setInputLogin({
+      ...inputLogin,
+      [name]: value,
+    });
+  };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleLogin = () => {
+    dispatch(login(inputLogin))
+      .then(() => {
+        router.push("/");
+      })
+      .catch((error) => {
+        console.log(error);
+        alert("gagal login");
+      });
+  };
+
   return (
     <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
       <div className="flex flex-col gap-2">
-        <h1 className="text-[28px] font-bold">Welcome Back</h1>
+        <h1 className="text-headForm">Welcome Back</h1>
         <p className="font-thin text-[16px] text-[#646464]">
           Please log in to your account
         </p>
       </div>
       <div className="flex flex-col gap-5 w-full">
         <div className="flex flex-col text-start w-full">
-          <label className="text-[16px] font-thin text-[#646464] mb-1">
-            Email
-          </label>
+          <label className="text-label">Email</label>
           <input
             type="email"
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] bg-transparent"
-            placeholder="M_Gustao@mail.com"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] bg-inherit"
+            placeholder="Email"
+            name="email"
+            onChange={handleChangeLoginInput}
           />
         </div>
         <div className="flex flex-col text-start w-full">
-          <label className="text-[16px] font-thin text-[#646464] mb-1">
-            Password
-          </label>
+          <label className="text-label">Password</label>
           <div className="relative">
             <input
               type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={onChange}
-              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] w-full bg-transparent"
-              placeholder="••••••••••••"
+              onChange={handleChangeLoginInput}
+              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D]  w-full bg-transparent"
+              placeholder="Password"
+              name="password"
             />
-            {password !== "" && (
+            {inputLogin.password !== "" && (
               <button
-                onClick={onClick}
+                onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 cursor-pointer"
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
@@ -63,7 +89,10 @@ function FormLogin({
         </button>
       </div>
       <div className="flex flex-col gap-5 w-full">
-        <button className="py-4 bg-[#1C25E7] w-full rounded-[8px] text-white -mt-2">
+        <button
+          className="py-4 bg-[#1C25E7] w-full rounded-[8px] text-white -mt-2"
+          onClick={handleLogin}
+        >
           Login
         </button>
         <p className="text-[18px] text-[#646464]">

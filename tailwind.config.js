@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       backgroundImage: (theme) => ({
         hero: 'url("/assets/images/imageTop.png")',
+        "hero-mobile": 'url("/assets/images/imageTopMobile.jpg")',
       }),
 
       fontFamily: {
@@ -33,6 +34,16 @@ module.exports = {
       addComponents({
         ".text-navbar": {
           "@apply font-lato font-semibold text-black": {},
+        },
+        ".text-input": {
+          "@apply border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#2E2D2D] bg-transparent":
+            {},
+        },
+        ".text-label": {
+          "@apply text-[16px] font-thin text-[#646464] mb-1": {},
+        },
+        ".text-headForm": {
+          "@apply text-[28px] font-bold": {},
         },
       });
     },
