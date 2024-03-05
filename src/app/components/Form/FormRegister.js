@@ -4,74 +4,70 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 
-function FormRegister({
-  password,
-  reenterPassword,
-  showReenterPassword,
-  showPassword,
-  onClickShowPassword,
-  onChangePassword,
-  onClickReenterPassword,
-  onChangeReenterPassword,
-}) {
-  const [passwordValid, setPasswordValid] = useState(false);
-  const [reenterPasswordValid, setReenterPasswordValid] = useState(false);
-  const [isUppercaseValid, setUppercaseValid] = useState(false);
-  const [isLowercaseValid, setLowercaseValid] = useState(false);
-  const [isNumberValid, setNumberValid] = useState(false);
-  const [isLengthValid, setLengthValid] = useState(false);
+function FormRegister({}) {
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    reenterPassword: false,
+  });
 
-  const validatePassword = () => {
+  const [input, setInput] = useState({
+    password: "",
+    reenterPassword: "",
+  });
+
+  const [passwordValid, setPasswordValid] = useState(false);
+  const [isUppercaseValid, setIsUppercaseValid] = useState(false);
+  const [isLowercaseValid, setIsLowercaseValid] = useState(false);
+  const [isNumberValid, setIsNumberValid] = useState(false);
+  const [isLengthValid, setIsLengthValid] = useState(false);
+  const [reenterPasswordValid, setReenterPasswordValid] = useState(false);
+
+  const validatePassword = (password, reenterPassword) => {
     const uppercaseRegex = /[A-Z]/;
     const lowercaseRegex = /[a-z]/;
     const numberRegex = /[0-9]/;
     const isLengthValid = password.length >= 8;
-
     const isUppercaseValid = uppercaseRegex.test(password);
     const isLowercaseValid = lowercaseRegex.test(password);
     const isNumberValid = numberRegex.test(password);
-
-    setUppercaseValid(isUppercaseValid);
-    setLowercaseValid(isLowercaseValid);
-    setNumberValid(isNumberValid);
-    setLengthValid(isLengthValid);
-  };
-
-  const validatePassword2 = () => {
     const isReenterPasswordValid = reenterPassword === password;
+
+    setIsUppercaseValid(isUppercaseValid);
+    setIsLowercaseValid(isLowercaseValid);
+    setIsNumberValid(isNumberValid);
+    setIsLengthValid(isLengthValid);
     setReenterPasswordValid(isReenterPasswordValid);
-  };
 
-  const handleReenterPasswordChange = (e) => {
-    onChangeReenterPassword(e);
-    validatePassword2();
-  };
-
-  const handlePasswordChange = (e) => {
-    onChangePassword(e);
-    validatePassword();
-  };
-  useEffect(() => {
-    validatePassword(password);
-    validatePassword2(reenterPassword, password);
-  }, [password, reenterPassword]);
-
-  useEffect(() => {
-    if (
+    setPasswordValid(
       isUppercaseValid &&
-      isLowercaseValid &&
-      isLengthValid &&
-      isNumberValid &&
-      reenterPasswordValid
-    )
-      setPasswordValid(true);
-  }, [
-    isUppercaseValid,
-    isLowercaseValid,
-    isLengthValid,
-    isNumberValid,
-    reenterPasswordValid,
-  ]);
+        isLowercaseValid &&
+        isLengthValid &&
+        isNumberValid &&
+        isReenterPasswordValid
+    );
+  };
+
+  const handleChangeInput = (e) => {
+    const { value, name } = e.target;
+    setInput((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+
+    if (name === "password" || name === "reenterPassword") {
+      validatePassword(
+        name === "password" ? value : input.password,
+        name === "reenterPassword" ? value : input.reenterPassword
+      );
+    }
+  };
+
+  const togglePasswordVisibility = (fieldName) => {
+    setShowPassword((prevState) => ({
+      ...prevState,
+      [fieldName]: !prevState[fieldName],
+    }));
+  };
 
   return (
     <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
@@ -84,26 +80,29 @@ function FormRegister({
           <input
             type="email"
             className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
-            placeholder="M_Gustao@mail.com"
+            placeholder="Email"
           />
         </div>
         <div className="flex flex-col text-start w-full">
           <label className="text-label">Password</label>
           <div className="relative">
             <input
-              type={showPassword ? "text" : "password"}
-              value={password}
-              onChange={handlePasswordChange}
+              type={showPassword.password ? "text" : "password"}
+              value={input.password}
+              onChange={handleChangeInput}
               className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
-              placeholder="••••••••••••"
+              placeholder="Password"
+              name="password"
             />
-            {password !== "" && (
+            {input.password !== "" && (
               <button
-                onClick={onClickShowPassword}
+                onClick={() => togglePasswordVisibility("password")}
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 cursor-pointer"
-                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-label={
+                  showPassword.password ? "Hide password" : "Show password"
+                }
               >
-                {showPassword ? (
+                {showPassword.password ? (
                   <OSSIcons name="EyeOff" />
                 ) : (
                   <OSSIcons name="EyeOn" />
@@ -116,21 +115,24 @@ function FormRegister({
           <label className="text-label">Reenter Password</label>
           <div className="relative">
             <input
-              type={showReenterPassword ? "text" : "password"}
-              value={reenterPassword}
-              onChange={handleReenterPasswordChange}
+              type={showPassword.reenterPassword ? "text" : "password"}
+              value={input.reenterPassword}
+              onChange={handleChangeInput}
               className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
-              placeholder="••••••••••••"
+              placeholder="Reenter Password"
+              name="reenterPassword"
             />
-            {reenterPassword !== "" && (
+            {input.reenterPassword !== "" && (
               <button
-                onClick={onClickReenterPassword}
+                onClick={() => togglePasswordVisibility("reenterPassword")}
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-600 cursor-pointer"
                 aria-label={
-                  showReenterPassword ? "Hide password" : "Show password"
+                  showPassword.reenterPassword
+                    ? "Hide password"
+                    : "Show password"
                 }
               >
-                {showReenterPassword ? (
+                {showPassword.reenterPassword ? (
                   <OSSIcons name="EyeOff" />
                 ) : (
                   <OSSIcons name="EyeOn" />
@@ -140,7 +142,7 @@ function FormRegister({
           </div>
         </div>
       </div>
-      {password !== "" && (
+      {input.password !== "" && (
         <div className="self-start -mt-2 w-full">
           <p className="text-[16px] font-thin text-[#646464] mb-3 text-start">
             Make sure your password contains it
@@ -153,7 +155,7 @@ function FormRegister({
                     isUppercaseValid
                       ? "bg-[#000A80]"
                       : "bg-transparent border-[1px] border-[#DCDCDC]"
-                  }  justify-center items-center flex gap-3`}
+                  } justify-center items-center flex gap-3`}
                 >
                   {isUppercaseValid ? <OSSIcons name="Approve" /> : null}
                 </div>
@@ -170,7 +172,7 @@ function FormRegister({
                     isLowercaseValid
                       ? "bg-[#000A80]"
                       : "bg-transparent border-[1px] border-[#DCDCDC]"
-                  }  justify-center items-center flex gap-3`}
+                  } justify-center items-center flex gap-3`}
                 >
                   {isLowercaseValid ? <OSSIcons name="Approve" /> : null}
                 </div>
@@ -187,7 +189,7 @@ function FormRegister({
                     reenterPasswordValid
                       ? "bg-[#000A80]"
                       : "bg-transparent border-[1px] border-[#DCDCDC]"
-                  }  justify-center items-center flex gap-3`}
+                  } justify-center items-center flex gap-3`}
                 >
                   {reenterPasswordValid ? <OSSIcons name="Approve" /> : null}
                 </div>
@@ -206,7 +208,7 @@ function FormRegister({
                     isNumberValid
                       ? "bg-[#000A80]"
                       : "bg-transparent border-[1px] border-[#DCDCDC]"
-                  }  justify-center items-center flex gap-3`}
+                  } justify-center items-center flex gap-3`}
                 >
                   {isNumberValid ? <OSSIcons name="Approve" /> : null}
                 </div>
@@ -223,7 +225,7 @@ function FormRegister({
                     isLengthValid
                       ? "bg-[#000A80]"
                       : "bg-transparent border-[1px] border-[#DCDCDC]"
-                  }  justify-center items-center flex gap-3`}
+                  } justify-center items-center flex gap-3`}
                 >
                   {isLengthValid ? <OSSIcons name="Approve" /> : null}
                 </div>

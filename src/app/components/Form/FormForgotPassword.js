@@ -19,7 +19,7 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
         <input
           type="email"
           className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
-          placeholder="M_Gustao@mail.com"
+          placeholder="Email"
         />
       </div>
       <button

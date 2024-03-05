@@ -22,7 +22,7 @@ function FormFaq({ handleChangeMessage, message, topic }) {
             <input
               type="text"
               className="text-input text-black placeholder-[#646464]"
-              placeholder="Maria"
+              placeholder="First Name"
             />
           </div>
           <div className="flex flex-col">
@@ -30,7 +30,7 @@ function FormFaq({ handleChangeMessage, message, topic }) {
             <input
               type="text"
               className="text-input text-black placeholder-[#646464]"
-              placeholder="Gustao"
+              placeholder="Last Name"
             />
           </div>
         </div>
@@ -39,7 +39,7 @@ function FormFaq({ handleChangeMessage, message, topic }) {
           <input
             type="email"
             className="text-input text-black placeholder-[#646464]"
-            placeholder="M_Gustao@mail.com"
+            placeholder="Email"
           />
         </div>
         <InputDropdown topic={topic} label={"Topic"} />

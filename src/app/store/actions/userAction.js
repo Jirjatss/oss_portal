@@ -69,17 +69,12 @@ export const getUserInformation = (access_token) => {
         url: "https://relative-painfully-quagga.ngrok-free.app/me",
         method: "GET",
         headers: {
+          "ngrok-skip-browser-warning": true,
           accept: "application/json",
           Authorization: `Bearer ${access_token}`,
         },
-        // headers: {
-
-        //   Authorization: `Bearer ${access_token}`,
-        // },
       });
-
-      console.log(data, "ini");
-      // dispatch(getUserInformationSuccess(data.data));
+      dispatch(getUserInformationSuccess(data.data));
     } catch (error) {
       console.log(error, "ini error");
       throw error;

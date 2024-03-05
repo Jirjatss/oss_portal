@@ -33,7 +33,7 @@ function FormIdentify({ onClick, isEditProfile = false }) {
             <input
               type="text"
               className="text-input text-black placeholder-[#646464]"
-              placeholder="Maria"
+              placeholder="First Name"
             />
           </div>
           <div className="flex flex-col">
@@ -41,7 +41,7 @@ function FormIdentify({ onClick, isEditProfile = false }) {
             <input
               type="text"
               className="text-input text-black placeholder-[#646464]"
-              placeholder="Gustao"
+              placeholder="Last Name"
             />
           </div>
         </div>
@@ -55,7 +55,7 @@ function FormIdentify({ onClick, isEditProfile = false }) {
             <input
               type="number"
               className="text-input text-black placeholder-[#646464]"
-              placeholder="12345678901234"
+              placeholder="Identify Number"
             />
           </div>
           <DatePicker />

@@ -60,13 +60,15 @@ const Header = () => {
           {!user && (
             <>
               <li className="m-auto ">
-                <Link href="">How To Apply</Link>
+                <a href="/#step">How To Apply</a>
               </li>
               <li className="m-auto">
-                <a href="">Services</a>
+                <a href="#services">Services</a>
               </li>
               <li className="m-auto">
-                <a href="">Contact us</a>
+                <a href="#contact-us" style={{ scrollBehavior: "smooth" }}>
+                  Contact us
+                </a>
               </li>
             </>
           )}

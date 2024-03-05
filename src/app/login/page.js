@@ -10,31 +10,7 @@ import ModalSuccessResetPassword from "../components/Modal/ModalSuccessResetPass
 import { useRouter } from "next/navigation";
 
 function Login() {
-  const router = useRouter();
-
-  const [reenterPassword, setReenterPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [showReenterPassword, setShowReenterPassword] = useState(false);
   const [formForgotPassword, setFormForgotPassword] = useState(false);
-  const [inputLogin, setInputLogin] = useState({
-    email: "",
-    password: "",
-  });
-  const handleChangeLoginInput = (name, text) => {
-    setInputLogin((input) => ({
-      ...input,
-      [name]: text,
-    }));
-  };
-
-  const toggleReenterPasswordVisibility = () => {
-    setShowReenterPassword(!showReenterPassword);
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
   const [formResetPassword, setFormResetPassword] = useState(false);
 
   const showModalSentLink = () => {
@@ -64,33 +40,15 @@ function Login() {
       ) : formResetPassword ? (
         <FormResetPassword
           back={() => {
-            setPassword("");
-            setReenterPassword("");
             setFormForgotPassword(true);
             setFormResetPassword(false);
           }}
-          password={password}
-          showPassword={showPassword}
-          onClickShowPassword={togglePasswordVisibility}
-          onChangePassword={(e) => setPassword(e.target.value)}
-          reenterPassword={reenterPassword}
-          showReenterPassword={showReenterPassword}
-          onClickReenterPassword={toggleReenterPasswordVisibility}
-          onChangeReenterPassword={(e) => setReenterPassword(e.target.value)}
           onSubmit={() => {
-            setPassword("");
-            setReenterPassword("");
             showModalSuccessResetPassword();
           }}
         />
       ) : (
-        <FormLogin
-          onClick={togglePasswordVisibility}
-          password={inputLogin.password}
-          onChange={handleChangeLoginInput}
-          showPassword={showPassword}
-          forgotPassword={() => setFormForgotPassword(true)}
-        />
+        <FormLogin forgotPassword={() => setFormForgotPassword(true)} />
       )}
 
       <ModalSendLinkPassword onClick={() => setFormResetPassword(true)} />

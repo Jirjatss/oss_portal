@@ -8,7 +8,10 @@ import Image from "next/image";
 
 const Steps = () => {
   return (
-    <div className="border-[#DCDCDC] border shadow-lg rounded-xl mx-28 m-auto lg:-mt-12 mt-10 bg-white p-12 justify-center relative">
+    <div
+      className="border-[#DCDCDC] border shadow-lg rounded-xl mx-28 m-auto lg:-mt-12 mt-10 bg-white p-12 justify-center relative py-24"
+      id="step"
+    >
       <h1 className="text-[40px] px-3 leading-[57.6px] text-[#363131] text-center">
         <b>Easy Application</b> In Three Steps!
       </h1>

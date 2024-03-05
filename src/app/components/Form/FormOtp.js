@@ -1,5 +1,3 @@
-"use client";
-
 import React, { useRef, useState, useEffect } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 
@@ -8,6 +6,10 @@ function FormOtp({ onClick, onClickSubmit }) {
   const [timer, setTimer] = useState(30);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
+
+  useEffect(() => {
+    inputRefs[0].current.focus();
+  }, []);
 
   const handleChange = (index, event) => {
     const value = event.target.value;
@@ -70,6 +72,7 @@ function FormOtp({ onClick, onClickSubmit }) {
           <input
             key={index}
             ref={inputRefs[index]}
+            autoFocus={index === 0}
             type="text"
             maxLength="1"
             value={digit}

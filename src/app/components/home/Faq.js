@@ -56,7 +56,10 @@ function Faq() {
   };
 
   return (
-    <div className="mt-24 px-28 grid grid-cols-2 justify-between gap-10 pb-24">
+    <div
+      className=" px-28 grid grid-cols-2 justify-between gap-10 py-24"
+      id="contact-us"
+    >
       <div>
         <h1 className="text-[40px] font-bold capitalize text-[#363131] mb-5">
           frequently asked questions

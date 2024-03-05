@@ -17,7 +17,7 @@ function FormStartRegister({ onClick }) {
           type="text"
           pattern="[0-9]*"
           className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
-          placeholder="+670 723 1234"
+          placeholder="Phone Number"
         />
       </div>
 

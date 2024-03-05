@@ -16,7 +16,7 @@ import {
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import Link from "next/link";
-function Services() {
+const Services = () => {
   const { user } = useSelector((state) => state.userReducer);
   const [service, setService] = useState([
     {
@@ -122,7 +122,7 @@ function Services() {
   };
 
   return (
-    <div className={`${!user && "px-28 mt-24"}`}>
+    <div className={`${!user && "px-28 pt-24"}`} id="services">
       {user ? (
         <>
           <h1 className="text-[28px] leading-[57.6px] text-[#363131] text-start capitalize font-semibold">
@@ -166,6 +166,6 @@ function Services() {
       )}
     </div>
   );
-}
+};
 
 export default Services;
