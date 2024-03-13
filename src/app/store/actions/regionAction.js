@@ -5,6 +5,7 @@ import {
   GET_REGION_POST_ADMINISTRATIVE_SUCCESS,
   GET_REGION_SUCOS,
   LOADING,
+  LOADING_FALSE,
 } from "./action_type";
 
 export const loading = () => {
@@ -29,7 +30,9 @@ export const getRegionCountry = (access_token) => {
       });
       dispatch(getRegionCountrySuccess(data.data));
     } catch (error) {
-      console.log(error);
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
@@ -53,6 +56,9 @@ export const getRegionMunicipality = (access_token) => {
       });
       dispatch(getRegionMunicipalitySuccess(data.data));
     } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
@@ -76,6 +82,9 @@ export const getRegionPostAdministrative = (access_token) => {
       });
       dispatch(getRegionPostAdministrativeSuccess(data.data));
     } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
@@ -98,6 +107,9 @@ export const getRegionSucos = (access_token) => {
       });
       dispatch(getRegionSucosSuccess(data.data));
     } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
