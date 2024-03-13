@@ -120,9 +120,6 @@ function FormIdentify({ onClick, isEditProfile = false }) {
             <InputDropdown label={"City"} topic={cityList} />
             <InputDropdown label={"Town"} topic={townList} />
           </div>
-          <div className="grid grid-cols-2 gap-10">
-            <InputDropdown label={"Village"} topic={country} />
-          </div>
         </div>
       </div>
       <button
