@@ -54,9 +54,6 @@ function FormContact({ onClick }) {
             <InputDropdown label={"City"} topic={country} />
             <InputDropdown label={"Town"} topic={country} />
           </div>
-          <div className="grid grid-cols-2 gap-10">
-            <InputDropdown label={"Village"} topic={country} />
-          </div>
         </div>
       </div>
       <button
