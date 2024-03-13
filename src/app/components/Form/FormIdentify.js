@@ -1,8 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputDropdown from "../TagComponents/InputDropdown";
 import DatePicker from "../TagComponents/DatePicker";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getRegionCountry,
+  getRegionMunicipality,
+  getRegionPostAdministrative,
+  getRegionSucos,
+} from "@/app/store/actions/regionAction";
+import Loader from "../Loader";
 
 function FormIdentify({ onClick, isEditProfile = false }) {
+  const { user } = useSelector((state) => state.userReducer);
+
+  const { region, municipality, city, town, loading } = useSelector(
+    (state) => state.regionReducer
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = () => {
+      if (user) {
+        dispatch(getRegionCountry(user?.accessToken));
+        dispatch(getRegionMunicipality(user?.accessToken));
+        dispatch(getRegionPostAdministrative(user?.accessToken));
+        dispatch(getRegionSucos(user?.accessToken));
+      }
+    };
+
+    fetchData();
+  }, [user, dispatch]);
+
   const gender = [
     {
       topic: "Male",
@@ -12,7 +41,24 @@ function FormIdentify({ onClick, isEditProfile = false }) {
     },
   ];
   const identifyType = [{ topic: "Citizen Card" }, { topic: "Passport" }];
-  const country = [{ topic: "Timor Leste" }, { topic: "Papua" }];
+  const country = (region || []).map((e) => ({
+    topic: e.name.replace("-", " "),
+  }));
+  const state = (municipality || []).map((e) => ({
+    topic: e.name.replace("-", " "),
+  }));
+
+  const cityList = (city || []).map((e) => ({
+    topic: e.name.replace("-", " "),
+  }));
+
+  const townList = (town || []).map((e) => ({
+    topic: e.name.replace("-", " "),
+  }));
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="">
@@ -68,11 +114,11 @@ function FormIdentify({ onClick, isEditProfile = false }) {
         <div className="flex flex-col gap-6 mb-16">
           <div className="grid grid-cols-2 gap-10">
             <InputDropdown label={"Country"} topic={country} />
-            <InputDropdown label={"State"} topic={country} />
+            <InputDropdown label={"State"} topic={state} />
           </div>
           <div className="grid grid-cols-2 gap-10">
-            <InputDropdown label={"City"} topic={country} />
-            <InputDropdown label={"Town"} topic={country} />
+            <InputDropdown label={"City"} topic={cityList} />
+            <InputDropdown label={"Town"} topic={townList} />
           </div>
           <div className="grid grid-cols-2 gap-10">
             <InputDropdown label={"Village"} topic={country} />

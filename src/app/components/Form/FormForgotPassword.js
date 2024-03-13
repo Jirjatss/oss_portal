@@ -1,7 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 
 function FormForgotPassword({ onClick, onClickSubmit }) {
+  const [email, setEmail] = useState("");
+  const isDisabled = email === "";
+  const [isValidEmail, setIsValidEmail] = useState(true);
+
+  useEffect(() => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setIsValidEmail(emailRegex.test(email));
+  }, [email]);
   return (
     <div className="flex flex-col items-center justify-center text-center px-44 gap-10 relative">
       <button className="absolute top-7 left-7 flex gap-3" onClick={onClick}>
@@ -20,11 +28,23 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
           type="email"
           className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
           placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
+        {!isValidEmail && email !== "" && (
+          <p className="text-red-500 text-xs">Invalid Email</p>
+        )}
       </div>
       <button
-        className="py-4 bg-[#1C25E7] w-full rounded-[8px] text-white -mt-2"
-        onClick={onClickSubmit}
+        className={`py-4 ${
+          isDisabled || !isValidEmail
+            ? "bg-[#DCDCDC] cursor-not-allowed"
+            : "bg-[#1C25E7]"
+        }  w-full rounded-[8px] text-white -mt-2`}
+        disabled={isDisabled || !isValidEmail}
+        onClick={() => {
+          onClickSubmit();
+        }}
       >
         Request Reset Password
       </button>

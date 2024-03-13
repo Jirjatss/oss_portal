@@ -1,45 +1,65 @@
+"use client";
+
+import { requestOtp } from "@/app/store/actions/userAction";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Loader from "../Loader";
 
 function FormStartRegister({ onClick }) {
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const { loading } = useSelector((state) => state.userReducer);
+  const dispatch = useDispatch();
+  const isDisabled = phoneNumber === "";
+
   return (
-    <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
-      <div className="flex flex-col gap-2">
-        <h1 className="text-headForm capitalize">Start registering </h1>
-        <p className="font-thin text-[16px] text-[#646464]">
-          Please complete the information below
-        </p>
-      </div>
+    <>
+      {loading && <Loader />}
+      <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-headForm capitalize">Start registering </h1>
+          <p className="font-thin text-[16px] text-[#646464]">
+            Please complete the information below
+          </p>
+        </div>
 
-      <div className="flex flex-col text-start w-full">
-        <label className="text-label">Phone Number</label>
-        <input
-          type="text"
-          pattern="[0-9]*"
-          className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
-          placeholder="Phone Number"
-        />
-      </div>
+        <div className="flex flex-col text-start w-full">
+          <label className="text-label">Phone Number</label>
+          <input
+            type="text"
+            pattern="[0-9]*"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChange={(e) => setPhoneNumber(e.target.value)}
+          />
+        </div>
 
-      <p className="text-[18px] text-[#646464]">
-        We will sent an OTP to your phone Number
-      </p>
-
-      <div className="flex flex-col gap-5 w-full">
-        <button
-          className="py-4 bg-[#1C25E7] w-full rounded-[8px] text-white -mt-2"
-          onClick={onClick}
-        >
-          Submit
-        </button>
         <p className="text-[18px] text-[#646464]">
-          Already have account?{" "}
-          <Link href="/login" className="text-[#1C25E7]">
-            Login Now
-          </Link>
+          We will sent an OTP to your phone Number
         </p>
+
+        <div className="flex flex-col gap-5 w-full">
+          <button
+            disabled={isDisabled}
+            className={`py-4 ${
+              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
+            }  w-full rounded-[8px] text-white  -mt-2`}
+            onClick={() => {
+              dispatch(requestOtp(phoneNumber)).then(() => onClick());
+            }}
+          >
+            Submit
+          </button>
+          <p className="text-[18px] text-[#646464]">
+            Already have account?{" "}
+            <Link href="/login" className="text-[#1C25E7]">
+              Login Now
+            </Link>
+          </p>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

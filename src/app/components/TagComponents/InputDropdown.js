@@ -16,7 +16,6 @@ function InputDropdown({ label, topic, onChange }) {
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     setMenuOpen(!menuOpen);
-    console.log(anchorEl, "ini");
   };
 
   const handleClose = () => {

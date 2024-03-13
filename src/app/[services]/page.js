@@ -14,7 +14,7 @@ function Service() {
   const router = useRouter();
   const [isSubmission, setIsSubmission] = useState(false);
   const [isCheckingUser, setIsCheckingUser] = useState(true);
-  const [index, setIndex] = useState(1);
+  const [index, setIndex] = useState(0);
   const title = pathname
     .replace(/^\//, "")
     .split("-")
@@ -79,7 +79,8 @@ function Service() {
   };
 
   const startSubmission = () => {
-    setIsSubmission(true);
+    if (!isCheckingUser && !user) router.replace("/login");
+    else setIsSubmission(true);
   };
 
   useEffect(() => {
@@ -96,11 +97,11 @@ function Service() {
     fetchUser();
   }, []);
 
-  useEffect(() => {
-    if (!isCheckingUser && !user) {
-      router.replace("/login");
-    }
-  }, [user, isCheckingUser]);
+  // useEffect(() => {
+  //   if (!isCheckingUser && !user) {
+  //     router.replace("/login");
+  //   }
+  // }, [user, isCheckingUser]);
 
   return (
     <div className="px-52 bg-white py-10">

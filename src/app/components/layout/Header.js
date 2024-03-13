@@ -11,6 +11,7 @@ import logo from "../../../../public/assets/images/logo.png";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser, logout } from "@/app/store/actions/userAction";
+import { toast } from "sonner";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -23,7 +24,10 @@ const Header = () => {
   const profile = [{ label: "Edit Profile" }, { label: "Logout" }];
 
   const handleLogout = () => {
-    dispatch(logout()).finally(() => router.push("/login"));
+    dispatch(logout()).finally(() => {
+      router.push("/login");
+      toast.success("Success Logout");
+    });
   };
   useEffect(() => {
     const updatePosition = () => {

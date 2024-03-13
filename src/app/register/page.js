@@ -6,6 +6,7 @@ import FormOtp from "../components/Form/FormOtp";
 import FormStartRegister from "../components/Form/FormStartRegister";
 import FormRegister from "../components/Form/FormRegister";
 import ModalOtp from "../components/Modal/ModalOtp";
+import ModalVerifiedOtp from "../components/Modal/ModalVerifiedOtp";
 
 function Register() {
   const [password, setPassword] = useState("");
@@ -27,6 +28,10 @@ function Register() {
     my_modal_1.showModal();
   };
 
+  const showModalVerifiedOtp = () => {
+    modal_verified_otp.showModal();
+  };
+
   return (
     <div className="min-h-screen bg-white grid grid-cols-2">
       <div className="relative">
@@ -43,7 +48,7 @@ function Register() {
           onClick={() => setFormOtp(false)}
           onClickSubmit={() => {
             setFormOtp(false);
-            setFormRegister(true);
+            showModalVerifiedOtp();
           }}
         />
       ) : formRegister ? (
@@ -60,7 +65,7 @@ function Register() {
       ) : (
         <FormStartRegister onClick={showModalOtp} />
       )}
-
+      <ModalVerifiedOtp onClick={() => setFormRegister(true)} />
       <ModalOtp onClick={() => setFormOtp(!formOtp)} />
     </div>
   );

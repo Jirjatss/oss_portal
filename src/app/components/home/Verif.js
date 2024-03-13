@@ -1,11 +1,17 @@
-import { getUserInformation } from "@/app/store/actions/userAction";
+import {
+  activateUser,
+  getUserInformation,
+} from "@/app/store/actions/userAction";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
 
 function Verif() {
   const router = useRouter();
-  const { user, profile } = useSelector((state) => state.userReducer);
+  const { user, dataRegister } = useSelector((state) => state.userReducer);
+
+  const dispatch = useDispatch();
 
   const title =
     user?.status === "Inactive"
@@ -36,7 +42,13 @@ function Verif() {
           <button
             className="bg-[#1C25E7] px-7 py-2 rounded-lg text-[#F3F3F3] inline-block"
             onClick={() => {
-              router.push("/personal-informations");
+              if (user?.status === "Inactive") {
+                dispatch(activateUser(dataRegister.token, user.accessToken))
+                  .then(() => toast.success("Success Activate"))
+                  .catch((err) => console.log(err));
+              } else {
+                router.push("/personal-informations");
+              }
             }}
           >
             {buttonTitle}

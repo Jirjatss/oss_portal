@@ -7,9 +7,11 @@ import FormForgotPassword from "../components/Form/FormForgotPassword";
 import ModalSendLinkPassword from "../components/Modal/ModalSendLinkPassword";
 import FormResetPassword from "../components/Form/FormResetPassword";
 import ModalSuccessResetPassword from "../components/Modal/ModalSuccessResetPassword";
-import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import Loader from "../components/Loader";
 
 function Login() {
+  const { loading } = useSelector((state) => state.userReducer);
   const [formForgotPassword, setFormForgotPassword] = useState(false);
   const [formResetPassword, setFormResetPassword] = useState(false);
 
@@ -22,43 +24,47 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white grid grid-cols-2">
-      <div className="relative">
-        <Image
-          src="/assets/images/login.png"
-          alt="Your Image"
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center"
-        />
-      </div>
-      {formForgotPassword && !formResetPassword ? (
-        <FormForgotPassword
-          onClick={() => setFormForgotPassword(false)}
-          onClickSubmit={showModalSentLink}
-        />
-      ) : formResetPassword ? (
-        <FormResetPassword
-          back={() => {
-            setFormForgotPassword(true);
+    <>
+      {loading && <Loader message="Please wait, your login in progress..." />}
+
+      <div className="min-h-screen bg-white grid grid-cols-2">
+        <div className="relative">
+          <Image
+            src="/assets/images/login.png"
+            alt="Your Image"
+            layout="fill"
+            objectFit="cover"
+            objectPosition="center"
+          />
+        </div>
+        {formForgotPassword && !formResetPassword ? (
+          <FormForgotPassword
+            onClick={() => setFormForgotPassword(false)}
+            onClickSubmit={showModalSentLink}
+          />
+        ) : formResetPassword ? (
+          <FormResetPassword
+            back={() => {
+              setFormForgotPassword(true);
+              setFormResetPassword(false);
+            }}
+            onSubmit={() => {
+              showModalSuccessResetPassword();
+            }}
+          />
+        ) : (
+          <FormLogin forgotPassword={() => setFormForgotPassword(true)} />
+        )}
+
+        <ModalSendLinkPassword onClick={() => setFormResetPassword(true)} />
+        <ModalSuccessResetPassword
+          onClick={() => {
+            setFormForgotPassword(false);
             setFormResetPassword(false);
           }}
-          onSubmit={() => {
-            showModalSuccessResetPassword();
-          }}
         />
-      ) : (
-        <FormLogin forgotPassword={() => setFormForgotPassword(true)} />
-      )}
-
-      <ModalSendLinkPassword onClick={() => setFormResetPassword(true)} />
-      <ModalSuccessResetPassword
-        onClick={() => {
-          setFormForgotPassword(false);
-          setFormResetPassword(false);
-        }}
-      />
-    </div>
+      </div>
+    </>
   );
 }
 

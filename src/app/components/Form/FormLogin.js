@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { login } from "@/app/store/actions/userAction";
+import { toast } from "sonner";
 
 function FormLogin({ forgotPassword }) {
   const dispatch = useDispatch();
@@ -26,14 +27,17 @@ function FormLogin({ forgotPassword }) {
     setShowPassword(!showPassword);
   };
 
+  const isDisabled = inputLogin.email === "" || inputLogin.password === "";
+
   const handleLogin = () => {
     dispatch(login(inputLogin))
       .then(() => {
         router.push("/");
+        toast.success("Success Login");
       })
       .catch((error) => {
-        console.log(error);
-        alert("gagal login");
+        console.log(error.response.data);
+        toast.error(error.response.data.ErrorMessage);
       });
   };
 
@@ -90,8 +94,11 @@ function FormLogin({ forgotPassword }) {
       </div>
       <div className="flex flex-col gap-5 w-full">
         <button
-          className="py-4 bg-[#1C25E7] w-full rounded-[8px] text-white -mt-2"
+          className={`py-4 ${
+            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
+          }  w-full rounded-[8px] text-white  -mt-2`}
           onClick={handleLogin}
+          disabled={isDisabled}
         >
           Login
         </button>

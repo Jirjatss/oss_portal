@@ -5,6 +5,7 @@ import Navbar from "../app/components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import { Toaster } from "sonner";
 
 const App = ({ children }) => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const App = ({ children }) => {
     <Provider store={store}>
       <Navbar />
       {children}
+      <Toaster position="bottom-left" richColors />
       <Footer />
     </Provider>
   );
