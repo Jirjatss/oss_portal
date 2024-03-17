@@ -21,16 +21,16 @@ function FormFaq({ handleChangeMessage, message, topic }) {
             <label className="text-label">First Name</label>
             <input
               type="text"
-              className="text-input text-black placeholder-[#646464]"
-              placeholder="First Name"
+              className="text-input text-black placeholder-gray-400"
+              placeholder="Your First Name"
             />
           </div>
           <div className="flex flex-col">
             <label className="text-label">Last Name</label>
             <input
               type="text"
-              className="text-input text-black placeholder-[#646464]"
-              placeholder="Last Name"
+              className="text-input text-[#2E2D2D] placeholder-gray-400"
+              placeholder="Your Last Name"
             />
           </div>
         </div>
@@ -38,22 +38,22 @@ function FormFaq({ handleChangeMessage, message, topic }) {
           <label className="text-label">Email</label>
           <input
             type="email"
-            className="text-input text-black placeholder-[#646464]"
-            placeholder="Email"
+            className="text-input text-black placeholder-gray-400"
+            placeholder="Your Email"
           />
         </div>
         <InputDropdown topic={topic} label={"Topic"} />
         <div className="flex flex-col">
           <label className="text-label">Feedback</label>
           <textarea
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none  text-[18px] text-black bg-transparent h-[120px] placeholder-[#646464]"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none text-[18px] text-black bg-transparent h-[80px] placeholder-gray-400"
             rows="3"
             value={message}
             onChange={handleChangeMessage}
-            placeholder="What documents are typically required for government applications, and where can applicants check the status of their submissions online?"
+            placeholder="Describe your feedback here"
             maxLength={240}
           />
-          <div className="text-[12px] text-[#646464] mt-2 text-end">
+          <div className="text-[12px] text-[#646464] placeholder-gray-400 mt-2 text-end">
             <b>{message.length}</b>/ 240
           </div>
         </div>

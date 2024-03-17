@@ -4,6 +4,7 @@ import {
   GET_REGION_POST_ADMINISTRATIVE_SUCCESS,
   GET_REGION_SUCOS,
   LOADING,
+  LOADING_FALSE,
 } from "../actions/action_type";
 
 const initialState = {
@@ -21,6 +22,12 @@ const formReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: true,
+      };
+
+    case LOADING_FALSE:
+      return {
+        ...state,
+        loading: false,
       };
 
     case GET_REGION_COUNTRY_SUCCESS:

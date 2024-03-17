@@ -8,11 +8,22 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckIcon from "@mui/icons-material/Check";
 
-function InputDropdown({ label, topic, onChange }) {
-  const [selectedTopic, setSelectedTopic] = useState("");
+function InputDropdown({
+  label,
+  topic,
+  onChange,
+  handleChange,
+  selectedTopic,
+  isDisabled,
+  name,
+}) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  const listTopic = (topic || []).map((e) => ({
+    name: e.name?.replace("-", " "),
+    value: e.code,
+  }));
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     setMenuOpen(!menuOpen);
@@ -24,7 +35,7 @@ function InputDropdown({ label, topic, onChange }) {
   };
 
   const handleChangeTopic = (e) => {
-    setSelectedTopic(e.topic);
+    handleChange(e);
     handleClose();
     if (typeof onChange === "function") {
       onChange(e.topic);
@@ -35,14 +46,16 @@ function InputDropdown({ label, topic, onChange }) {
       <label className="text-label">{label}</label>
       <div className="-mt-2">
         <Button
+          disabled={isDisabled}
           id="demo-positioned-button"
           variant="text"
           aria-controls={menuOpen ? "demo-positioned-menu" : undefined}
           aria-haspopup="true"
           aria-expanded={menuOpen ? "true" : undefined}
           onClick={handleClick}
-          className="text-black w-full text-start"
+          className={`text-black w-full text-start`}
           sx={{
+            cursor: isDisabled && "not-allowed",
             borderBottom: "1px solid #F0F0F0",
             color: "gray.900",
             justifyContent: "space-between",
@@ -59,11 +72,18 @@ function InputDropdown({ label, topic, onChange }) {
         >
           <span
             className={`-ml-2 capitalize text-start  text-[18px] ${
-              selectedTopic ? "text-[#2E2D2D]" : "text-[#646464]"
+              selectedTopic ? "text-[#2E2D2D]" : "text-gray-400"
             }`}
             style={{ textAlign: "left" }}
           >
-            {selectedTopic ? selectedTopic : `Select ${label}`}
+            {selectedTopic &&
+            listTopic.some((item) => item.value === selectedTopic)
+              ? listTopic
+                  .filter((item) => item.value === selectedTopic)
+                  .map((filteredItem, index) => (
+                    <p key={index}>{filteredItem.name}</p>
+                  ))
+              : `Please Select ${label}`}
           </span>
         </Button>
         <Menu
@@ -81,26 +101,34 @@ function InputDropdown({ label, topic, onChange }) {
             horizontal: "left",
           }}
         >
-          {topic.map((e) => (
-            <MenuItem
-              className="text-gray-900 w-full text-start"
-              key={e.topic}
-              onClick={() => handleChangeTopic(e)}
-              sx={{
-                backgroundColor:
-                  selectedTopic === e.topic
-                    ? "transparent !important"
-                    : "inherit",
-                fontWeight: selectedTopic === e.topic ? "bold" : "normal",
-              }}
-              selected={selectedTopic === e.topic}
-            >
-              <div className="flex gap-3">
-                {e.topic}
-                {selectedTopic === e.topic && <CheckIcon fontSize="small" />}
-              </div>
+          {listTopic.length === 0 ? (
+            <MenuItem className="text-red-500 w-full text-start cursor-not-allowed">
+              <div className="flex gap-3">Please Select Another City</div>
             </MenuItem>
-          ))}
+          ) : (
+            listTopic.map((e, idx) => (
+              <MenuItem
+                className="text-gray-900 w-full text-start"
+                key={e.name + idx}
+                onClick={() =>
+                  handleChangeTopic({ name: name, value: e.value })
+                }
+                sx={{
+                  backgroundColor:
+                    selectedTopic === e.name
+                      ? "transparent !important"
+                      : "inherit",
+                  fontWeight: selectedTopic === e.name ? "bold" : "normal",
+                }}
+                selected={selectedTopic === e.name}
+              >
+                <div className="flex gap-3">
+                  {e.name}
+                  {selectedTopic === e.name && <CheckIcon fontSize="small" />}
+                </div>
+              </MenuItem>
+            ))
+          )}
         </Menu>
       </div>
     </div>

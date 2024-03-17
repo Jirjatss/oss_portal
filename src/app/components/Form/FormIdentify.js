@@ -12,6 +12,19 @@ import Loader from "../Loader";
 
 function FormIdentify({ onClick, isEditProfile = false }) {
   const { user } = useSelector((state) => state.userReducer);
+  const [input, setInput] = useState({});
+
+  const handleChangeSelect = (e) => {
+    const { name, value } = e;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  useEffect(() => {
+    console.log(input);
+  }, [input]);
 
   const { region, municipality, city, town, loading } = useSelector(
     (state) => state.regionReducer
@@ -24,37 +37,42 @@ function FormIdentify({ onClick, isEditProfile = false }) {
       if (user) {
         dispatch(getRegionCountry(user?.accessToken));
         dispatch(getRegionMunicipality(user?.accessToken));
-        dispatch(getRegionPostAdministrative(user?.accessToken));
-        dispatch(getRegionSucos(user?.accessToken));
+      }
+      if (input.municipality) {
+        dispatch(
+          getRegionPostAdministrative(
+            user?.accessToken,
+            `municipalityCode=${input.municipality}`
+          )
+        );
+      }
+      if (input.city) {
+        dispatch(
+          getRegionSucos(
+            user?.accessToken,
+            `postAdministrativeCode=${input.city}`
+          )
+        );
       }
     };
 
     fetchData();
-  }, [user, dispatch]);
+  }, [user, dispatch, input.municipality, input.city]);
 
   const gender = [
     {
-      topic: "Male",
+      name: "Male",
+      code: "Male",
     },
     {
-      topic: "Female",
+      name: "Female",
+      code: "Female",
     },
   ];
-  const identifyType = [{ topic: "Citizen Card" }, { topic: "Passport" }];
-  const country = (region || []).map((e) => ({
-    topic: e.name.replace("-", " "),
-  }));
-  const state = (municipality || []).map((e) => ({
-    topic: e.name.replace("-", " "),
-  }));
-
-  const cityList = (city || []).map((e) => ({
-    topic: e.name.replace("-", " "),
-  }));
-
-  const townList = (town || []).map((e) => ({
-    topic: e.name.replace("-", " "),
-  }));
+  const identifyType = [
+    { name: "Citizen Card", code: "CitizenCard" },
+    { name: "Passport", code: "Passport" },
+  ];
 
   if (loading) {
     return <Loader />;
@@ -78,33 +96,55 @@ function FormIdentify({ onClick, isEditProfile = false }) {
             <label className="text-label">First Name</label>
             <input
               type="text"
-              className="text-input text-black placeholder-[#646464]"
+              className="text-input text-black placeholder-gray-400"
               placeholder="First Name"
+              name="FirstName"
+              onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
           <div className="flex flex-col">
             <label className="text-label">Last Name</label>
             <input
               type="text"
-              className="text-input text-black placeholder-[#646464]"
+              className="text-input text-black placeholder-gray-400"
               placeholder="Last Name"
+              name="LastName"
+              onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-10">
-          <InputDropdown label={"Gender"} topic={gender} />
-          <InputDropdown label={"Identify Type"} topic={identifyType} />
+          <InputDropdown
+            label={"Gender"}
+            topic={gender}
+            name="Gender"
+            handleChange={(e) => handleChangeSelect(e)}
+            selectedTopic={input.Gender}
+          />
+          <InputDropdown
+            label={"Identify Type"}
+            topic={identifyType}
+            name="IdentifyType"
+            handleChange={(e) => handleChangeSelect(e)}
+            selectedTopic={input.IdentifyType}
+          />
         </div>
         <div className="grid grid-cols-2 gap-10">
           <div className="flex flex-col">
             <label className="text-label">Identity Number</label>
             <input
               type="number"
-              className="text-input text-black placeholder-[#646464]"
+              className="text-input text-black placeholder-gray-400"
               placeholder="Identify Number"
+              name="IdentifyNumber"
+              onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
-          <DatePicker />
+          <DatePicker
+            handleChange={(e) => handleChangeSelect(e.target)}
+            name="DateOfBirth"
+            value={input.DateOfBirth}
+          />
         </div>
       </div>
       <div>
@@ -113,12 +153,39 @@ function FormIdentify({ onClick, isEditProfile = false }) {
         </h1>
         <div className="flex flex-col gap-6 mb-16">
           <div className="grid grid-cols-2 gap-10">
-            <InputDropdown label={"Country"} topic={country} />
-            <InputDropdown label={"State"} topic={state} />
+            <InputDropdown
+              label={"Country"}
+              topic={region}
+              handleChange={(e) => handleChangeSelect(e)}
+              name="region"
+              selectedTopic={input?.region}
+            />
+            <InputDropdown
+              label={"State"}
+              topic={municipality}
+              isDisabled={!input.region}
+              handleChange={(e) => handleChangeSelect(e)}
+              name="municipality"
+              selectedTopic={input?.municipality}
+            />
           </div>
           <div className="grid grid-cols-2 gap-10">
-            <InputDropdown label={"City"} topic={cityList} />
-            <InputDropdown label={"Town"} topic={townList} />
+            <InputDropdown
+              label={"City"}
+              topic={city}
+              handleChange={(e) => handleChangeSelect(e)}
+              name="city"
+              isDisabled={!input.region && !input.municipality}
+              selectedTopic={input?.city}
+            />
+            <InputDropdown
+              label={"Town"}
+              topic={town}
+              handleChange={(e) => handleChangeSelect(e)}
+              name="town"
+              isDisabled={!input.region && !input.municipality && !input.city}
+              selectedTopic={input?.town}
+            />
           </div>
         </div>
       </div>

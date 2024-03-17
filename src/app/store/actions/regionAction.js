@@ -21,7 +21,7 @@ export const getRegionCountry = (access_token) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://relative-painfully-quagga.ngrok-free.app/regions/country",
+        url: "https://api.ardhiansyah.com/regions/country",
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -33,6 +33,7 @@ export const getRegionCountry = (access_token) => {
       dispatch({
         type: LOADING_FALSE,
       });
+      console.log(error);
       throw error;
     }
   };
@@ -47,7 +48,7 @@ export const getRegionMunicipality = (access_token) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://relative-painfully-quagga.ngrok-free.app/regions/municipality",
+        url: "https://api.ardhiansyah.com/regions/municipality",
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -68,12 +69,13 @@ export const getRegionPostAdministrativeSuccess = (payload) => {
   return { type: GET_REGION_POST_ADMINISTRATIVE_SUCCESS, payload };
 };
 
-export const getRegionPostAdministrative = (access_token) => {
+export const getRegionPostAdministrative = (access_token, query) => {
+  console.log("query:", query);
   return async (dispatch) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://relative-painfully-quagga.ngrok-free.app/regions/post-administrative",
+        url: `https://api.ardhiansyah.com/regions/post-administrative?${query}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -89,16 +91,17 @@ export const getRegionPostAdministrative = (access_token) => {
     }
   };
 };
+
 export const getRegionSucosSuccess = (payload) => {
   return { type: GET_REGION_SUCOS, payload };
 };
 
-export const getRegionSucos = (access_token) => {
+export const getRegionSucos = (access_token, query) => {
   return async (dispatch) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://relative-painfully-quagga.ngrok-free.app/regions/sucos",
+        url: `https://api.ardhiansyah.com/regions/sucos?${query}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",

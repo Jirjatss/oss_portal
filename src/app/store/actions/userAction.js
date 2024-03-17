@@ -5,17 +5,9 @@ import {
   LOADING_FALSE,
   LOGIN_FAILED,
   LOGOUT,
-  REGISTER_SUCCESS,
   REQUEST_OTP,
-  VERIFY_OTP,
 } from "./action_type";
-import {
-  getRegionCountry,
-  getRegionMunicipality,
-  loading,
-} from "./regionAction";
-
-const baseUrl = "https://relative-painfully-quagga.ngrok-free.app/auth/";
+import { loading } from "./regionAction";
 
 export const getUserSuccess = (payload) => {
   return { type: GET_USER, payload };
@@ -62,7 +54,7 @@ export const login = (val) => {
     try {
       const { data } = await axios({
         method: "post",
-        url: baseUrl + "login",
+        url: "https://api.ardhiansyah.com/auth/login",
         data: val,
       });
       localStorage.setItem("user", JSON.stringify(data.data));
@@ -81,7 +73,7 @@ export const getUserInformation = (access_token) => {
   return async (dispatch) => {
     try {
       const { data } = await axios({
-        url: "https://relative-painfully-quagga.ngrok-free.app/me",
+        url: "https://api.ardhiansyah.com/me",
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -105,7 +97,7 @@ export const requestOtp = (phone_number) => {
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://relative-painfully-quagga.ngrok-free.app/auth/otp/request",
+        url: "https://api.ardhiansyah.com/auth/otp/request",
         data: {
           phoneNumber: phone_number,
         },
@@ -123,7 +115,7 @@ export const verifyOtp = (val) => {
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://relative-painfully-quagga.ngrok-free.app/auth/otp/verify",
+        url: "https://api.ardhiansyah.com/auth/otp/verify",
         data: val,
       });
       dispatch({
@@ -144,7 +136,7 @@ export const registerHandler = (val) => {
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://relative-painfully-quagga.ngrok-free.app/auth/register",
+        url: "https://api.ardhiansyah.com/auth/register",
         data: val,
       });
       const loginVal = {
@@ -171,7 +163,7 @@ export const activateUser = (token, accessToken) => {
       console.log(token);
       const { data } = await axios({
         method: "POST",
-        url: "https://relative-painfully-quagga.ngrok-free.app/auth/activate",
+        url: "https://api.ardhiansyah.com/auth/activate",
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",

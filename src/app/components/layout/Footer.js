@@ -4,15 +4,15 @@ function Footer() {
   const footerContent = [
     {
       icon: "Building",
-      text: "900 Larkin Springs*, Liquiçá, Baiquenilab, Samanaro",
+      text: "Rua 20 de Maio, n°43, Dili, Timor-Leste",
     },
     {
       icon: "Call",
-      text: "+670-333-4343",
+      text: "(+670)3333 0097",
     },
     {
       icon: "Message",
-      text: "info@yoursite.com",
+      text: "info@bu.gov.tl",
     },
   ];
   return (

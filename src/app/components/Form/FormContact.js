@@ -18,7 +18,7 @@ function FormContact({ onClick }) {
           <label className="text-label">Email</label>
           <input
             type="text"
-            className="text-input text-black placeholder-[#646464]"
+            className="text-input text-black placeholder-gray-400"
             placeholder="Email"
           />
         </div>
@@ -26,7 +26,7 @@ function FormContact({ onClick }) {
           <label className="text-label">Phone Number</label>
           <input
             type="number"
-            className="text-input text-black placeholder-[#646464]"
+            className="text-input text-black placeholder-gray-400"
             placeholder="Phone Number"
           />
         </div>
@@ -41,7 +41,7 @@ function FormContact({ onClick }) {
               <label className="text-label">Address</label>
               <input
                 type="text"
-                className="text-input text-black placeholder-[#646464]"
+                className="text-input text-black placeholder-gray-400"
                 placeholder="Address"
               />
             </div>
@@ -53,6 +53,9 @@ function FormContact({ onClick }) {
           <div className="grid grid-cols-2 gap-10">
             <InputDropdown label={"City"} topic={country} />
             <InputDropdown label={"Town"} topic={country} />
+          </div>
+          <div className="grid grid-cols-2 gap-10">
+            <InputDropdown label={"Village"} topic={country} />
           </div>
         </div>
       </div>

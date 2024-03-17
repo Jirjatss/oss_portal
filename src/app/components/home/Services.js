@@ -20,22 +20,22 @@ const Services = () => {
   const { user } = useSelector((state) => state.userReducer);
   const [service, setService] = useState([
     {
+      icon: Akta,
+      title: "Birth of Certificate",
+      desc: "Secure your identity. Obtain your birth certificate now!",
+      url: "/birth-of-certificate",
+    },
+    {
+      icon: Citizen,
+      title: "Citizen ID",
+      desc: "Secure your identity. Obtain your birth certificate now!",
+      url: "/citizen-id",
+    },
+    {
       icon: Passport,
-      title: "Passport Card",
+      title: "Passport",
       desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/passport-card",
-    },
-    {
-      icon: Driving,
-      title: "Driving License",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/driving-license",
-    },
-    {
-      icon: NIC,
-      title: "NIC",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/nic",
+      url: "/passport",
     },
     {
       icon: Family,
@@ -44,28 +44,10 @@ const Services = () => {
       url: "/family-card",
     },
     {
-      icon: Business,
-      title: "Business Card",
+      icon: Driving,
+      title: "Driving License",
       desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/business-card",
-    },
-    {
-      icon: Ficha,
-      title: "Ficha Familia",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/ficha-familia",
-    },
-    {
-      icon: Citizen,
-      title: "Citizen Card",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/citizen-card",
-    },
-    {
-      icon: Akta,
-      title: "Birth of Certificate",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/birth-of-certificate",
+      url: "/driving-license",
     },
   ]);
 
