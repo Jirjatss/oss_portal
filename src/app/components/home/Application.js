@@ -5,7 +5,7 @@ function Application() {
   return (
     <div className="bg-[#2E2D2D] px-28 mt-24 flex gap-10">
       <Image
-        src="/assets/images/app.png"
+        src="/assets/images/app.PNG"
         className="h-[340px]"
         width={900}
         height={325}
