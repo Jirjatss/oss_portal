@@ -64,15 +64,15 @@ const Header = () => {
           {!user && (
             <>
               <li className="m-auto ">
-                <a href="/#step">How To Apply</a>
+                <Link href="/#step">How To Apply</Link>
               </li>
               <li className="m-auto">
-                <a href="#services">Services</a>
+                <Link href="/#services">Services</Link>
               </li>
               <li className="m-auto">
-                <a href="#contact-us" style={{ scrollBehavior: "smooth" }}>
+                <Link href="/#contact-us" style={{ scrollBehavior: "smooth" }}>
                   Contact us
-                </a>
+                </Link>
               </li>
             </>
           )}

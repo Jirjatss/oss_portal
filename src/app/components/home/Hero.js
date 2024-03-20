@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const Hero = () => {
@@ -15,9 +16,12 @@ const Hero = () => {
             Now all your document can be handled online, much faster, more
             timely and easier to handle.
           </p>
-          <button className="bg-[#1C25E7] text-white px-4 py-3 rounded-xl w-[300px] block m-auto">
+          <Link
+            href="/#services"
+            className="bg-[#1C25E7] text-white px-4 py-3 rounded-xl w-[300px] block m-auto"
+          >
             Explore Now
-          </button>
+          </Link>
         </div>
       </div>
     </div>

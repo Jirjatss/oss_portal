@@ -128,7 +128,7 @@ const CardListApplications = ({ applications }) => {
           </p>
         </div>
         <div className="flex flex-col justify-between items-end text-[#1C25E7] font-semibold cursor-pointer">
-          Detail
+          {/* Detail */}
         </div>
       </div>
     </div>
