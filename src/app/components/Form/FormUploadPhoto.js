@@ -1,15 +1,29 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
+import { useDispatch, useSelector } from "react-redux";
+import { savePersonalInformation } from "@/app/store/actions/userAction";
+import { LOADING_FALSE } from "@/app/store/actions/action_type";
+import Loader from "../Loader";
 
 function FormUploadPhoto({ onClick }) {
+  const { user, personalInformation, loading } = useSelector(
+    (state) => state.userReducer
+  );
+  const dispatch = useDispatch();
+  const [upload, setUpload] = useState({
+    citizenPhoto: null,
+    identityDocument: null,
+  });
   const [image, setImage] = useState({
     citizenPhoto: null,
     identityDocument: null,
   });
 
   const handleImageChange = (event, type) => {
+    console.log("event:", event.target.files);
     const selectedImage = event.target.files[0];
+    console.log("selectedImage:", selectedImage);
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -17,13 +31,48 @@ function FormUploadPhoto({ onClick }) {
         ...prevState,
         [type]: reader.result,
       }));
+
+      setUpload((prevState) => ({
+        ...prevState,
+        [type]: selectedImage,
+      }));
     };
 
     reader.readAsDataURL(selectedImage);
   };
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch({
+        type: LOADING_FALSE,
+      });
+    }, 500);
+  }, []);
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      const scrollStep = -window.scrollY / (500 / 15);
+      const scrollInterval = setInterval(() => {
+        if (window.scrollY !== 0) {
+          window.scrollBy(0, scrollStep);
+        } else {
+          clearInterval(scrollInterval);
+        }
+      }, 15);
+    };
+    scrollToTop();
+    return () => {};
+  }, []);
+
+  const isDisabled = !upload.citizenPhoto || !upload.identityDocument;
+  useEffect(() => {
+    if (personalInformation.Photo && personalInformation.Identity) {
+      onClick();
+    }
+  }, [personalInformation.Photo, personalInformation.Identity]);
 
   return (
     <>
+      {loading && <Loader />}
       <div>
         <h1 className="text-[28px] font-semibold text-[#2E2D2D] mb-2">
           Upload Photo
@@ -63,7 +112,7 @@ function FormUploadPhoto({ onClick }) {
                         ...prevState,
                         citizenPhoto: null,
                       }))
-                    } // Ubah penanganan klik
+                    }
                   >
                     <OSSIcons name={"Cancel"} />
                   </div>
@@ -149,7 +198,7 @@ function FormUploadPhoto({ onClick }) {
                 <div
                   onClick={() =>
                     document.getElementById("identityDocumentInput").click()
-                  } // Ubah pemanggilan ID
+                  }
                   className="cursor-pointer flex flex-col gap-4"
                 >
                   <OSSIcons name="AddImage" />
@@ -163,7 +212,7 @@ function FormUploadPhoto({ onClick }) {
               className="text-center mt-2 text-[#1C25E7] font-semibold cursor-pointer"
               onClick={() =>
                 document.getElementById("identityDocumentInput").click()
-              } // Ubah pemanggilan ID
+              }
             >
               {image.identityDocument ? "Change Photo" : "Upload"}
             </p>
@@ -172,8 +221,21 @@ function FormUploadPhoto({ onClick }) {
       </div>
 
       <button
-        className="bg-[#1C25E7] py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px]"
-        onClick={onClick}
+        className={`${
+          isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
+        } py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px]`}
+        disabled={isDisabled}
+        onClick={() => {
+          console.log(upload.citizenPhoto.lastModifiedDate);
+          console.log(upload.citizenPhoto);
+          // dispatch(
+          //   savePersonalInformation({
+          //     ...personalInformation,
+          //     Photo: upload.citizenPhoto,
+          //     Identity: upload.identityDocument,
+          //   })
+          // );
+        }}
       >
         Submit
       </button>

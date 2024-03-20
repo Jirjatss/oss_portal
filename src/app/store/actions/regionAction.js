@@ -18,7 +18,7 @@ export const getRegionCountrySuccess = (payload) => {
 
 export const getRegionCountry = (access_token) => {
   return async (dispatch) => {
-    dispatch(loading());
+    // dispatch(loading());
     try {
       const { data } = await axios({
         url: "https://api.ardhiansyah.com/regions/country",
@@ -45,7 +45,7 @@ export const getRegionMunicipalitySuccess = (payload) => {
 
 export const getRegionMunicipality = (access_token) => {
   return async (dispatch) => {
-    dispatch(loading());
+    // dispatch(loading());
     try {
       const { data } = await axios({
         url: "https://api.ardhiansyah.com/regions/municipality",
@@ -72,7 +72,7 @@ export const getRegionPostAdministrativeSuccess = (payload) => {
 export const getRegionPostAdministrative = (access_token, query) => {
   console.log("query:", query);
   return async (dispatch) => {
-    dispatch(loading());
+    // dispatch(loading());
     try {
       const { data } = await axios({
         url: `https://api.ardhiansyah.com/regions/post-administrative?${query}`,
@@ -98,7 +98,7 @@ export const getRegionSucosSuccess = (payload) => {
 
 export const getRegionSucos = (access_token, query) => {
   return async (dispatch) => {
-    dispatch(loading());
+    // dispatch(loading());
     try {
       const { data } = await axios({
         url: `https://api.ardhiansyah.com/regions/sucos?${query}`,

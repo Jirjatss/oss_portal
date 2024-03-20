@@ -21,6 +21,16 @@ function Service() {
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
 
+  const [code, setCode] = useState("");
+
+  useEffect(() => {
+    if (pathname === "/passport") setCode("1");
+    if (pathname === "/driving-license") setCode("2");
+    if (pathname === "/citizen-id") setCode("7");
+    if (pathname === "/family-card") setCode("4");
+    if (pathname === "/birth-of-certificate") setCode("8");
+  }, [pathname]);
+
   const services = [
     {
       title: `New \n ${title}`,
@@ -97,12 +107,6 @@ function Service() {
     fetchUser();
   }, []);
 
-  // useEffect(() => {
-  //   if (!isCheckingUser && !user) {
-  //     router.replace("/login");
-  //   }
-  // }, [user, isCheckingUser]);
-
   return (
     <div className="px-52 bg-white py-10">
       <div
@@ -118,7 +122,7 @@ function Service() {
         </p>
       </div>
       {isSubmission ? (
-        <FormSubmisson title={title} />
+        <FormSubmisson title={title} code={code} />
       ) : (
         <div className="flex gap-16 mt-7">
           <div className="flex-1 flex-col">

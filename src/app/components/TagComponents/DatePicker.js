@@ -15,7 +15,7 @@ function DatePicker({ handleChange, value }) {
         <style jsx>{`
           #date-input::-webkit-calendar-picker-indicator {
             filter: invert(1);
-            cursor: "pointer;
+            cursor: pointer;
           }
         `}</style>
       </div>

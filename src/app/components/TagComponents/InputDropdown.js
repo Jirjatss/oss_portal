@@ -101,34 +101,26 @@ function InputDropdown({
             horizontal: "left",
           }}
         >
-          {listTopic.length === 0 ? (
-            <MenuItem className="text-red-500 w-full text-start cursor-not-allowed">
-              <div className="flex gap-3">Please Select Another City</div>
+          {listTopic.map((e, idx) => (
+            <MenuItem
+              className="text-gray-900 w-full text-start"
+              key={e.name + idx}
+              onClick={() => handleChangeTopic({ name: name, value: e.value })}
+              sx={{
+                backgroundColor:
+                  selectedTopic === e.name
+                    ? "transparent !important"
+                    : "inherit",
+                fontWeight: selectedTopic === e.name ? "bold" : "normal",
+              }}
+              selected={selectedTopic === e.name}
+            >
+              <div className="flex gap-3">
+                {e.name}
+                {selectedTopic === e.name && <CheckIcon fontSize="small" />}
+              </div>
             </MenuItem>
-          ) : (
-            listTopic.map((e, idx) => (
-              <MenuItem
-                className="text-gray-900 w-full text-start"
-                key={e.name + idx}
-                onClick={() =>
-                  handleChangeTopic({ name: name, value: e.value })
-                }
-                sx={{
-                  backgroundColor:
-                    selectedTopic === e.name
-                      ? "transparent !important"
-                      : "inherit",
-                  fontWeight: selectedTopic === e.name ? "bold" : "normal",
-                }}
-                selected={selectedTopic === e.name}
-              >
-                <div className="flex gap-3">
-                  {e.name}
-                  {selectedTopic === e.name && <CheckIcon fontSize="small" />}
-                </div>
-              </MenuItem>
-            ))
-          )}
+          ))}
         </Menu>
       </div>
     </div>

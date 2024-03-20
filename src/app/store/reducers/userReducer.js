@@ -6,6 +6,7 @@ import {
   LOGIN_FAILED,
   LOGOUT,
   REQUEST_OTP,
+  SAVE_PERSONAL_INFORMATIONS,
   VERIFY_OTP,
 } from "../actions/action_type";
 
@@ -14,6 +15,7 @@ const initialState = {
   profile: null,
   user: null,
   dataRegister: null,
+  personalInformation: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -68,6 +70,12 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+
+    case SAVE_PERSONAL_INFORMATIONS:
+      return {
+        ...state,
+        personalInformation: action.payload,
       };
 
     default:

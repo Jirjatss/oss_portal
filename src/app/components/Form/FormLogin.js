@@ -36,8 +36,8 @@ function FormLogin({ forgotPassword }) {
         toast.success("Success Login");
       })
       .catch((error) => {
-        console.log(error);
-        toast.error(error.response.data.ErrorMessage);
+        // console.log(error.response.data.errorMessage, "error login");
+        toast.error(error?.response?.data?.errorMessage);
       });
   };
 

@@ -10,7 +10,8 @@ export const REQUEST_OTP = "request_otp";
 export const VERIFY_OTP = "verify_otp";
 export const REGISTER_SUCCESS = "registerSuccess";
 export const ACTIVATE_USER = "activate_user";
-
+export const SAVE_PERSONAL_INFORMATIONS = "personal-informations";
+export const SUBMIT_PERSONAL_INFORMATIONS = "submit-personal-informations";
 // form
 export const GET_REGION_COUNTRY_SUCCESS = "getRegionCountrySuccess";
 export const GET_REGION_MUNICIPALITY_SUCCESS = "getRegionMunicipalitySuccess";

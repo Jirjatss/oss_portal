@@ -8,7 +8,6 @@ import Loader from "../Loader";
 
 function FormOtp({ onClick, onClickSubmit }) {
   const { dataRegister, loading } = useSelector((state) => state.userReducer);
-  console.log("dataRegiser:", dataRegister);
   const dispatch = useDispatch();
   const [showResendButton, setShowResendButton] = useState(false);
   const [timer, setTimer] = useState(30);
@@ -107,7 +106,7 @@ function FormOtp({ onClick, onClickSubmit }) {
                 .then(() => onClickSubmit())
                 .catch((err) => {
                   console.log(err.response.data);
-                  toast.error(err.response.data.ErrorMessage);
+                  toast.error(err.response.data.errorMessage);
                 });
             }}
           >

@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputDropdown from "../TagComponents/InputDropdown";
 import InputText from "../TagComponents/InputText";
 import DatePicker from "../TagComponents/DatePicker";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import Link from "next/link";
 import ModalPreview from "../Modal/ModalPreview";
+import { useDispatch, useSelector } from "react-redux";
+import { getUserInformation } from "@/app/store/actions/userAction";
 
-const FormSubmission = ({ title }) => {
+const FormSubmission = ({ title, code }) => {
   const applier = [
-    { topic: `New ${title}` },
-    { topic: `Renew ${title}` },
-    { topic: `Loss ${title}` },
-    { topic: `Damage ${title}` },
+    { name: `New ${title}`, code: `New ${title}` },
+    { name: `Renew ${title}`, code: `Renew ${title}` },
+    { name: `Loss ${title}`, code: `Loss ${title}` },
+    { name: `Damage ${title}`, code: `Damage ${title}` },
   ];
   const requester = [
-    { topic: `My Self` },
-    { topic: `My Child` },
-    { topic: `My Family` },
+    { name: `My Self`, code: "My Self" },
+    { name: `My Child`, code: `My Child` },
+    { name: `My Family`, code: `My Family` },
   ];
   const [isOther, setIsOther] = useState(false);
-  const gender = [{ topic: `Male` }, { topic: `Female` }];
+  const gender = [
+    { name: `Male`, code: "Male" },
+    { name: `Female`, code: "Female" },
+  ];
   const deliverTime = [
-    { topic: `Express (1 - 2 Days)` },
-    { topic: `Normal (2 - 3 Days)` },
+    { name: `Express (1 - 2 Days)`, code: `Express (1 - 2 Days)` },
+    { name: `Normal (2 - 3 Days)`, code: `Normal (1 - 2 Days)` },
   ];
   const [isChecked, setIsChecked] = useState(false);
   const [image, setImage] = useState({ images: [] });
   const [checkedImages, setCheckedImages] = useState([]);
   const [indexImage, setIndexImage] = useState(null);
-
+  const dispatch = useDispatch();
+  const { user, profile } = useSelector((state) => state.userReducer);
+  const { personalDetail } = profile || {};
+  console.log("personalDetail:", personalDetail);
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];
     if (!selectedImage) return;
@@ -75,7 +83,15 @@ const FormSubmission = ({ title }) => {
 
     reader.readAsDataURL(selectedImage);
   };
+  const [input, setInput] = useState({});
 
+  const handleChangeSelect = (e) => {
+    const { name, value } = e;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
   const toggleImageCheck = (index) => {
     setCheckedImages((prevState) => {
       return prevState.includes(index)
@@ -90,6 +106,10 @@ const FormSubmission = ({ title }) => {
       return { images: updatedImages };
     });
   };
+
+  useEffect(() => {
+    dispatch(getUserInformation(user?.accessToken));
+  }, []);
 
   return (
     <>
@@ -107,14 +127,25 @@ const FormSubmission = ({ title }) => {
           </p>
         </div>
         <div className="flex flex-col gap-5">
-          <InputDropdown label={"Applying For"} topic={applier} />
+          <InputDropdown
+            label={"Applying For"}
+            topic={applier}
+            name="applyingFor"
+            handleChange={(e) => {
+              handleChangeSelect(e);
+            }}
+            selectedTopic={input.applyingFor}
+          />
           <InputDropdown
             label={"Request For"}
             topic={requester}
-            onChange={(value) => {
-              if (value !== "My Self") setIsOther(true);
+            name="requester"
+            handleChange={(e) => {
+              handleChangeSelect(e);
+              if (e.value !== "My Self") setIsOther(true);
               else setIsOther(false);
             }}
+            selectedTopic={input.requester}
           />
           {isOther && (
             <>
@@ -125,7 +156,13 @@ const FormSubmission = ({ title }) => {
             </>
           )}
 
-          <InputDropdown label={"Deliver Time"} topic={deliverTime} />
+          <InputDropdown
+            label={"Deliver Time"}
+            topic={deliverTime}
+            name="deliverTime"
+            handleChange={(e) => handleChangeSelect(e)}
+            selectedTopic={input.deliverTime}
+          />
           <UploadContainer
             handleImageChange={handleImageChange}
             toggleImageCheck={toggleImageCheck}
@@ -161,6 +198,19 @@ const FormSubmission = ({ title }) => {
             className={`${
               isChecked ? "bg-[#1C25E7]" : "bg-[#DCDCDC] cursor-not-allowed"
             }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-1 font-semibold`}
+            onClick={() => {
+              const inputForm = {
+                ServiceId: code,
+                RequestFor: input.requester,
+                FirstName: input.requester === "My Self" ? "" : input.firstName,
+                LastName: input.requester === "My Self" ? "" : input.lastName,
+                Gender: input.requester === "My Self" ? "" : input.gender,
+                DateOfBirth:
+                  input.requester === "My Self" ? "" : input.dateOfBirth,
+                DeliveryTime: input.deliverTime,
+              };
+              console.log(inputForm);
+            }}
           >
             Submit
           </button>

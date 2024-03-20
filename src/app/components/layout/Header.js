@@ -132,7 +132,7 @@ const Header = () => {
                         setMenuOpen(false);
                       }
                       if (e.label === "Edit Profile") {
-                        router.push("/edit-profile");
+                        router.push("/personal-informations");
                         setAnchorEl(null);
                         setMenuOpen(false);
                       }

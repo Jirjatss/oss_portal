@@ -1,5 +1,3 @@
-"use client";
-
 import { requestOtp } from "@/app/store/actions/userAction";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -8,9 +6,19 @@ import Loader from "../Loader";
 
 function FormStartRegister({ onClick }) {
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [validPhoneNumber, setValidPhoneNumber] = useState(true);
+
+  const regexPhoneNumber = /^\+[1-9]\d{1,14}$/; // Pola nomor telepon internasional
+
   const { loading } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
-  const isDisabled = phoneNumber === "";
+  const isDisabled = phoneNumber === "" || !validPhoneNumber;
+
+  const handleChangePhoneNumber = (e) => {
+    const { value } = e.target;
+    setPhoneNumber(value);
+    setValidPhoneNumber(regexPhoneNumber.test(value));
+  };
 
   return (
     <>
@@ -27,16 +35,22 @@ function FormStartRegister({ onClick }) {
           <label className="text-label">Phone Number</label>
           <input
             type="text"
-            pattern="[0-9]*"
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
+            className={`border-b-[1px] border-${
+              validPhoneNumber ? "gray" : "red"
+            }-500 focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent`}
             placeholder="Phone Number"
             value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
+            onChange={handleChangePhoneNumber}
           />
+          {!validPhoneNumber && (
+            <p className="text-[12px] text-red-500">
+              Invalid phone number format
+            </p>
+          )}
         </div>
 
         <p className="text-[18px] text-[#646464]">
-          We will sent an OTP to your phone Number
+          We will send an OTP to your phone Number
         </p>
 
         <div className="flex flex-col gap-5 w-full">
@@ -52,7 +66,7 @@ function FormStartRegister({ onClick }) {
             Submit
           </button>
           <p className="text-[18px] text-[#646464]">
-            Already have account?{" "}
+            Already have an account?{" "}
             <Link href="/login" className="text-[#1C25E7]">
               Login Now
             </Link>

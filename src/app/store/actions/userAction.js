@@ -6,6 +6,7 @@ import {
   LOGIN_FAILED,
   LOGOUT,
   REQUEST_OTP,
+  SAVE_PERSONAL_INFORMATIONS,
 } from "./action_type";
 import { loading } from "./regionAction";
 
@@ -58,7 +59,6 @@ export const login = (val) => {
         data: val,
       });
       localStorage.setItem("user", JSON.stringify(data.data));
-      dispatch(getUserInformation(data.data.accessToken));
       dispatch(getUser());
     } catch (error) {
       dispatch({
@@ -80,6 +80,7 @@ export const getUserInformation = (access_token) => {
           Authorization: `Bearer ${access_token}`,
         },
       });
+
       dispatch(getUserInformationSuccess(data.data));
     } catch (error) {
       throw error;
@@ -182,6 +183,77 @@ export const activateUser = (token, accessToken) => {
         type: LOADING_FALSE,
       });
       console.log(error, "disini");
+      throw error;
+    }
+  };
+};
+
+export const savePersonalInformation = (payload) => {
+  return { type: SAVE_PERSONAL_INFORMATIONS, payload };
+};
+
+export const submitPersonalInformations = (val, access_token) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      console.log(val);
+      // if (val) {
+      //   const formData = new FormData();
+      //   Object.entries(val).forEach(([key, value]) => {
+      //     formData.append(key, value);
+      //   });
+
+      //   const { data } = await axios.post(
+      //     "https://api.ardhiansyah.com/personal-informations",
+      //     formData,
+      //     {
+      //       headers: {
+      //         Authorization: `Bearer ${access_token}`,
+      //       },
+      //     }
+      //   );
+      //   dispatch(getUserInformation(access_token));
+      //   dispatch({
+      //     type: LOADING_FALSE,
+      //   });
+      // }
+    } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
+      console.log(error);
+    }
+  };
+};
+
+export const editProfile = (val, access_token) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      if (val) {
+        const formData = new FormData();
+        Object.entries(val).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
+
+        const { data } = await axios.put(
+          "https://api.ardhiansyah.com/personal-informations",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        dispatch(getUserInformation(access_token));
+        dispatch({
+          type: LOADING_FALSE,
+        });
+      }
+    } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
