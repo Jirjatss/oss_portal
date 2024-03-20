@@ -266,7 +266,7 @@ function FormIdentify({ onClick }) {
           </div>
         </div>
         <button
-          // disabled={isDisabled}
+          disabled={isDisabled}
           className={`${
             isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
           } py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px]`}
