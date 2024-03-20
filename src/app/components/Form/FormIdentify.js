@@ -25,21 +25,17 @@ function FormIdentify({ onClick }) {
   );
 
   const [input, setInput] = useState({});
-  const { personalDetail, residenceDetail } = profile || {};
+  const { personalDetail, residenceDetail, birthDetail } = profile || {};
+  console.log("profile:", profile);
 
+  const { dateOfBirth } = birthDetail || {};
   const { countryCode, municipalityCode, postAdministrativeCode, sucosCode } =
     residenceDetail || {};
 
-  const {
-    firstName,
-    email,
-    lastName,
-    dateOfBirth,
-    identityNumber,
-    identityType,
-    gender,
-  } = personalDetail || {};
+  const { firstName, email, lastName, identityNumber, identityType, gender } =
+    personalDetail || {};
 
+  console.log("dateOfBirth:", dateOfBirth);
   const handleChangeSelect = (e) => {
     const { name, value } = e;
     setInput({
@@ -62,7 +58,13 @@ function FormIdentify({ onClick }) {
       municipality: municipalityCode,
       city: postAdministrativeCode,
     }));
-  }, []);
+  }, [
+    sucosCode,
+    municipalityCode,
+    postAdministrativeCode,
+    countryCode,
+    dateOfBirth,
+  ]);
 
   const isDisabled =
     !input.FirstName ||
