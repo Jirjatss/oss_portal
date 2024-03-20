@@ -21,3 +21,6 @@ export const GET_REGION_SUCOS = "getRegionSucosSuccess";
 
 // service
 export const GET_SERVICES = "getServices";
+
+// applications
+export const GET_MY_APPLICATIONS = "getMyApplications";

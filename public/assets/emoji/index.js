@@ -5,7 +5,7 @@ import NIC from "./Service=NIC.png";
 import Family from "./Service=FamilyCard.png";
 import Business from "./Service=BusinessCard.png";
 import Ficha from "./Service=FichaFamillia.png";
-import Citizen from "./Service=CitizenCard.png";
+import CitizenCard from "./Service=CitizenCard.png";
 import Akta from "./Service=BirthofCertificate.png";
 import EmptyApplicant from "./MyApplicants=Empty.png";
 import FlowStep1 from "./Flow=Step1.png";
@@ -20,7 +20,7 @@ export {
   Family,
   Business,
   Ficha,
-  Citizen,
+  CitizenCard,
   Akta,
   EmptyApplicant,
   FlowStep1,

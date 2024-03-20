@@ -10,7 +10,7 @@ import {
   Family,
   Business,
   Ficha,
-  Citizen,
+  CitizenCard,
   Akta,
 } from "../../../../public/assets/emoji/index";
 import Image from "next/image";
@@ -26,7 +26,7 @@ const Services = () => {
       url: "/birth-of-certificate",
     },
     {
-      icon: Citizen,
+      icon: CitizenCard,
       title: "Citizen ID",
       desc: "Secure your identity. Obtain your birth certificate now!",
       url: "/citizen-id",

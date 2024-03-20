@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOADING_FALSE } from "./action_type";
+import { GET_MY_APPLICATIONS, LOADING_FALSE } from "./action_type";
 import { loading } from "./regionAction";
 
 export const submitApplication = (val, access_token) => {
@@ -36,6 +36,32 @@ export const submitApplication = (val, access_token) => {
         });
       }
     } catch (error) {
+      throw error;
+    }
+  };
+};
+
+export const getMyApplications = (access_token) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      const { data } = await axios({
+        url: "https://api.ardhiansyah.com/applications",
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+      dispatch({
+        type: GET_MY_APPLICATIONS,
+        payload: data.data,
+      });
+      dispatch({
+        type: LOADING_FALSE,
+      });
+    } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
