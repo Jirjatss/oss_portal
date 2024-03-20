@@ -197,26 +197,26 @@ export const submitPersonalInformations = (val, access_token) => {
     dispatch(loading());
     try {
       console.log(val);
-      // if (val) {
-      //   const formData = new FormData();
-      //   Object.entries(val).forEach(([key, value]) => {
-      //     formData.append(key, value);
-      //   });
+      if (val) {
+        const formData = new FormData();
+        Object.entries(val).forEach(([key, value]) => {
+          formData.append(key, value);
+        });
 
-      //   const { data } = await axios.post(
-      //     "https://api.ardhiansyah.com/personal-informations",
-      //     formData,
-      //     {
-      //       headers: {
-      //         Authorization: `Bearer ${access_token}`,
-      //       },
-      //     }
-      //   );
-      //   dispatch(getUserInformation(access_token));
-      //   dispatch({
-      //     type: LOADING_FALSE,
-      //   });
-      // }
+        const { data } = await axios.post(
+          "https://api.ardhiansyah.com/personal-informations",
+          formData,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        dispatch(getUserInformation(access_token));
+        dispatch({
+          type: LOADING_FALSE,
+        });
+      }
     } catch (error) {
       dispatch({
         type: LOADING_FALSE,

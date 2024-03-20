@@ -2,14 +2,21 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import { useDispatch, useSelector } from "react-redux";
-import { savePersonalInformation } from "@/app/store/actions/userAction";
+import {
+  savePersonalInformation,
+  submitPersonalInformations,
+} from "@/app/store/actions/userAction";
 import { LOADING_FALSE } from "@/app/store/actions/action_type";
 import Loader from "../Loader";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 function FormUploadPhoto({ onClick }) {
   const { user, personalInformation, loading } = useSelector(
     (state) => state.userReducer
   );
+
+  const router = useRouter();
   const dispatch = useDispatch();
   const [upload, setUpload] = useState({
     citizenPhoto: null,
@@ -226,15 +233,24 @@ function FormUploadPhoto({ onClick }) {
         } py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px]`}
         disabled={isDisabled}
         onClick={() => {
-          console.log(upload.citizenPhoto.lastModifiedDate);
-          console.log(upload.citizenPhoto);
-          // dispatch(
-          //   savePersonalInformation({
-          //     ...personalInformation,
-          //     Photo: upload.citizenPhoto,
-          //     Identity: upload.identityDocument,
-          //   })
-          // );
+          dispatch(
+            submitPersonalInformations(
+              {
+                ...personalInformation,
+                Photo: upload.citizenPhoto,
+                Identity: upload.identityDocument,
+              },
+              user?.accessToken
+            )
+          )
+            .then(() => {
+              toast.success("Success Submit Personal Informations");
+              router.push("/");
+            })
+            .catch((err) => {
+              toast.error;
+              console.log(err);
+            });
         }}
       >
         Submit

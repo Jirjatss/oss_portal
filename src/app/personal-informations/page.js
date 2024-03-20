@@ -1,17 +1,13 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { OSSIcons } from "../../../public/assets/icons/parent";
 import { useRouter } from "next/navigation";
 import FormIdentify from "../components/Form/FormIdentify";
 import FormContact from "../components/Form/FormContact";
 import FormUploadPhoto from "../components/Form/FormUploadPhoto";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  editProfile,
-  submitPersonalInformations,
-} from "../store/actions/userAction";
-import Loader from "../components/Loader";
+import { editProfile } from "../store/actions/userAction";
 import { LOADING } from "../store/actions/action_type";
 import { toast } from "sonner";
 
@@ -34,12 +30,6 @@ function Verification() {
   const updateProfile = () => {
     dispatch(editProfile(personalInformation, user?.accessToken)).then(() =>
       toast.success("Success Edit Profile")
-    );
-  };
-
-  const submitData = () => {
-    dispatch(
-      submitPersonalInformations(personalInformation, user?.accessToken)
     );
   };
 
@@ -81,7 +71,7 @@ function Verification() {
           />
         )}
         {step === 2 && <FormContact onClick={nextHandler} />}
-        {step === 3 && <FormUploadPhoto onClick={submitData} />}
+        {step === 3 && <FormUploadPhoto />}
       </div>
     </>
   );
