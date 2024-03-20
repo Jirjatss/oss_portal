@@ -18,3 +18,6 @@ export const GET_REGION_MUNICIPALITY_SUCCESS = "getRegionMunicipalitySuccess";
 export const GET_REGION_POST_ADMINISTRATIVE_SUCCESS =
   "getRegionPostAdministrativeSuccess";
 export const GET_REGION_SUCOS = "getRegionSucosSuccess";
+
+// service
+export const GET_SERVICES = "getServices";

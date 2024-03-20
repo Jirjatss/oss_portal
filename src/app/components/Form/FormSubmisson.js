@@ -7,218 +7,11 @@ import Link from "next/link";
 import ModalPreview from "../Modal/ModalPreview";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInformation } from "@/app/store/actions/userAction";
-
-const FormSubmission = ({ title, code }) => {
-  const applier = [
-    { name: `New ${title}`, code: `New ${title}` },
-    { name: `Renew ${title}`, code: `Renew ${title}` },
-    { name: `Loss ${title}`, code: `Loss ${title}` },
-    { name: `Damage ${title}`, code: `Damage ${title}` },
-  ];
-  const requester = [
-    { name: `My Self`, code: "My Self" },
-    { name: `My Child`, code: `My Child` },
-    { name: `My Family`, code: `My Family` },
-  ];
-  const [isOther, setIsOther] = useState(false);
-  const gender = [
-    { name: `Male`, code: "Male" },
-    { name: `Female`, code: "Female" },
-  ];
-  const deliverTime = [
-    { name: `Express (1 - 2 Days)`, code: `Express (1 - 2 Days)` },
-    { name: `Normal (2 - 3 Days)`, code: `Normal (1 - 2 Days)` },
-  ];
-  const [isChecked, setIsChecked] = useState(false);
-  const [image, setImage] = useState({ images: [] });
-  const [checkedImages, setCheckedImages] = useState([]);
-  const [indexImage, setIndexImage] = useState(null);
-  const dispatch = useDispatch();
-  const { user, profile } = useSelector((state) => state.userReducer);
-  const { personalDetail } = profile || {};
-  console.log("personalDetail:", personalDetail);
-  const handleImageChange = (event) => {
-    const selectedImage = event.target.files[0];
-    if (!selectedImage) return;
-
-    const allowedTypes = [
-      "image/jpeg",
-      "image/jpg",
-      "image/png",
-      "application/pdf",
-    ];
-    if (!allowedTypes.includes(selectedImage.type)) {
-      alert("Hanya file JPG, JPEG, PDF, dan PNG yang diperbolehkan.");
-      return;
-    }
-
-    const maxSize = 10 * 1024 * 1024;
-    if (selectedImage.size > maxSize) {
-      alert("Ukuran file terlalu besar. Maksimal 10 MB.");
-      return;
-    }
-
-    const reader = new FileReader();
-
-    reader.onload = () => {
-      const newImage = {
-        title: selectedImage.name,
-        url: reader.result,
-        size: (selectedImage.size / (1024 * 1024)).toFixed(2),
-        isChecked: false,
-      };
-
-      setImage((prevState) => ({
-        ...prevState,
-        images: [...(prevState.images || []), newImage],
-      }));
-
-      setCheckedImages((prevState) => [
-        ...(prevState.images || []).map((_, index) => index),
-        (prevState.images || []).length,
-      ]);
-
-      setIsChecked(false);
-    };
-
-    reader.readAsDataURL(selectedImage);
-  };
-  const [input, setInput] = useState({});
-
-  const handleChangeSelect = (e) => {
-    const { name, value } = e;
-    setInput({
-      ...input,
-      [name]: value,
-    });
-  };
-  const toggleImageCheck = (index) => {
-    setCheckedImages((prevState) => {
-      return prevState.includes(index)
-        ? prevState.filter((item) => item !== index)
-        : [...prevState, index];
-    });
-  };
-
-  const deleteImage = (index) => {
-    setImage((prevState) => {
-      const updatedImages = prevState.images.filter((_, i) => i !== index);
-      return { images: updatedImages };
-    });
-  };
-
-  useEffect(() => {
-    dispatch(getUserInformation(user?.accessToken));
-  }, []);
-
-  return (
-    <>
-      {image?.images && <ModalPreview image={image.images[indexImage]} />}
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 my-10 gap-x-10">
-        <div>
-          <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-5">
-            Submit Document
-          </h1>
-          <p className="text-[16px] text-[#646464]">
-            Please upload clear and legible copies of your photos and documents.
-            Ensure all details are visible for accurate processing, and
-            following how to apply instructions
-          </p>
-        </div>
-        <div className="flex flex-col gap-5">
-          <InputDropdown
-            label={"Applying For"}
-            topic={applier}
-            name="applyingFor"
-            handleChange={(e) => {
-              handleChangeSelect(e);
-            }}
-            selectedTopic={input.applyingFor}
-          />
-          <InputDropdown
-            label={"Request For"}
-            topic={requester}
-            name="requester"
-            handleChange={(e) => {
-              handleChangeSelect(e);
-              if (e.value !== "My Self") setIsOther(true);
-              else setIsOther(false);
-            }}
-            selectedTopic={input.requester}
-          />
-          {isOther && (
-            <>
-              <InputText label={"First Name"} placeholder={"First Name"} />
-              <InputText label={"Last Name"} placeholder={"Last Name"} />
-              <DatePicker />
-              <InputDropdown label={"Gender"} topic={gender} />
-            </>
-          )}
-
-          <InputDropdown
-            label={"Deliver Time"}
-            topic={deliverTime}
-            name="deliverTime"
-            handleChange={(e) => handleChangeSelect(e)}
-            selectedTopic={input.deliverTime}
-          />
-          <UploadContainer
-            handleImageChange={handleImageChange}
-            toggleImageCheck={toggleImageCheck}
-            deleteImage={deleteImage}
-            checkedImages={checkedImages}
-            image={image}
-            onClick={(idx) => {
-              setIndexImage(idx);
-              modalPreview.showModal();
-            }}
-          />
-          <div className="flex gap-3 items-center mt-4">
-            <div
-              className={`w-[24px] h-[24px] border-[1px] border-[#DCDCDC] rounded-lg cursor-pointer justify-center items-center flex ${
-                isChecked && "bg-[#1C25E7]"
-              }`}
-              onClick={() => setIsChecked(!isChecked)}
-            >
-              {isChecked && <OSSIcons name={"Approve"} />}
-            </div>
-            <p className="text-[14px] text-[#6C737E]">
-              By sending this form I agree to the applicable{" "}
-              <Link
-                href="/terms-conditions"
-                className="text-[#1C25E7] font-semibold cursor-pointer"
-              >
-                terms and conditions
-              </Link>
-            </p>
-          </div>
-          <button
-            disabled={!isChecked}
-            className={`${
-              isChecked ? "bg-[#1C25E7]" : "bg-[#DCDCDC] cursor-not-allowed"
-            }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-1 font-semibold`}
-            onClick={() => {
-              const inputForm = {
-                ServiceId: code,
-                RequestFor: input.requester,
-                FirstName: input.requester === "My Self" ? "" : input.firstName,
-                LastName: input.requester === "My Self" ? "" : input.lastName,
-                Gender: input.requester === "My Self" ? "" : input.gender,
-                DateOfBirth:
-                  input.requester === "My Self" ? "" : input.dateOfBirth,
-                DeliveryTime: input.deliverTime,
-              };
-              console.log(inputForm);
-            }}
-          >
-            Submit
-          </button>
-        </div>
-      </div>
-    </>
-  );
-};
+import { getServicesHandler } from "@/app/store/actions/serviceAction";
+import { submitApplication } from "@/app/store/actions/applicationAction";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import Loader from "../Loader";
 
 const UploadContainer = ({
   handleImageChange,
@@ -283,15 +76,255 @@ const UploadContainer = ({
                 className={`w-[24px] h-[24px] border-[1px] border-[#DCDCDC] rounded-lg cursor-pointer justify-center items-center flex ${
                   checkedImages.includes(index) && "bg-[#1C25E7]"
                 }`}
-                onClick={() => toggleImageCheck(index)}
+                onClick={() => toggleImageCheck(index, image)}
               >
-                {checkedImages.includes(index) && <OSSIcons name={"Approve"} />}
+                {checkedImages.includes(index, image) && (
+                  <OSSIcons name={"Approve"} />
+                )}
               </div>
             </div>
           </div>
         ))}
       </div>
     </div>
+  );
+};
+
+const FormSubmission = ({ code }) => {
+  const requester = [
+    { name: `Self`, code: "Self" },
+    { name: `Child`, code: `Child` },
+    { name: `Spouse`, code: `Spouse` },
+    { name: `Parent`, code: `Parent` },
+  ];
+  const [isOther, setIsOther] = useState(false);
+  const gender = [
+    { name: `Male`, code: "Male" },
+    { name: `Female`, code: "Female" },
+  ];
+  const deliverTime = [{ name: `Normal`, code: `Normal` }];
+  const router = useRouter();
+  const [isChecked, setIsChecked] = useState(false);
+  const [image, setImage] = useState({ images: [] });
+  const [checkedImages, setCheckedImages] = useState([]);
+  const [indexImage, setIndexImage] = useState(null);
+  const dispatch = useDispatch();
+  const { user, loading } = useSelector((state) => state.userReducer);
+  const { services } = useSelector((state) => state.serviceReducer);
+  const [upload, setUpload] = useState([]);
+
+  const isDisabled =
+    !isChecked ||
+    checkedImages.length !== image.images.length ||
+    image.images.length === 0;
+
+  const handleImageChange = (event) => {
+    const selectedImage = event.target.files[0];
+    if (!selectedImage) return;
+
+    const allowedTypes = [
+      "image/jpeg",
+      "image/jpg",
+      "image/png",
+      "application/pdf",
+    ];
+    if (!allowedTypes.includes(selectedImage.type)) {
+      alert("Hanya file JPG, JPEG, PDF, dan PNG yang diperbolehkan.");
+      return;
+    }
+
+    const maxSize = 10 * 1024 * 1024;
+    if (selectedImage.size > maxSize) {
+      alert("Ukuran file terlalu besar. Maksimal 10 MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      const newImage = {
+        title: selectedImage.name,
+        url: reader.result,
+        size: (selectedImage.size / (1024 * 1024)).toFixed(2),
+        isChecked: false,
+      };
+
+      setUpload((prevUpload) => [...prevUpload, selectedImage]);
+
+      setImage((prevState) => ({
+        ...prevState,
+        images: [...(prevState.images || []), newImage],
+      }));
+
+      setCheckedImages((prevState) => {
+        if (prevState.some((index) => prevState.includes(index))) {
+          return [
+            ...(prevState.images || []).map((_, index) => index),
+            (prevState.images || []).length,
+          ];
+        }
+        return prevState;
+      });
+    };
+
+    reader.readAsDataURL(selectedImage);
+  };
+  const [input, setInput] = useState({});
+
+  const handleChangeSelect = (e) => {
+    const { name, value } = e;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+  const toggleImageCheck = (index, image) => {
+    setImage((prevState) => {
+      const updatedImages = prevState.images.map((img, i) => {
+        if (i === index) {
+          return {
+            ...img,
+            isChecked: !img.isChecked,
+          };
+        }
+        return img;
+      });
+      return { images: updatedImages };
+    });
+
+    setCheckedImages((prevState) => {
+      return prevState.includes(index)
+        ? prevState.filter((item) => item !== index)
+        : [...prevState, index];
+    });
+  };
+
+  const deleteImage = (index) => {
+    setImage((prevState) => {
+      const updatedImages = prevState.images.filter((_, i) => i !== index);
+      return { images: updatedImages };
+    });
+  };
+
+  useEffect(() => {
+    dispatch(getUserInformation(user?.accessToken));
+    dispatch(getServicesHandler(code, user?.accessToken));
+  }, []);
+
+  return (
+    <>
+      {image?.images && <ModalPreview image={image.images[indexImage]} />}
+      {loading && <Loader message="Please wait, your data is submitting..." />}
+      <div className="grid grid-cols-1 lg:grid-cols-2 my-10 gap-x-10">
+        <div>
+          <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-5">
+            Submit Document
+          </h1>
+          <p className="text-[16px] text-[#646464]">
+            Please upload clear and legible copies of your photos and documents.
+            Ensure all details are visible for accurate processing, and
+            following how to apply instructions
+          </p>
+        </div>
+        <div className="flex flex-col gap-5">
+          <InputDropdown
+            label={"Applying For"}
+            topic={services}
+            name="applyingFor"
+            handleChange={(e) => {
+              handleChangeSelect(e);
+            }}
+            selectedTopic={input.applyingFor}
+          />
+          <InputDropdown
+            label={"Request For"}
+            topic={requester}
+            name="requester"
+            handleChange={(e) => {
+              handleChangeSelect(e);
+              if (e.value !== "Self") setIsOther(true);
+              else setIsOther(false);
+            }}
+            selectedTopic={input.requester}
+          />
+          {isOther && (
+            <>
+              <InputText label={"First Name"} placeholder={"First Name"} />
+              <InputText label={"Last Name"} placeholder={"Last Name"} />
+              <DatePicker />
+              <InputDropdown label={"Gender"} topic={gender} />
+            </>
+          )}
+
+          <InputDropdown
+            label={"Deliver Time"}
+            topic={deliverTime}
+            name="deliverTime"
+            handleChange={(e) => handleChangeSelect(e)}
+            selectedTopic={input.deliverTime}
+            isSeparate={false}
+          />
+          <UploadContainer
+            handleImageChange={handleImageChange}
+            toggleImageCheck={toggleImageCheck}
+            deleteImage={deleteImage}
+            checkedImages={checkedImages}
+            image={image}
+            onClick={(idx) => {
+              setIndexImage(idx);
+              modalPreview.showModal();
+            }}
+          />
+          <div className="flex gap-3 items-center mt-4">
+            <div
+              className={`w-[24px] h-[24px] border-[1px] border-[#DCDCDC] rounded-lg cursor-pointer justify-center items-center flex ${
+                isChecked && "bg-[#1C25E7]"
+              }`}
+              onClick={() => setIsChecked(!isChecked)}
+            >
+              {isChecked && <OSSIcons name={"Approve"} />}
+            </div>
+            <p className="text-[14px] text-[#6C737E]">
+              By sending this form I agree to the applicable{" "}
+              <Link
+                href="/terms-conditions"
+                className="text-[#1C25E7] font-semibold cursor-pointer"
+              >
+                terms and conditions
+              </Link>
+            </p>
+          </div>
+          <button
+            disabled={isDisabled}
+            className={`${
+              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
+            }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-1 font-semibold`}
+            onClick={() => {
+              const inputForm = {
+                ServiceId: code,
+                RequestFor: input.requester,
+                FirstName: input.requester === "Self" ? "" : input.firstName,
+                LastName: input.requester === "Self" ? "" : input.lastName,
+                Gender: input.requester === "Self" ? "" : input.gender,
+                DateOfBirth:
+                  input.requester === "Self" ? "" : input.dateOfBirth,
+                DeliveryTime: input.deliverTime,
+                Files: upload,
+              };
+
+              dispatch(submitApplication(inputForm, user?.accessToken))
+                .then(() => {
+                  toast.success("Success Submit Applications");
+                  router.push("/");
+                })
+                .catch((err) => toast.error("Failed Submit Applications"));
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 

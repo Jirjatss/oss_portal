@@ -16,12 +16,13 @@ function InputDropdown({
   selectedTopic,
   isDisabled,
   name,
+  isSeparate = true,
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const listTopic = (topic || []).map((e) => ({
-    name: e.name?.replace("-", " "),
+    name: isSeparate ? e.name?.replace("-", " ") : e.name,
     value: e.code,
   }));
   const handleClick = (e) => {
