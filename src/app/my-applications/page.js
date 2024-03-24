@@ -14,11 +14,13 @@ import { getMyApplications } from "../store/actions/applicationAction";
 import { getUser } from "../store/actions/userAction";
 import Image from "next/image";
 import Loader from "../components/Loader";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 const MyApplications = () => {
   const router = useRouter();
+  const user = useAuthUser();
   const dispatch = useDispatch();
-  const { user, loading } = useSelector((state) => state.userReducer);
+  const { loading } = useSelector((state) => state.userReducer);
   const { myApplications } = useSelector((state) => state.applicationReducer);
   const [filterStatus, setFilterStatus] = useState("All");
 
