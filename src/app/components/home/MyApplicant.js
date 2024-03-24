@@ -1,6 +1,9 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
-import { EmptyApplicant, MyApplicants } from "../../../../public/assets/emoji";
+import {
+  EmptyApplicant,
+  MyApplicants,
+} from "../../../../public/assets/emoji/index";
 import { useDispatch, useSelector } from "react-redux";
 import { getMyApplications } from "@/app/store/actions/applicationAction";
 import { useRouter } from "next/navigation";
