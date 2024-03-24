@@ -11,7 +11,7 @@ import EmptyApplicant from "./MyApplicants=Empty.png";
 import FlowStep1 from "./Flow=Step1.png";
 import FlowStep2 from "./Flow=Step2.png";
 import FlowStep3 from "./Flow=Step3.png";
-import ResendVerif from "./resendverif.png";
+import ResendVerif from "./resendVerif.png";
 import VerifSuccess from "./verifSuccess.png";
 import MyApplicants from "./My Applicants=Filled.png";
 import Profile from "./profile.png";
