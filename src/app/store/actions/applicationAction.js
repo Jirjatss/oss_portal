@@ -5,7 +5,6 @@ import { loading } from "./regionAction";
 export const submitApplication = (val, access_token) => {
   return async (dispatch) => {
     dispatch(loading());
-
     try {
       if (val) {
         const formData = new FormData();
@@ -18,7 +17,6 @@ export const submitApplication = (val, access_token) => {
         });
 
         val.Files.forEach((file) => {
-          console.log(`Files`, file);
           formData.append(`Files`, file);
         });
 
@@ -36,6 +34,9 @@ export const submitApplication = (val, access_token) => {
         });
       }
     } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
@@ -46,7 +47,7 @@ export const getMyApplications = (access_token) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/applications",
+        url: "https://api.ardhiansyah.com/me/applications",
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

@@ -15,7 +15,7 @@ export const getServicesHandler = (id, access_token) => {
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
-          Authorization: `Bearer ${access_token}`,
+          Authorization: access_token,
         },
       });
       dispatch(getServiceSuccess(data.data));

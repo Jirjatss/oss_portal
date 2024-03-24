@@ -57,7 +57,7 @@ function InputDropdown({
           className={`text-black w-full text-start`}
           sx={{
             cursor: isDisabled && "not-allowed",
-            borderBottom: "1px solid #F0F0F0",
+            borderBottom: "1px solid #B0B0B0",
             color: "gray.900",
             justifyContent: "space-between",
             "& .MuiButton-endIcon": {

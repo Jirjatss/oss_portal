@@ -1,12 +1,11 @@
 import React, { useRef, useState, useEffect } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
-import { useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { verifyOtp } from "@/app/store/actions/userAction";
+import { requestOtp, verifyOtp } from "@/app/store/actions/userAction";
 import { toast } from "sonner";
 import Loader from "../Loader";
 
-function FormOtp({ onClick, onClickSubmit }) {
+function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
   const { dataRegister, loading } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();
   const [showResendButton, setShowResendButton] = useState(false);
@@ -56,9 +55,16 @@ function FormOtp({ onClick, onClickSubmit }) {
   }, [showResendButton, timer]);
 
   const handleResendClick = () => {
-    setShowResendButton(false);
-    setTimer(30);
-    startTimer();
+    dispatch(requestOtp(dataRegister.phoneNumber))
+      .then(() => {
+        onResendOtp();
+        setShowResendButton(false);
+        setTimer(30);
+        startTimer();
+      })
+      .catch((err) => {
+        toast.error(err.response.data.errorMessage);
+      });
   };
 
   return (
@@ -87,7 +93,7 @@ function FormOtp({ onClick, onClickSubmit }) {
               value={digit}
               onChange={(e) => handleChange(index, e)}
               onKeyDown={(e) => handleKeyDown(index, e)}
-              className="w-12 h-12 text-3xl mx-1 text-center border-b-[1px] border-[#F0F0F0] rounded focus:outline-none bg-transparent"
+              className="w-12 h-12 text-3xl mx-1 text-center text-input rounded focus:outline-none bg-transparent"
             />
           ))}
         </div>
@@ -105,7 +111,7 @@ function FormOtp({ onClick, onClickSubmit }) {
               )
                 .then(() => onClickSubmit())
                 .catch((err) => {
-                  console.log(err.response.data);
+                  console.log(err);
                   toast.error(err.response.data.errorMessage);
                 });
             }}

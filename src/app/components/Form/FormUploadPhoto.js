@@ -2,22 +2,23 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  savePersonalInformation,
-  submitPersonalInformations,
-} from "@/app/store/actions/userAction";
+import { submitPersonalInformations } from "@/app/store/actions/userAction";
 import { LOADING_FALSE } from "@/app/store/actions/action_type";
 import Loader from "../Loader";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import SubmitConfirmation from "../Modal/SubmitConfirmation";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import ModalSuccess from "../Modal/ModalSuccess";
 
 function FormUploadPhoto({ onClick }) {
-  const { user, personalInformation, loading } = useSelector(
+  const user = useAuthUser();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  const { personalInformation, loading } = useSelector(
     (state) => state.userReducer
   );
-
-  const router = useRouter();
-  const dispatch = useDispatch();
   const [upload, setUpload] = useState({
     citizenPhoto: null,
     identityDocument: null,
@@ -26,6 +27,26 @@ function FormUploadPhoto({ onClick }) {
     citizenPhoto: null,
     identityDocument: null,
   });
+
+  const onSubmit = () => {
+    dispatch(
+      submitPersonalInformations(
+        {
+          ...personalInformation,
+          Photo: upload.citizenPhoto,
+          Identity: upload.identityDocument,
+        },
+        user?.accessToken
+      )
+    )
+      .then(() => {
+        personal_informations.showModal();
+      })
+      .catch((err) => {
+        toast.error;
+        console.log(err);
+      });
+  };
 
   const handleImageChange = (event, type) => {
     console.log("event:", event.target.files);
@@ -233,28 +254,21 @@ function FormUploadPhoto({ onClick }) {
         } py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px]`}
         disabled={isDisabled}
         onClick={() => {
-          dispatch(
-            submitPersonalInformations(
-              {
-                ...personalInformation,
-                Photo: upload.citizenPhoto,
-                Identity: upload.identityDocument,
-              },
-              user?.accessToken
-            )
-          )
-            .then(() => {
-              toast.success("Success Submit Personal Informations");
-              router.push("/");
-            })
-            .catch((err) => {
-              toast.error;
-              console.log(err);
-            });
+          submit_confirmation.showModal();
         }}
       >
         Submit
       </button>
+      <SubmitConfirmation onSubmit={onSubmit} />
+      <ModalSuccess
+        id="personal_informations"
+        title="Your Data Have Submitted"
+        description=" Your submitted data is being reviewed by our team. Verification may
+      take some time. Thank you for your patience!"
+        onClick={() => {
+          router.push("/");
+        }}
+      />
     </>
   );
 }

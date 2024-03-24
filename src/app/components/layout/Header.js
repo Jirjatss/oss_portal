@@ -6,17 +6,17 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LanguageSelector from "../language/LanguageSelector";
 import { Button, Menu, MenuItem } from "@mui/material";
-
 import logo from "../../../../public/assets/images/logo.png";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser, logout } from "@/app/store/actions/userAction";
 import { toast } from "sonner";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useSignOut from "react-auth-kit/hooks/useSignOut";
+import { Profile as ProfileImage } from "../../../../public/assets/emoji/index";
 
 const Header = () => {
-  const dispatch = useDispatch();
+  const signOut = useSignOut();
   const router = useRouter();
-  const { user } = useSelector((state) => state.userReducer);
+  const auth = useAuthUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -24,11 +24,11 @@ const Header = () => {
   const profile = [{ label: "Edit Profile" }, { label: "Logout" }];
 
   const handleLogout = () => {
-    dispatch(logout()).finally(() => {
-      router.push("/login");
-      toast.success("Success Logout");
-    });
+    signOut();
+    router.push("/login");
+    toast.success("Success Logout");
   };
+
   useEffect(() => {
     const updatePosition = () => {
       setScrollPosition(window.pageYOffset);
@@ -38,15 +38,11 @@ const Header = () => {
     return () => window.removeEventListener("scroll", updatePosition);
   }, []);
 
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-
   return (
     <div className="sticky top-0 z-30 p-5 px-28 flex justify-between text-navbar">
       <div
         className={`absolute inset-0 ${
-          (pathname === "/" && user) || pathname !== "/"
+          (pathname === "/" && auth) || pathname !== "/"
             ? "bg-white border-b-2"
             : scrollPosition > 60
             ? "bg-white border-b-2"
@@ -61,7 +57,7 @@ const Header = () => {
               <Image src={logo} width={70} height={70} alt="" />
             </Link>
           </li>
-          {!user && (
+          {!auth && (
             <>
               <li className="m-auto ">
                 <Link href="/#step">How To Apply</Link>
@@ -78,10 +74,10 @@ const Header = () => {
           )}
         </ul>
       </div>
-      {user ? (
+      {auth ? (
         <div className="relative z-10 mt-1">
-          <ul className="flex gap-5">
-            <li className="flex m-auto">
+          <ul className="flex gap-3">
+            <li className="flex m-auto mr-5">
               <LanguageSelector />
             </li>
             <li className="m-auto">
@@ -99,9 +95,9 @@ const Header = () => {
                   setMenuOpen(!menuOpen);
                 }}
                 style={{ minWidth: "40px" }}
-                className="text-[16px] h-[40px] bg-black text-white justify-center items-center flex rounded-md hover:bg-black"
+                className="text-[16px] h-[40px]  justify-center items-center flex rounded-md"
               >
-                M
+                <Image src={ProfileImage} width={23} height={40} />
               </Button>
               <Menu
                 id="demo-positioned-menu"

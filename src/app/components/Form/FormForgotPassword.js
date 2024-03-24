@@ -26,7 +26,7 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
         <label className="text-label">Email</label>
         <input
           type="email"
-          className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
+          className="text-input focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-gray-400 bg-transparent"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}

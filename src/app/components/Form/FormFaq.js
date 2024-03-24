@@ -1,7 +1,29 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import InputDropdown from "../TagComponents/InputDropdown";
 
-function FormFaq({ handleChangeMessage, message, topic }) {
+function FormFaq() {
+  const [input, setInput] = useState({});
+  const topic = [
+    {
+      name: "Applicant",
+      code: "Applicant",
+    },
+    {
+      name: "Officer",
+      code: "Officer",
+    },
+  ];
+
+  const handleChangeSelect = (e) => {
+    const { name, value } = e;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="border-[1px] border-[#DCDCDC] rounded-[20px] px-10 py-8 flex flex-col gap-8">
       <div className="">
@@ -16,7 +38,7 @@ function FormFaq({ handleChangeMessage, message, topic }) {
         </p>
       </div>
       <div className="flex flex-col gap-6">
-        <div className="grid grid-cols-2">
+        <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col">
             <label className="text-label">First Name</label>
             <input
@@ -42,19 +64,26 @@ function FormFaq({ handleChangeMessage, message, topic }) {
             placeholder="Your Email"
           />
         </div>
-        <InputDropdown topic={topic} label={"Topic"} />
+        <InputDropdown
+          label={"Topic"}
+          topic={topic}
+          name="topic"
+          handleChange={(e) => handleChangeSelect(e)}
+          selectedTopic={input.topic}
+        />
         <div className="flex flex-col">
           <label className="text-label">Feedback</label>
           <textarea
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none text-[18px] text-black bg-transparent h-[80px] placeholder-gray-400"
+            className="border-b-[1px] border-[#B0B0B0] focus:outline-none text-[18px] text-black bg-transparent h-[80px] placeholder-gray-400"
             rows="3"
-            value={message}
-            onChange={handleChangeMessage}
+            value={input.message}
+            onChange={(e) => handleChangeSelect(e.target)}
             placeholder="Describe your feedback here"
             maxLength={240}
+            name="message"
           />
           <div className="text-[12px] text-[#646464] placeholder-gray-400 mt-2 text-end">
-            <b>{message.length}</b>/ 240
+            <b>{input.message?.length}</b>/ 240
           </div>
         </div>
       </div>

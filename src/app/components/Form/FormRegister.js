@@ -8,9 +8,11 @@ import { registerHandler } from "@/app/store/actions/userAction";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Loader from "../Loader";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
 
 function FormRegister({}) {
   const dispatch = useDispatch();
+  const signIn = useSignIn();
   const { loading, dataRegister } = useSelector((state) => state.userReducer);
   const router = useRouter();
   const [isValidEmail, setIsValidEmail] = useState(true);
@@ -276,11 +278,14 @@ function FormRegister({}) {
             disabled={!passwordValid || !isValidEmail}
             onClick={() => {
               dispatch(
-                registerHandler({
-                  phoneNumber: dataRegister.phoneNumber,
-                  email: input.email,
-                  password: input.password,
-                })
+                registerHandler(
+                  {
+                    phoneNumber: dataRegister.phoneNumber,
+                    email: input.email,
+                    password: input.password,
+                  },
+                  signIn
+                )
               )
                 .then(() => router.push("/"))
                 .catch((err) => {

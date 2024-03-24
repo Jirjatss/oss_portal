@@ -35,9 +35,7 @@ function FormStartRegister({ onClick }) {
           <label className="text-label">Phone Number</label>
           <input
             type="text"
-            className={`border-b-[1px] border-${
-              validPhoneNumber ? "gray" : "red"
-            }-500 focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent`}
+            className={`text-input focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-gray-400 bg-transparent`}
             placeholder="Phone Number"
             value={phoneNumber}
             onChange={handleChangePhoneNumber}

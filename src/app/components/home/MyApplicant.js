@@ -1,19 +1,17 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
-import { EmptyApplicant } from "../../../../public/assets/emoji";
+import { EmptyApplicant, MyApplicants } from "../../../../public/assets/emoji";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "@/app/store/actions/userAction";
 import { getMyApplications } from "@/app/store/actions/applicationAction";
 import { useRouter } from "next/navigation";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 function MyApplicant() {
-  const { user } = useSelector((state) => state.userReducer);
+  const user = useAuthUser();
   const { myApplications } = useSelector((state) => state.applicationReducer);
   const dispatch = useDispatch();
   const router = useRouter();
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
+  const isEmptyApplications = myApplications?.length === 0;
 
   useEffect(() => {
     const fetchData = () => {
@@ -32,16 +30,23 @@ function MyApplicant() {
           <p className="text-[18px] text-[#363131] font-semibold">
             My Applications
           </p>
-          <p
-            className="text-[#1C25E7] text-[18px] font-semibold cursor-pointer"
-            onClick={() => router.push("/my-applications")}
-          >
-            See All
-          </p>
+          {!isEmptyApplications && (
+            <p
+              className="text-[#1C25E7] text-[18px] font-semibold cursor-pointer"
+              onClick={() => router.push("/my-applications")}
+            >
+              See All
+            </p>
+          )}
         </div>
 
         <div className="bg-[#DCDCDC] rounded-xl justify-center items-center flex p-5 m-auto">
-          <Image src={EmptyApplicant} width={50} height={50} alt={"Empty"} />
+          <Image
+            src={isEmptyApplications ? EmptyApplicant : MyApplicants}
+            width={50}
+            height={50}
+            alt={"Empty"}
+          />
         </div>
 
         <div className="flex justify-center items-center flex-col text-center gap-4">

@@ -5,8 +5,9 @@ import Image from "next/image";
 import FormOtp from "../components/Form/FormOtp";
 import FormStartRegister from "../components/Form/FormStartRegister";
 import FormRegister from "../components/Form/FormRegister";
-import ModalOtp from "../components/Modal/ModalOtp";
 import ModalVerifiedOtp from "../components/Modal/ModalVerifiedOtp";
+import ModalSuccess from "../components/Modal/ModalSuccess";
+import { useSelector } from "react-redux";
 
 function Register() {
   const [password, setPassword] = useState("");
@@ -25,11 +26,11 @@ function Register() {
   };
 
   const showModalOtp = () => {
-    my_modal_1.showModal();
+    sent_otp.showModal();
   };
 
   const showModalVerifiedOtp = () => {
-    modal_verified_otp.showModal();
+    verified_otp.showModal();
   };
 
   return (
@@ -50,6 +51,10 @@ function Register() {
             setFormOtp(false);
             showModalVerifiedOtp();
           }}
+          onResendOtp={() => {
+            showModalOtp();
+            setFormOtp(true);
+          }}
         />
       ) : formRegister ? (
         <FormRegister
@@ -65,8 +70,19 @@ function Register() {
       ) : (
         <FormStartRegister onClick={showModalOtp} />
       )}
-      <ModalVerifiedOtp onClick={() => setFormRegister(true)} />
-      <ModalOtp onClick={() => setFormOtp(!formOtp)} />
+      <ModalSuccess
+        id="verified_otp"
+        title="Your Phone Verified"
+        description=" One more step to unlock full access. Create your account to register
+        in this website!"
+        onClick={() => setFormRegister(true)}
+      />
+      <ModalSuccess
+        id="sent_otp"
+        title="We sent an OTP to your Phone Number"
+        description="Please check your short message and input the OTP Number to continue register"
+        onClick={() => setFormOtp(true)}
+      />
     </div>
   );
 }

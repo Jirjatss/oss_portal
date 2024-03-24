@@ -1,5 +1,6 @@
 function DatePicker({ handleChange, value }) {
   const defaultValue = value || "";
+  const today = new Date().toISOString().split("T")[0];
   return (
     <div className="flex flex-col">
       <label className="text-label">Date of Birth</label>
@@ -11,6 +12,7 @@ function DatePicker({ handleChange, value }) {
           name="DateOfBirth"
           onChange={(e) => handleChange(e)}
           value={defaultValue}
+          max={today}
         />
         <style jsx>{`
           #date-input::-webkit-calendar-picker-indicator {

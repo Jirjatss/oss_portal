@@ -36,7 +36,7 @@ module.exports = {
           "@apply font-lato font-semibold text-black": {},
         },
         ".text-input": {
-          "@apply border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px]  bg-transparent":
+          "@apply border-b-[1px] border-[#B0B0B0] focus:outline-none pb-1 text-[18px]  bg-transparent":
             {},
         },
         ".text-label": {

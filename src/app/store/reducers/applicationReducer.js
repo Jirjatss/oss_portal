@@ -11,6 +11,7 @@ const applicationReducer = (state = initialState, action) => {
         ...state,
         myApplications: action.payload,
       };
+
     default:
       return state;
   }

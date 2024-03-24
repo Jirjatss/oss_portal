@@ -4,6 +4,7 @@ import {
   GET_USER_INFORMATION,
   LOADING_FALSE,
   LOGIN_FAILED,
+  LOGIN_SUCCESS,
   LOGOUT,
   REQUEST_OTP,
   SAVE_PERSONAL_INFORMATIONS,
@@ -49,7 +50,7 @@ export const logout = () => {
   };
 };
 
-export const login = (val) => {
+export const login = (val, signIn) => {
   return async (dispatch) => {
     dispatch(loading());
     try {
@@ -58,8 +59,24 @@ export const login = (val) => {
         url: "https://api.ardhiansyah.com/auth/login",
         data: val,
       });
-      localStorage.setItem("user", JSON.stringify(data.data));
-      dispatch(getUser());
+      if (
+        signIn({
+          auth: {
+            token: data?.data.accessToken,
+            type: "Bearer",
+          },
+          refresh: data?.data.refreshToken,
+          userState: data.data,
+        })
+      ) {
+        dispatch({
+          type: LOGIN_SUCCESS,
+        });
+      } else {
+        dispatch({
+          type: LOGIN_FAILED,
+        });
+      }
     } catch (error) {
       dispatch({
         type: LOGIN_FAILED,
@@ -77,7 +94,7 @@ export const getUserInformation = (access_token) => {
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
-          Authorization: `Bearer ${access_token}`,
+          Authorization: access_token,
         },
       });
 
@@ -103,8 +120,15 @@ export const requestOtp = (phone_number) => {
           phoneNumber: phone_number,
         },
       });
+      dispatch({
+        type: LOADING_FALSE,
+      });
       dispatch(requestOtpSuccess(data.data));
     } catch (error) {
+      console.log(error);
+      dispatch({
+        type: LOADING_FALSE,
+      });
       throw error;
     }
   };
@@ -131,7 +155,7 @@ export const verifyOtp = (val) => {
   };
 };
 
-export const registerHandler = (val) => {
+export const registerHandler = (val, signIn) => {
   return async (dispatch) => {
     dispatch(loading());
     try {
@@ -147,7 +171,7 @@ export const registerHandler = (val) => {
       dispatch({
         type: LOADING_FALSE,
       });
-      dispatch(login(loginVal));
+      dispatch(login(loginVal, signIn));
     } catch (error) {
       dispatch({
         type: LOADING_FALSE,
@@ -169,7 +193,7 @@ export const activateUser = (token, accessToken) => {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
+          Authorization: accessToken,
         },
         data: {
           token: token,
@@ -208,7 +232,7 @@ export const submitPersonalInformations = (val, access_token) => {
           formData,
           {
             headers: {
-              Authorization: `Bearer ${access_token}`,
+              Authorization: `${access_token}`,
             },
           }
         );
@@ -241,7 +265,7 @@ export const editProfile = (val, access_token) => {
           formData,
           {
             headers: {
-              Authorization: `Bearer ${access_token}`,
+              Authorization: `${access_token}`,
             },
           }
         );

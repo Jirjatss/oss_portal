@@ -6,6 +6,10 @@ import Footer from "./components/layout/Footer";
 import { Provider } from "react-redux";
 import store from "./store/store";
 import { Toaster } from "sonner";
+import createStore from "react-auth-kit/createStore";
+import AuthProvider from "react-auth-kit/AuthProvider";
+import createRefresh from "react-auth-kit/createRefresh";
+import axios from "axios";
 
 const App = ({ children }) => {
   useEffect(() => {
@@ -23,13 +27,54 @@ const App = ({ children }) => {
     return () => {};
   }, []);
 
+  const refresh = createRefresh({
+    interval: 2,
+    refreshApiCallback: async (param) => {
+      try {
+        const object = {
+          accessToken: param.authToken,
+          refreshToken: param.refreshToken,
+        };
+        const { data } = await axios.post(
+          "https://api.ardhiansyah.com/auth/refresh-token",
+          object
+        );
+
+        return {
+          isSuccess: true,
+          newAuthToken: data.data.accessToken,
+          newAuthTokenExpireIn: 3,
+          newRefreshTokenExpiresIn: 5,
+        };
+      } catch (error) {
+        console.error(error);
+        return {
+          isSuccess: false,
+        };
+      }
+    },
+  });
+
+  const storeKit = createStore({
+    authName: "__auth",
+    authType: "cookie",
+    cookieDomain:
+      typeof window !== "undefined"
+        ? window.location.hostname
+        : "http://localhost:3000",
+    refresh: refresh,
+    cookieSecure: false,
+  });
+
   return (
-    <Provider store={store}>
-      <Navbar />
-      {children}
-      <Toaster position="bottom-left" richColors />
-      <Footer />
-    </Provider>
+    <AuthProvider store={storeKit}>
+      <Provider store={store}>
+        <Navbar />
+        {children}
+        <Toaster position="bottom-left" richColors />
+        <Footer />
+      </Provider>
+    </AuthProvider>
   );
 };
 

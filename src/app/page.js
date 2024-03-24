@@ -1,24 +1,19 @@
 "use client";
 
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import * as HomeComponent from "./components/home/Index";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser, getUserInformation } from "./store/actions/userAction";
 import Loader from "./components/Loader";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 export default function Home() {
-  const dispatch = useDispatch();
-  const { user, profile, loading } = useSelector((state) => state.userReducer);
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
+  const auth = useAuthUser();
+  const { loading } = useSelector((state) => state.userReducer);
 
   return (
     <>
       {loading && <Loader />}
       <div className="bg-white min-h-screen">
-        {user ? (
+        {auth ? (
           <div className="w-full  px-28 py-10 ">
             <p className="text-[18px] font-semibold text-[#2E2D2D] mb-5">
               Welcome,{" "}
@@ -40,7 +35,7 @@ export default function Home() {
             </div>
             <HomeComponent.Steps />
             <HomeComponent.Services />
-            <HomeComponent.Appointment />
+            {/* <HomeComponent.Appointment /> */}
             <HomeComponent.Application />
             <HomeComponent.Faq />
           </>

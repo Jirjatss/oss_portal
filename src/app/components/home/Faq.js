@@ -7,16 +7,6 @@ import FormFaq from "../Form/FormFaq";
 function Faq() {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const [message, setMessage] = useState("");
-
-  const topic = [
-    {
-      topic: "Applicant",
-    },
-    {
-      topic: "Officer",
-    },
-  ];
   const questions = [
     {
       question:
@@ -47,13 +37,6 @@ function Faq() {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
   ];
-
-  const handleChangeMessage = (e) => {
-    const value = e.target.value;
-    if (value.length <= 240) {
-      setMessage(value);
-    }
-  };
 
   return (
     <div
@@ -102,11 +85,7 @@ function Faq() {
           ))}
         </div>
       </div>
-      <FormFaq
-        topic={topic}
-        message={message}
-        handleChangeMessage={handleChangeMessage}
-      />
+      <FormFaq />
     </div>
   );
 }

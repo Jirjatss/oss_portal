@@ -4,6 +4,7 @@ import {
   LOADING,
   LOADING_FALSE,
   LOGIN_FAILED,
+  LOGIN_SUCCESS,
   LOGOUT,
   REQUEST_OTP,
   SAVE_PERSONAL_INFORMATIONS,
@@ -27,6 +28,12 @@ const userReducer = (state = initialState, action) => {
       };
 
     case LOADING_FALSE:
+      return {
+        ...state,
+        loading: false,
+      };
+
+    case LOGIN_SUCCESS:
       return {
         ...state,
         loading: false,

@@ -1,25 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../public/assets/icons/parent";
 import { useRouter } from "next/navigation";
 import FormIdentify from "../components/Form/FormIdentify";
 import FormContact from "../components/Form/FormContact";
 import FormUploadPhoto from "../components/Form/FormUploadPhoto";
 import { useDispatch, useSelector } from "react-redux";
-import { editProfile } from "../store/actions/userAction";
 import { LOADING } from "../store/actions/action_type";
-import { toast } from "sonner";
+import FormOtpModal from "../components/Modal/FormOtp";
+import ModalSuccess from "../components/Modal/ModalSuccess";
+import { requestOtp } from "../store/actions/userAction";
 
 function Verification() {
   const router = useRouter();
+
+  const dispatch = useDispatch();
+
   const [step, setStep] = useState(1);
-  const { user, personalInformation, loading, profile } = useSelector(
-    (state) => state.userReducer
-  );
+  const { profile } = useSelector((state) => state.userReducer);
 
   const { personalDetail } = profile || {};
-  const dispatch = useDispatch();
   const nextHandler = () => {
     dispatch({
       type: LOADING,
@@ -27,10 +28,10 @@ function Verification() {
     setStep(step + 1);
   };
 
-  const updateProfile = () => {
-    dispatch(editProfile(personalInformation, user?.accessToken)).then(() =>
-      toast.success("Success Edit Profile")
-    );
+  const requestEditProfile = () => {
+    dispatch(requestOtp(personalDetail?.phoneNumber)).then(() => {
+      form_otp_modal.showModal();
+    });
   };
 
   return (
@@ -41,7 +42,7 @@ function Verification() {
             className="flex gap-2 cursor-pointer"
             onClick={() => {
               if (step === 1) router.back();
-              setStep(step - 1);
+              else setStep(step - 1);
             }}
           >
             <OSSIcons name="LeftArrow" />
@@ -62,16 +63,30 @@ function Verification() {
             </div>
           )}
         </div>
+
         {step === 1 && (
           <FormIdentify
             onClick={() => {
-              if (personalDetail?.firstName) updateProfile();
-              else nextHandler();
+              if (personalDetail?.firstName) {
+                requestEditProfile();
+              } else nextHandler();
             }}
           />
         )}
-        {step === 2 && <FormContact onClick={nextHandler} />}
+        {step === 2 && <FormContact onClick={() => nextHandler()} />}
         {step === 3 && <FormUploadPhoto />}
+
+        <FormOtpModal />
+
+        <ModalSuccess
+          id="personal_informations"
+          title="Your Data Have Submitted"
+          description=" Your submitted data is being reviewed by our team. Verification may
+      take some time. Thank you for your patience!"
+          onClick={() => {
+            router.push("/");
+          }}
+        />
       </div>
     </>
   );

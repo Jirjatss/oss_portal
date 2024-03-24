@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import InputDropdown from "../TagComponents/InputDropdown";
-import InputText from "../TagComponents/InputText";
 import DatePicker from "../TagComponents/DatePicker";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import Link from "next/link";
 import ModalPreview from "../Modal/ModalPreview";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserInformation } from "@/app/store/actions/userAction";
+import { getUserInformation, requestOtp } from "@/app/store/actions/userAction";
 import { getServicesHandler } from "@/app/store/actions/serviceAction";
-import { submitApplication } from "@/app/store/actions/applicationAction";
-import { toast } from "sonner";
+import { saveSubmissionData } from "@/app/store/actions/applicationAction";
 import { useRouter } from "next/navigation";
 import Loader from "../Loader";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import FormOtpModalSubmisson from "../Modal/FormOtpSubmission";
 
 const UploadContainer = ({
   handleImageChange,
@@ -98,18 +98,21 @@ const FormSubmission = ({ code }) => {
     { name: `Parent`, code: `Parent` },
   ];
   const [isOther, setIsOther] = useState(false);
-  const gender = [
-    { name: `Male`, code: "Male" },
-    { name: `Female`, code: "Female" },
+  const genderForm = [
+    { name: "Male", code: "Male" },
+    { name: "Female", code: "Female" },
   ];
+  const { profile } = useSelector((state) => state.userReducer);
+  const { personalDetail } = profile || {};
   const deliverTime = [{ name: `Normal`, code: `Normal` }];
-  const router = useRouter();
   const [isChecked, setIsChecked] = useState(false);
   const [image, setImage] = useState({ images: [] });
   const [checkedImages, setCheckedImages] = useState([]);
   const [indexImage, setIndexImage] = useState(null);
   const dispatch = useDispatch();
-  const { user, loading } = useSelector((state) => state.userReducer);
+  const { loading } = useSelector((state) => state.userReducer);
+  const user = useAuthUser();
+
   const { services } = useSelector((state) => state.serviceReducer);
   const [upload, setUpload] = useState([]);
 
@@ -178,6 +181,7 @@ const FormSubmission = ({ code }) => {
       [name]: value,
     });
   };
+
   const toggleImageCheck = (index, image) => {
     setImage((prevState) => {
       const updatedImages = prevState.images.map((img, i) => {
@@ -204,6 +208,17 @@ const FormSubmission = ({ code }) => {
       const updatedImages = prevState.images.filter((_, i) => i !== index);
       return { images: updatedImages };
     });
+  };
+
+  const inputForm = {
+    ServiceId: input.applyingFor,
+    RequestFor: input.requester,
+    FirstName: input.requester === "Self" ? "" : input.firstName,
+    LastName: input.requester === "Self" ? "" : input.lastName,
+    Gender: input.requester === "Self" ? "" : input.gender,
+    DateOfBirth: input.requester === "Self" ? "" : input.DateOfBirth,
+    DeliveryTime: input.deliverTime,
+    Files: upload,
   };
 
   useEffect(() => {
@@ -249,10 +264,40 @@ const FormSubmission = ({ code }) => {
           />
           {isOther && (
             <>
-              <InputText label={"First Name"} placeholder={"First Name"} />
-              <InputText label={"Last Name"} placeholder={"Last Name"} />
-              <DatePicker />
-              <InputDropdown label={"Gender"} topic={gender} />
+              <div className="flex flex-col">
+                <label className="text-label">First Name</label>
+                <input
+                  type="text"
+                  className="text-input text-black placeholder-gray-400"
+                  placeholder="First Name"
+                  value={input.firstName}
+                  name="firstName"
+                  onChange={(e) => handleChangeSelect(e.target)}
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="text-label">Last Name</label>
+                <input
+                  type="text"
+                  className="text-input text-black placeholder-gray-400"
+                  placeholder={"Last Name"}
+                  value={input.lastName}
+                  name="lastName"
+                  onChange={(e) => handleChangeSelect(e.target)}
+                />
+              </div>
+              <DatePicker
+                handleChange={(e) => handleChangeSelect(e.target)}
+                name="DateOfBirth"
+                value={input?.DateOfBirth}
+              />
+              <InputDropdown
+                label={"Gender"}
+                topic={genderForm}
+                handleChange={(e) => handleChangeSelect(e)}
+                name="gender"
+                selectedTopic={input?.gender}
+              />
             </>
           )}
 
@@ -300,30 +345,19 @@ const FormSubmission = ({ code }) => {
               isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
             }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-1 font-semibold`}
             onClick={() => {
-              const inputForm = {
-                ServiceId: code,
-                RequestFor: input.requester,
-                FirstName: input.requester === "Self" ? "" : input.firstName,
-                LastName: input.requester === "Self" ? "" : input.lastName,
-                Gender: input.requester === "Self" ? "" : input.gender,
-                DateOfBirth:
-                  input.requester === "Self" ? "" : input.dateOfBirth,
-                DeliveryTime: input.deliverTime,
-                Files: upload,
-              };
-
-              dispatch(submitApplication(inputForm, user?.accessToken))
+              console.log("personalDetail:", personalDetail);
+              dispatch(requestOtp(personalDetail?.phoneNumber))
                 .then(() => {
-                  toast.success("Success Submit Applications");
-                  router.push("/");
+                  form_otp_modal_submisson.showModal();
                 })
-                .catch((err) => toast.error("Failed Submit Applications"));
+                .catch((err) => console.log(err));
             }}
           >
             Submit
           </button>
         </div>
       </div>
+      <FormOtpModalSubmisson data={inputForm} />
     </>
   );
 };

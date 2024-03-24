@@ -14,8 +14,32 @@ import {
 } from "@/app/store/actions/userAction";
 import { LOADING_FALSE } from "@/app/store/actions/action_type";
 import Loader from "../Loader";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 function FormContact({ onClick }) {
+  const user = useAuthUser();
+  const dispatch = useDispatch();
+  const [input, setInput] = useState({});
+
+  const { personalInformation, profile } = useSelector(
+    (state) => state.userReducer
+  );
+  const { region, municipality, city, town, loading } = useSelector(
+    (state) => state.regionReducer
+  );
+
+  const isDisabled = !input.address || !input.town;
+  const { personalDetail } = profile || {};
+  const { email, phoneNumber } = personalDetail || {};
+
+  const handleChangeSelect = (e) => {
+    const { name, value } = e;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
   useEffect(() => {
     const scrollToTop = () => {
       const scrollStep = -window.scrollY / (500 / 15);
@@ -30,27 +54,6 @@ function FormContact({ onClick }) {
     scrollToTop();
     return () => {};
   }, []);
-
-  const [input, setInput] = useState({});
-  const { user, personalInformation, profile } = useSelector(
-    (state) => state.userReducer
-  );
-
-  const { personalDetail } = profile || {};
-  const { email, phoneNumber } = personalDetail || {};
-
-  const handleChangeSelect = (e) => {
-    const { name, value } = e;
-    setInput({
-      ...input,
-      [name]: value,
-    });
-  };
-  const { region, municipality, city, town, loading } = useSelector(
-    (state) => state.regionReducer
-  );
-  const isDisabled = !input.address || !input.town;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {

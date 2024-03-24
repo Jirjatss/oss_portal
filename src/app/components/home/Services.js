@@ -6,18 +6,16 @@ import {
   Booking,
   Passport,
   Driving,
-  NIC,
   Family,
-  Business,
-  Ficha,
   CitizenCard,
   Akta,
 } from "../../../../public/assets/emoji/index";
 import Image from "next/image";
-import { useSelector } from "react-redux";
 import Link from "next/link";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import Appointment from "./Appointment";
 const Services = () => {
-  const { user } = useSelector((state) => state.userReducer);
+  const user = useAuthUser();
   const [service, setService] = useState([
     {
       icon: Akta,
@@ -144,6 +142,28 @@ const Services = () => {
               url={e.url}
             />
           ))}
+          <div className="col-span-3">
+            <div className="border-[1px] border-[#DCDCDC] rounded-[20px] flex flex-1 p-6 gap-8 items-center h-full">
+              <div className="bg-[#D9D7F9] rounded-[12.8px] w-[64px] h-[64px] flex justify-center items-center">
+                <p className="text-[38.4px]">🗓</p>
+              </div>
+              <div className="flex flex-col flex-1">
+                <h1 className="text-[24px] font-bold leading-[48px]">
+                  Set Appointment Online First
+                </h1>
+                <p className="text-[16px] text-[#646464]">
+                  Effortlessly book appointments with government officials{" "}
+                  <br /> online for a seamless service experience
+                </p>
+              </div>
+              <button className="">
+                <OSSIcons
+                  name="RightArrow"
+                  style={{ width: "40px", height: "40px" }}
+                />
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

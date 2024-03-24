@@ -3,17 +3,15 @@
 import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../public/assets/icons/parent";
-import { useDispatch, useSelector } from "react-redux";
 import FormSubmisson from "../components/Form/FormSubmisson";
-import { getUser } from "../store/actions/userAction";
+import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import ModalSuccess from "../components/Modal/ModalSuccess";
 
 function Service() {
-  const { user } = useSelector((state) => state.userReducer);
-  const dispatch = useDispatch();
+  const auth = useAuthUser();
   const pathname = usePathname();
   const router = useRouter();
   const [isSubmission, setIsSubmission] = useState(false);
-  const [isCheckingUser, setIsCheckingUser] = useState(true);
   const [index, setIndex] = useState(0);
   const title = pathname
     .replace(/^\//, "")
@@ -89,23 +87,9 @@ function Service() {
   };
 
   const startSubmission = () => {
-    if (!isCheckingUser && !user) router.replace("/login");
+    if (!auth) router.replace("/login");
     else setIsSubmission(true);
   };
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        await dispatch(getUser());
-        setIsCheckingUser(false);
-      } catch (error) {
-        setIsCheckingUser(false);
-        console.error("Error fetching user:", error);
-      }
-    };
-
-    fetchUser();
-  }, []);
 
   return (
     <div className="px-52 bg-white py-10">
@@ -122,7 +106,7 @@ function Service() {
         </p>
       </div>
       {isSubmission ? (
-        <FormSubmisson title={title} code={code} />
+        <FormSubmisson code={code} />
       ) : (
         <div className="flex gap-16 mt-7">
           <div className="flex-1 flex-col">
@@ -192,6 +176,15 @@ function Service() {
           <Submission onClick={startSubmission} />
         </div>
       )}
+
+      <ModalSuccess
+        id="personal_informations"
+        title="Your Data Have Submitted"
+        description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
+        onClick={() => {
+          router.push("/my-applications");
+        }}
+      />
     </div>
   );
 }
