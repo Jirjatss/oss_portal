@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { getMyAppointments } from "../store/actions/appointmentAction";
 import { formattedDateAppointment } from "../universalFunction";
 import ModalDetailApplications from "../components/Modal/ModalDetailApplications";
+import Link from "next/link";
 
 const MyApplications = () => {
   const router = useRouter();
@@ -266,37 +267,29 @@ const MyApplications = () => {
             <p className="text-[14px] text-[#646464]">
               Your documents are ready to be picked up at the office
             </p>
-            <button
+            <Link
+              href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
               className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px]"
-              onClick={() =>
-                router.push(
-                  `/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`
-                )
-              }
             >
               Schedule Pick Up
-            </button>
+            </Link>
           </div>
         )}
         {(status === "rejectedFromBackOffice" ||
           status === "rejectedFromFrontOffice") && (
           <div className="flex gap-4 justify-end items-center mt-3">
-            <button
+            <Link
+              href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
               className="border-[#DCDCDC] border-[1px] bg-[#FFFFFF] text-[#1C25E7] p-[8px] px-4 rounded-[8px] text-[16px]"
-              onClick={() =>
-                router.push(
-                  `/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`
-                )
-              }
             >
               Correct at Office
-            </button>
-            <button
+            </Link>
+            <Link
+              href={`/${serviceType}?id=${id}`}
               className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px]"
-              onClick={() => router.push(`/${serviceType}?id=${id}`)}
             >
               Correct Online
-            </button>
+            </Link>
           </div>
         )}
       </div>
