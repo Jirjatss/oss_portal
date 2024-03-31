@@ -2,12 +2,14 @@ import axios from "axios";
 import {
   GET_USER,
   GET_USER_INFORMATION,
+  HIDE_VERIF,
   LOADING_FALSE,
   LOGIN_FAILED,
   LOGIN_SUCCESS,
   LOGOUT,
   REQUEST_OTP,
   SAVE_PERSONAL_INFORMATIONS,
+  SHOW_VERIF,
 } from "./action_type";
 import { loading } from "./regionAction";
 
@@ -23,21 +25,6 @@ export const getUserInformationSuccess = (payload) => {
   return { type: GET_USER_INFORMATION, payload };
 };
 
-export const getUser = () => {
-  return (dispatch) => {
-    try {
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (!user) {
-        throw new Error("userNotFound");
-      }
-
-      dispatch(getUserSuccess(user));
-    } catch (error) {
-      console.log(error, "disini");
-    }
-  };
-};
-
 export const logout = () => {
   return async (dispatch) => {
     dispatch(loading());
@@ -48,6 +35,13 @@ export const logout = () => {
       console.log(error);
     }
   };
+};
+
+export const showVerif = () => {
+  return { type: SHOW_VERIF };
+};
+export const hideVerif = () => {
+  return { type: HIDE_VERIF };
 };
 
 export const login = (val, signIn) => {
@@ -72,6 +66,7 @@ export const login = (val, signIn) => {
         dispatch({
           type: LOGIN_SUCCESS,
         });
+        dispatch(showVerif());
       } else {
         dispatch({
           type: LOGIN_FAILED,
@@ -92,12 +87,10 @@ export const getUserInformation = (access_token) => {
       const { data } = await axios({
         url: "https://api.ardhiansyah.com/me",
         headers: {
-          "ngrok-skip-browser-warning": true,
           accept: "application/json",
           Authorization: access_token,
         },
       });
-
       dispatch(getUserInformationSuccess(data.data));
     } catch (error) {
       throw error;
@@ -206,7 +199,6 @@ export const activateUser = (token, accessToken) => {
       dispatch({
         type: LOADING_FALSE,
       });
-      console.log(error, "disini");
       throw error;
     }
   };
@@ -220,7 +212,6 @@ export const submitPersonalInformations = (val, access_token) => {
   return async (dispatch) => {
     dispatch(loading());
     try {
-      console.log(val);
       if (val) {
         const formData = new FormData();
         Object.entries(val).forEach(([key, value]) => {

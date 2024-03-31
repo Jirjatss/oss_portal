@@ -7,19 +7,13 @@ import { requestOtp, verifyOtp } from "@/app/store/actions/userAction";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { toast } from "sonner";
 import Loader from "../Loader";
-import {
-  editMyApplication,
-  submitApplication,
-} from "@/app/store/actions/applicationAction";
-import { useRouter, useSearchParams } from "next/navigation";
+import { submitApplication } from "@/app/store/actions/applicationAction";
+import { setAppointment } from "@/app/store/actions/appointmentAction";
 
-function FormOtpModalSubmisson({ data }) {
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
-
+function FormOtpAppointment({ data }) {
   const [timer, setTimer] = useState(30);
   const { dataRegister, loading } = useSelector((state) => state.userReducer);
-
+  // console.log("dataRegister:", dataRegister);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [successSubmit, setSuccessSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -71,49 +65,9 @@ function FormOtpModalSubmisson({ data }) {
     return () => clearInterval(intervalId);
   }, [showResendButton, timer]);
 
-  const editSubmissonHandler = () => {
-    dispatch(
-      verifyOtp({
-        phoneNumber: dataRegister.phoneNumber,
-        token: dataRegister.token,
-        otpCode: otp.join(""),
-      })
-    )
-      .then(() => {
-        setSuccessSubmit(true);
-        dispatch(editMyApplication(id, data, user?.accessToken)).then(() => {
-          success_submission.showModal();
-        });
-      })
-      .catch((err) => {
-        setErrorMessage(err.response.data.errorMessage);
-        setOtp(["", "", "", ""]);
-      });
-  };
-
-  const submitSubmissionHandler = () => {
-    dispatch(
-      verifyOtp({
-        phoneNumber: dataRegister.phoneNumber,
-        token: dataRegister.token,
-        otpCode: otp.join(""),
-      })
-    )
-      .then(() => {
-        setSuccessSubmit(true);
-        dispatch(submitApplication(data, user?.accessToken)).then(() => {
-          success_submission.showModal();
-        });
-      })
-      .catch((err) => {
-        setErrorMessage(err.response.data.errorMessage);
-        setOtp(["", "", "", ""]);
-      });
-  };
-
   if (successSubmit) return null;
   return (
-    <dialog id="form_otp_modal_submisson" className="modal">
+    <dialog id="form_otp_appointment" className="modal">
       {loading && <Loader />}
       <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px]  relative lg:w-[594px]">
         <form method="dialog">
@@ -194,8 +148,26 @@ function FormOtpModalSubmisson({ data }) {
                 formMethod={successSubmit && "dialog"}
                 disabled={otp.some((element) => element === "")}
                 onClick={() => {
-                  if (id) editSubmissonHandler();
-                  else submitSubmissionHandler();
+                  dispatch(
+                    verifyOtp({
+                      phoneNumber: dataRegister.phoneNumber,
+                      token: dataRegister.token,
+                      otpCode: otp.join(""),
+                    })
+                  )
+                    .then(() => {
+                      setSuccessSubmit(true);
+                      dispatch(setAppointment(data, user?.accessToken)).then(
+                        () => {
+                          appointment_success.showModal();
+                        }
+                      );
+                    })
+                    .catch((err) => {
+                      setErrorMessage(err.response.data.errorMessage);
+                      setOtp(["", "", "", ""]);
+                      setSentOtp("");
+                    });
                 }}
               >
                 Submit
@@ -208,4 +180,4 @@ function FormOtpModalSubmisson({ data }) {
   );
 }
 
-export default FormOtpModalSubmisson;
+export default FormOtpAppointment;

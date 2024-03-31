@@ -2,7 +2,10 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import { useDispatch, useSelector } from "react-redux";
-import { submitPersonalInformations } from "@/app/store/actions/userAction";
+import {
+  showVerif,
+  submitPersonalInformations,
+} from "@/app/store/actions/userAction";
 import { LOADING_FALSE } from "@/app/store/actions/action_type";
 import Loader from "../Loader";
 import { toast } from "sonner";
@@ -40,7 +43,7 @@ function FormUploadPhoto({ onClick }) {
       )
     )
       .then(() => {
-        personal_informations.showModal();
+        success_modal.showModal();
       })
       .catch((err) => {
         toast.error;
@@ -49,9 +52,7 @@ function FormUploadPhoto({ onClick }) {
   };
 
   const handleImageChange = (event, type) => {
-    console.log("event:", event.target.files);
     const selectedImage = event.target.files[0];
-    console.log("selectedImage:", selectedImage);
     const reader = new FileReader();
 
     reader.onload = () => {
@@ -261,11 +262,11 @@ function FormUploadPhoto({ onClick }) {
       </button>
       <SubmitConfirmation onSubmit={onSubmit} />
       <ModalSuccess
-        id="personal_informations"
+        id="success_modal"
         title="Your Data Have Submitted"
-        description=" Your submitted data is being reviewed by our team. Verification may
-      take some time. Thank you for your patience!"
+        description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
         onClick={() => {
+          dispatch(showVerif());
           router.push("/");
         }}
       />

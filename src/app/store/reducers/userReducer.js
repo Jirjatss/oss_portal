@@ -1,6 +1,7 @@
 import {
   GET_USER,
   GET_USER_INFORMATION,
+  HIDE_VERIF,
   LOADING,
   LOADING_FALSE,
   LOGIN_FAILED,
@@ -8,6 +9,7 @@ import {
   LOGOUT,
   REQUEST_OTP,
   SAVE_PERSONAL_INFORMATIONS,
+  SHOW_VERIF,
   VERIFY_OTP,
 } from "../actions/action_type";
 
@@ -17,6 +19,7 @@ const initialState = {
   user: null,
   dataRegister: null,
   personalInformation: null,
+  isShowVerif: false,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -43,6 +46,18 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         loading: false,
+      };
+
+    case SHOW_VERIF:
+      return {
+        ...state,
+        isShowVerif: true,
+      };
+
+    case HIDE_VERIF:
+      return {
+        ...state,
+        isShowVerif: false,
       };
 
     case GET_USER:

@@ -108,7 +108,7 @@ function FormContact({ onClick }) {
           <input
             disabled
             type="email"
-            className="text-input text-black placeholder-gray-400"
+            className="text-input text-black placeholder-gray-400 cursor-not-allowed"
             placeholder="Email"
             value={email}
             name="email"
@@ -119,7 +119,7 @@ function FormContact({ onClick }) {
           <input
             disabled
             type="text"
-            className="text-input text-black placeholder-gray-400"
+            className="text-input text-black placeholder-gray-400 cursor-not-allowed"
             placeholder="Phone Number"
             value={phoneNumber}
             name="phoneNumber"

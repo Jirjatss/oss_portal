@@ -22,7 +22,12 @@ function InputDropdown({
   const [menuOpen, setMenuOpen] = useState(false);
 
   const listTopic = (topic || []).map((e) => ({
-    name: isSeparate ? e.name?.replace("-", " ") : e.name,
+    name: isSeparate
+      ? e.name
+          ?.split("-")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+      : e.name,
     value: e.code,
   }));
   const handleClick = (e) => {

@@ -21,7 +21,18 @@ export const GET_REGION_POST_ADMINISTRATIVE_SUCCESS =
 export const GET_REGION_SUCOS = "getRegionSucosSuccess";
 
 // service
+export const GET_SERVICES_TYPE = "getServicesType";
 export const GET_SERVICES = "getServices";
 
 // applications
 export const GET_MY_APPLICATIONS = "getMyApplications";
+export const GET_APPLICATION_DETAIL_STATUS = "getApplicationDetailStatus";
+export const GET_APPLICATION_DETAIL = "getApplicationDetail";
+
+export const SHOW_VERIF = "show_verif";
+export const HIDE_VERIF = "hide_verif";
+
+// appointmnet
+export const GET_MY_APPOINTMENT = "getMyAppointment";
+export const SAVE_APPOINTMENT_DATA = "saveAppointmentData";
+export const SET_APPOINTMENT_SUCCESS = "setAppointmentSuccess";

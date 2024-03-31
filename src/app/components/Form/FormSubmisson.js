@@ -7,11 +7,16 @@ import ModalPreview from "../Modal/ModalPreview";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserInformation, requestOtp } from "@/app/store/actions/userAction";
 import { getServicesHandler } from "@/app/store/actions/serviceAction";
-import { saveSubmissionData } from "@/app/store/actions/applicationAction";
-import { useRouter } from "next/navigation";
 import Loader from "../Loader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import FormOtpModalSubmisson from "../Modal/FormOtpSubmission";
+import { useSearchParams } from "next/navigation";
+import {
+  getDetailApplication,
+  getDetailApplicationSuccess,
+} from "@/app/store/actions/applicationAction";
+import { formattedDate } from "@/app/universalFunction";
+import { toast } from "sonner";
 
 const UploadContainer = ({
   handleImageChange,
@@ -63,22 +68,25 @@ const UploadContainer = ({
               </div>
               <div className="flex flex-col">
                 <p>{image.title}</p>
-                <p>{image.size} MB</p>
+                {image.size && <p>{image.size} MB</p>}
               </div>
             </div>
             <div className="flex gap-4 items-center">
-              <OSSIcons
-                name="Trash"
-                className="cursor-pointer"
-                onClick={() => deleteImage(index)}
-              />
+              {!image.isExisting && (
+                <OSSIcons
+                  name="Trash"
+                  className="cursor-pointer"
+                  onClick={() => deleteImage(index)}
+                />
+              )}
               <div
                 className={`w-[24px] h-[24px] border-[1px] border-[#DCDCDC] rounded-lg cursor-pointer justify-center items-center flex ${
                   checkedImages.includes(index) && "bg-[#1C25E7]"
-                }`}
+                } ${image.isExisting && "bg-[#DCDCDC]"}`}
+                disabled={image.isExisting}
                 onClick={() => toggleImageCheck(index, image)}
               >
-                {checkedImages.includes(index, image) && (
+                {(checkedImages.includes(index, image) || image.isExisting) && (
                   <OSSIcons name={"Approve"} />
                 )}
               </div>
@@ -91,35 +99,49 @@ const UploadContainer = ({
 };
 
 const FormSubmission = ({ code }) => {
-  const requester = [
-    { name: `Self`, code: "Self" },
-    { name: `Child`, code: `Child` },
-    { name: `Spouse`, code: `Spouse` },
-    { name: `Parent`, code: `Parent` },
-  ];
-  const [isOther, setIsOther] = useState(false);
-  const genderForm = [
-    { name: "Male", code: "Male" },
-    { name: "Female", code: "Female" },
-  ];
+  const searchParams = useSearchParams();
+  const user = useAuthUser();
+  const dispatch = useDispatch();
+  const id = searchParams.get("id");
+
   const { profile } = useSelector((state) => state.userReducer);
   const { personalDetail } = profile || {};
-  const deliverTime = [{ name: `Normal`, code: `Normal` }];
+  const { detailById } = useSelector((state) => state.applicationReducer);
+
+  const { familyDetail, deliveryTime, files } = detailById || {};
+  console.log("files:", files);
+
+  const { dateOfBirth, familyType, firstName, gender, lastName } =
+    familyDetail || {};
+
   const [isChecked, setIsChecked] = useState(false);
   const [image, setImage] = useState({ images: [] });
   const [checkedImages, setCheckedImages] = useState([]);
   const [indexImage, setIndexImage] = useState(null);
-  const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.userReducer);
-  const user = useAuthUser();
-
-  const { services } = useSelector((state) => state.serviceReducer);
   const [upload, setUpload] = useState([]);
+  const [isShowModal, setIsShowModal] = useState(false);
+
+  const { loading } = useSelector((state) => state.userReducer);
+  const { services } = useSelector((state) => state.serviceReducer);
 
   const isDisabled =
     !isChecked ||
     checkedImages.length !== image.images.length ||
-    image.images.length === 0;
+    image.images.length === 0 ||
+    upload.length === 0;
+
+  const deliverTime = [{ name: `normal`, code: `normal` }];
+  const requester = [
+    { name: `self`, code: "self" },
+    { name: `child`, code: `child` },
+    { name: `spouse`, code: `spouse` },
+    { name: `parent`, code: `parent` },
+  ];
+  const [isOther, setIsOther] = useState(false);
+  const genderForm = [
+    { name: "male", code: "male" },
+    { name: "female", code: "female" },
+  ];
 
   const handleImageChange = (event) => {
     const selectedImage = event.target.files[0];
@@ -213,18 +235,66 @@ const FormSubmission = ({ code }) => {
   const inputForm = {
     ServiceId: input.applyingFor,
     RequestFor: input.requester,
-    FirstName: input.requester === "Self" ? "" : input.firstName,
-    LastName: input.requester === "Self" ? "" : input.lastName,
-    Gender: input.requester === "Self" ? "" : input.gender,
-    DateOfBirth: input.requester === "Self" ? "" : input.DateOfBirth,
+    FirstName: input.requester === "self" ? "" : input.firstName,
+    LastName: input.requester === "self" ? "" : input.lastName,
+    Gender: input.requester === "self" ? "" : input.gender,
+    DateOfBirth: input.requester === "self" ? "" : input.DateOfBirth,
     DeliveryTime: input.deliverTime,
     Files: upload,
   };
 
   useEffect(() => {
-    dispatch(getUserInformation(user?.accessToken));
-    dispatch(getServicesHandler(code, user?.accessToken));
+    if (id && user) dispatch(getDetailApplication(id, user.accessToken));
+  }, [id]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(getDetailApplicationSuccess(null));
+    };
   }, []);
+
+  useEffect(() => {
+    dispatch(getUserInformation(user?.accessToken));
+    if (code !== "") dispatch(getServicesHandler(code, user?.accessToken));
+  }, [code]);
+
+  useEffect(() => {
+    if (detailById) {
+      setInput({
+        requester: familyType,
+        firstName: firstName,
+        lastName: lastName,
+        DateOfBirth: formattedDate(dateOfBirth),
+        gender: gender,
+        deliverTime: deliveryTime,
+      });
+      setImage(() => ({
+        checkedImages: true,
+        images: files
+          .filter((e) => e.status !== "rejected")
+          .map((e) => {
+            return {
+              title: e.fileName,
+              isExisting: true,
+            };
+          }),
+      }));
+      setCheckedImages(
+        files.filter((e) => e.status !== "rejected").map(() => true)
+      );
+
+      setIsOther(familyType !== "self");
+    }
+    if (!detailById) {
+      setInput({
+        ...input,
+      });
+    }
+  }, [detailById]);
+
+  useEffect(() => {
+    if (isShowModal) form_otp_modal_submisson.showModal();
+  }, [isShowModal]);
 
   return (
     <>
@@ -233,12 +303,12 @@ const FormSubmission = ({ code }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2 my-10 gap-x-10">
         <div>
           <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-5">
-            Submit Document
+            {id ? "Resubmit Document " : "Submit Document"}
           </h1>
           <p className="text-[16px] text-[#646464]">
-            Please upload clear and legible copies of your photos and documents.
-            Ensure all details are visible for accurate processing, and
-            following how to apply instructions
+            {id
+              ? "Sorry, your applicant rejected because attachment invalid or lack of documents, please check feedback in your e-mail and reupload the requirement soon."
+              : "Please upload clear and legible copies of your photos and documents.Ensure all details are visible for accurate processing, and following how to apply instructions"}
           </p>
         </div>
         <div className="flex flex-col gap-5">
@@ -254,10 +324,11 @@ const FormSubmission = ({ code }) => {
           <InputDropdown
             label={"Request For"}
             topic={requester}
+            isDisabled={familyType}
             name="requester"
             handleChange={(e) => {
               handleChangeSelect(e);
-              if (e.value !== "Self") setIsOther(true);
+              if (e.value !== "self") setIsOther(true);
               else setIsOther(false);
             }}
             selectedTopic={input.requester}
@@ -268,7 +339,10 @@ const FormSubmission = ({ code }) => {
                 <label className="text-label">First Name</label>
                 <input
                   type="text"
-                  className="text-input text-black placeholder-gray-400"
+                  disabled={firstName}
+                  className={`text-input text-black placeholder-gray-400 ${
+                    firstName && "cursor-not-allowed"
+                  }`}
                   placeholder="First Name"
                   value={input.firstName}
                   name="firstName"
@@ -279,7 +353,9 @@ const FormSubmission = ({ code }) => {
                 <label className="text-label">Last Name</label>
                 <input
                   type="text"
-                  className="text-input text-black placeholder-gray-400"
+                  className={`text-input text-black placeholder-gray-400 ${
+                    lastName && "cursor-not-allowed"
+                  }`}
                   placeholder={"Last Name"}
                   value={input.lastName}
                   name="lastName"
@@ -287,12 +363,14 @@ const FormSubmission = ({ code }) => {
                 />
               </div>
               <DatePicker
+                isDisabled={dateOfBirth}
                 handleChange={(e) => handleChangeSelect(e.target)}
                 name="DateOfBirth"
                 value={input?.DateOfBirth}
               />
               <InputDropdown
                 label={"Gender"}
+                isDisabled={gender}
                 topic={genderForm}
                 handleChange={(e) => handleChangeSelect(e)}
                 name="gender"
@@ -304,6 +382,7 @@ const FormSubmission = ({ code }) => {
           <InputDropdown
             label={"Deliver Time"}
             topic={deliverTime}
+            isDisabled={deliveryTime}
             name="deliverTime"
             handleChange={(e) => handleChangeSelect(e)}
             selectedTopic={input.deliverTime}
@@ -345,19 +424,23 @@ const FormSubmission = ({ code }) => {
               isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
             }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-1 font-semibold`}
             onClick={() => {
-              console.log("personalDetail:", personalDetail);
+              setIsShowModal(false);
               dispatch(requestOtp(personalDetail?.phoneNumber))
                 .then(() => {
-                  form_otp_modal_submisson.showModal();
+                  setIsShowModal(true);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                  toast.error(err.errorMessage);
+                });
             }}
           >
             Submit
           </button>
         </div>
       </div>
-      <FormOtpModalSubmisson data={inputForm} />
+      {isShowModal && (
+        <FormOtpModalSubmisson data={id ? inputForm.Files : inputForm} />
+      )}
     </>
   );
 };

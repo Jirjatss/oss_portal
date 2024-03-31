@@ -20,9 +20,7 @@ function FormIdentify({ onClick }) {
   const user = useAuthUser();
   const dispatch = useDispatch();
 
-  const { profile, personalInformation } = useSelector(
-    (state) => state.userReducer
-  );
+  const { profile } = useSelector((state) => state.userReducer);
   const { region, municipality, city, town, loading } = useSelector(
     (state) => state.regionReducer
   );
@@ -44,19 +42,20 @@ function FormIdentify({ onClick }) {
   };
 
   useEffect(() => {
-    setInput((prevInput) => ({
-      ...prevInput,
-      DateOfBirth: dateOfBirth && formattedDate(dateOfBirth),
-      FirstName: firstName,
-      LastName: lastName,
-      IdentityNumber: identityNumber,
-      region: countryCode,
-      IdentityType: identityType,
-      Gender: gender,
-      town: sucosCode,
-      municipality: municipalityCode,
-      city: postAdministrativeCode,
-    }));
+    if (firstName !== "")
+      setInput((prevInput) => ({
+        ...prevInput,
+        DateOfBirth: dateOfBirth && formattedDate(dateOfBirth),
+        FirstName: firstName,
+        LastName: lastName,
+        IdentityNumber: identityNumber,
+        region: countryCode,
+        IdentityType: identityType,
+        Gender: gender,
+        town: sucosCode,
+        municipality: municipalityCode,
+        city: postAdministrativeCode,
+      }));
   }, [
     sucosCode,
     municipalityCode,
@@ -97,6 +96,7 @@ function FormIdentify({ onClick }) {
           );
         }
       }
+      if (user) dispatch(getUserInformation(user.accessToken));
     };
 
     fetchData();
@@ -179,7 +179,7 @@ function FormIdentify({ onClick }) {
             <label className="text-label">Identity Number</label>
             <input
               type="number"
-              className="text-input text-black placeholder-gray-400"
+              className="text-input text-black placeholder-gray-400 number-to-text"
               placeholder="Identify Number"
               name="IdentityNumber"
               value={input.IdentityNumber}

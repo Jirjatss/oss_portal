@@ -1,4 +1,4 @@
-function DatePicker({ handleChange, value }) {
+function DatePicker({ handleChange, value, isDisabled }) {
   const defaultValue = value || "";
   const today = new Date().toISOString().split("T")[0];
   return (
@@ -8,7 +8,10 @@ function DatePicker({ handleChange, value }) {
         <input
           type="date"
           id="date-input"
-          className="text-input text-black placeholder-gray-400 flex-1 mr-2"
+          disabled={isDisabled}
+          className={`text-input text-black placeholder-gray-400 flex-1 mr-2 ${
+            isDisabled && "cursor-not-allowed"
+          }`}
           name="DateOfBirth"
           onChange={(e) => handleChange(e)}
           value={defaultValue}

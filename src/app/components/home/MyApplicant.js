@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMyApplications } from "@/app/store/actions/applicationAction";
 import { useRouter } from "next/navigation";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import Link from "next/link";
 
 function MyApplicant() {
   const user = useAuthUser();
@@ -28,18 +29,18 @@ function MyApplicant() {
 
   return (
     <div className="border-[#DCDCDC] rounded-[20px] border-[1px] p-[24px]">
-      <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-10">
         <div className="flex justify-between items-center">
           <p className="text-[18px] text-[#363131] font-semibold">
             My Applications
           </p>
           {!isEmptyApplications && (
-            <p
+            <Link
+              href="/my-applications"
               className="text-[#1C25E7] text-[18px] font-semibold cursor-pointer"
-              onClick={() => router.push("/my-applications")}
             >
               See All
-            </p>
+            </Link>
           )}
         </div>
 

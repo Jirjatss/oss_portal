@@ -10,13 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { LOADING } from "../store/actions/action_type";
 import FormOtpModal from "../components/Modal/FormOtp";
 import ModalSuccess from "../components/Modal/ModalSuccess";
-import { requestOtp } from "../store/actions/userAction";
+import { requestOtp, showVerif } from "../store/actions/userAction";
 
 function Verification() {
   const router = useRouter();
-
   const dispatch = useDispatch();
-
+  const [isShowOtp, setIsShowOtp] = useState(false);
   const [step, setStep] = useState(1);
   const { profile } = useSelector((state) => state.userReducer);
 
@@ -30,9 +29,13 @@ function Verification() {
 
   const requestEditProfile = () => {
     dispatch(requestOtp(personalDetail?.phoneNumber)).then(() => {
-      form_otp_modal.showModal();
+      setIsShowOtp(true);
     });
   };
+
+  useEffect(() => {
+    if (isShowOtp) form_otp_modal.showModal();
+  }, [isShowOtp]);
 
   return (
     <>
@@ -75,14 +78,11 @@ function Verification() {
         )}
         {step === 2 && <FormContact onClick={() => nextHandler()} />}
         {step === 3 && <FormUploadPhoto />}
-
-        <FormOtpModal />
-
+        {isShowOtp && <FormOtpModal />}
         <ModalSuccess
           id="personal_informations"
           title="Your Data Have Submitted"
-          description=" Your submitted data is being reviewed by our team. Verification may
-      take some time. Thank you for your patience!"
+          description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
           onClick={() => {
             router.push("/");
           }}

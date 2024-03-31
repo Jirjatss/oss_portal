@@ -6,7 +6,7 @@ import Application from "./Application";
 import Faq from "./Faq";
 import MyApplicant from "./MyApplicant";
 import Verif from "./Verif";
-
+import { ServicesCard } from "./Services";
 export {
   Hero,
   Steps,
@@ -16,4 +16,5 @@ export {
   Faq,
   MyApplicant,
   Verif,
+  ServicesCard,
 };

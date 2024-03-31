@@ -5,6 +5,7 @@ import {
   GET_REGION_SUCOS,
   LOADING,
   LOADING_FALSE,
+  LOGOUT,
 } from "../actions/action_type";
 
 const initialState = {

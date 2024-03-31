@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../public/assets/icons/parent";
 import FormSubmisson from "../components/Form/FormSubmisson";
@@ -11,8 +11,13 @@ function Service() {
   const auth = useAuthUser();
   const pathname = usePathname();
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
   const [isSubmission, setIsSubmission] = useState(false);
   const [index, setIndex] = useState(0);
+
   const title = pathname
     .replace(/^\//, "")
     .split("-")
@@ -22,26 +27,18 @@ function Service() {
   const [code, setCode] = useState("");
 
   useEffect(() => {
-    if (pathname === "/passport") setCode("1");
-    if (pathname === "/driving-license") setCode("2");
-    if (pathname === "/citizen-id") setCode("7");
-    if (pathname === "/family-card") setCode("4");
-    if (pathname === "/birth-of-certificate") setCode("8");
+    if (pathname.includes("/passport")) setCode("1");
+    if (pathname.includes("/driving-license")) setCode("2");
+    if (pathname.includes("/citizen-id")) setCode("7");
+    if (pathname.includes("/family-card")) setCode("4");
+    if (pathname.includes("/birth-of-certificate")) setCode("8");
   }, [pathname]);
 
   const services = [
-    {
-      title: `New \n ${title}`,
-    },
-    {
-      title: `Renew \n ${title}`,
-    },
-    {
-      title: `Loss \n ${title}`,
-    },
-    {
-      title: `Damage \n ${title}`,
-    },
+    { title: `New \n ${title}` },
+    { title: `Renew \n ${title}` },
+    { title: `Loss \n ${title}` },
+    { title: `Damage \n ${title}` },
   ];
 
   const ServicesHeader = () => {
@@ -92,7 +89,7 @@ function Service() {
   };
 
   return (
-    <div className="px-52 bg-white py-10">
+    <div className="px-52 bg-white py-10 min-h-screen">
       <div
         className="flex gap-2 cursor-pointer"
         onClick={() => {
@@ -105,7 +102,7 @@ function Service() {
           Service {title}
         </p>
       </div>
-      {isSubmission ? (
+      {isSubmission || id !== "" ? (
         <FormSubmisson code={code} />
       ) : (
         <div className="flex gap-16 mt-7">
@@ -178,7 +175,7 @@ function Service() {
       )}
 
       <ModalSuccess
-        id="personal_informations"
+        id="success_submission"
         title="Your Data Have Submitted"
         description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
         onClick={() => {

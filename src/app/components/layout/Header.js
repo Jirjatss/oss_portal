@@ -52,26 +52,27 @@ const Header = () => {
 
       <div className="relative z-10 m-0">
         <ul className="flex gap-5 mt-1">
-          <li className="m-auto ">
+          <li className="m-auto">
             <Link href="/">
               <Image src={logo} width={70} height={70} alt="" />
             </Link>
           </li>
           {!auth && (
-            <>
-              <li className="m-auto ">
-                <Link href="/#step">How To Apply</Link>
-              </li>
-              <li className="m-auto">
-                <Link href="/#services">Services</Link>
-              </li>
-              <li className="m-auto">
-                <Link href="/#contact-us" style={{ scrollBehavior: "smooth" }}>
-                  Contact us
-                </Link>
-              </li>
-            </>
+            <li className="m-auto ">
+              <Link href="/#step">How To Apply</Link>
+            </li>
           )}
+          <li className="m-auto">
+            <Link href="/#services">Services</Link>
+          </li>
+          <li className="m-auto">
+            <Link href="/set-appointment">Set Appointment</Link>
+          </li>
+          <li className="m-auto">
+            <Link href="/#contact-us" style={{ scrollBehavior: "smooth" }}>
+              Contact us
+            </Link>
+          </li>
         </ul>
       </div>
       {auth ? (
@@ -97,7 +98,12 @@ const Header = () => {
                 style={{ minWidth: "40px" }}
                 className="text-[16px] h-[40px]  justify-center items-center flex rounded-md"
               >
-                <Image src={ProfileImage} width={23} height={40} />
+                <Image
+                  src={ProfileImage}
+                  width={23}
+                  height={40}
+                  alt="profile image"
+                />
               </Button>
               <Menu
                 id="demo-positioned-menu"

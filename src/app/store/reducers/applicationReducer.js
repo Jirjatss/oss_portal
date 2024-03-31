@@ -1,7 +1,13 @@
-import { GET_MY_APPLICATIONS } from "../actions/action_type";
+import {
+  GET_APPLICATION_DETAIL,
+  GET_APPLICATION_DETAIL_STATUS,
+  GET_MY_APPLICATIONS,
+} from "../actions/action_type";
 
 const initialState = {
   myApplications: null,
+  detailApplication: null,
+  detailById: null,
 };
 
 const applicationReducer = (state = initialState, action) => {
@@ -10,6 +16,18 @@ const applicationReducer = (state = initialState, action) => {
       return {
         ...state,
         myApplications: action.payload,
+      };
+
+    case GET_APPLICATION_DETAIL_STATUS:
+      return {
+        ...state,
+        detailApplication: action.payload,
+      };
+
+    case GET_APPLICATION_DETAIL:
+      return {
+        ...state,
+        detailById: action.payload,
       };
 
     default:

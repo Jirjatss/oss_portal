@@ -6,6 +6,7 @@ import {
   GET_REGION_SUCOS,
   LOADING,
   LOADING_FALSE,
+  LOGOUT,
 } from "./action_type";
 
 export const loading = () => {
@@ -52,7 +53,7 @@ export const getRegionMunicipality = (access_token) => {
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
-          Authorization: `Bearer ${access_token}`,
+          // Authorization: `Bearer ${access_token}`,
         },
       });
       dispatch(getRegionMunicipalitySuccess(data.data));
@@ -70,7 +71,6 @@ export const getRegionPostAdministrativeSuccess = (payload) => {
 };
 
 export const getRegionPostAdministrative = (access_token, query) => {
-  console.log("query:", query);
   return async (dispatch) => {
     // dispatch(loading());
     try {
