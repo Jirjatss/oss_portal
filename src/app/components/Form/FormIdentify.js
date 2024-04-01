@@ -75,7 +75,7 @@ function FormIdentify({ onClick }) {
 
   useEffect(() => {
     const fetchData = () => {
-      if (user?.status === "Active") {
+      if (user?.status === "active") {
         dispatch(getUserInformation(user?.accessToken));
         dispatch(getRegionCountry(user?.accessToken));
         dispatch(getRegionMunicipality(user?.accessToken));

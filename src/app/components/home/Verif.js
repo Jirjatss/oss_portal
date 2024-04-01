@@ -31,32 +31,32 @@ function Verif() {
   const verifComplete = firstName !== "";
 
   const buttonTitle =
-    user?.status === "Inactive" ? "Resend to Email" : "Verification";
+    user?.status === "inactive" ? "Resend to Email" : "Verification";
 
   const titleDecider = () => {
-    if (user?.status === "Inactive") return "Verification your mail first";
-    if (user?.status === "Active" && firstName === "")
+    if (user?.status === "inactive") return "Verification your mail first";
+    if (user?.status === "active" && firstName === "")
       return "Verification your account first";
     if (verifComplete) return "Verification Successful!";
   };
 
   const iconDecider = () => {
-    if (user?.status === "Inactive") return ResendVerif;
-    if (user?.status === "Active" && firstName === "") return FlowStep1;
+    if (user?.status === "inactive") return ResendVerif;
+    if (user?.status === "active" && firstName === "") return FlowStep1;
     if (verifComplete) return VerifSuccess;
   };
 
   const descriptionDecider = () => {
-    if (user?.status === "Inactive")
+    if (user?.status === "inactive")
       return "To be able to use all the available facilities, please to verifiy your email first so you can eligible to continue.";
-    if (user?.status === "Active" && firstName === "")
+    if (user?.status === "active" && firstName === "")
       return "To be able to use all the available facilities, please to complete your personal data first so you can eligible to continue.";
     if (verifComplete)
       return "Congratulations! Your data has been verified, granting you complete access to our facilities. Start exploring now!";
   };
 
   useEffect(() => {
-    if (user?.status === "Active") {
+    if (user?.status === "active") {
       dispatch(getUserInformation(user?.accessToken));
     }
   }, []);
