@@ -39,7 +39,7 @@ function Verification() {
 
   return (
     <>
-      <div className="px-52 bg-white py-10 min-h-screen">
+      <div className="px-28 bg-white py-10 min-h-screen">
         <div className="flex justify-between items-center mb-10">
           <div
             className="flex gap-2 cursor-pointer"

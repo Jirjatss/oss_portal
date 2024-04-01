@@ -144,7 +144,7 @@ function FormOtpAppointment({ data }) {
                   otp.some((element) => element === "")
                     ? "bg-[#DCDCDC] cursor-not-allowed text-[#646464]"
                     : "bg-[#1C25E7] text-[#F3F3F3] "
-                }  px-16 text-[16px] py-2  rounded-[8px] mt-2`}
+                }  px-28 text-[16px] py-2  rounded-[8px] mt-2`}
                 formMethod={successSubmit && "dialog"}
                 disabled={otp.some((element) => element === "")}
                 onClick={() => {

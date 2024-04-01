@@ -354,7 +354,7 @@ const MyApplications = () => {
 
   return (
     <>
-      <div className="px-52 bg-white py-10 min-h-screen">
+      <div className="px-28 bg-white py-10 min-h-screen">
         {loading && <Loader />}
         <div
           className="flex gap-2 cursor-pointer"

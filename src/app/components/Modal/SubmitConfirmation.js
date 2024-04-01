@@ -22,13 +22,13 @@ function SubmitConfirmation({ onSubmit }) {
           <form method="dialog" className="w-full mt-4">
             <div className="grid grid-cols-2 gap-5">
               <button
-                className="bg-[#FFFFFF] px-16 text-[16px] py-2 text-[#1C25E7] rounded-[8px] mt-2 border-[2px] border-[#DCDCDC]"
+                className="bg-[#FFFFFF] px-28 text-[16px] py-2 text-[#1C25E7] rounded-[8px] mt-2 border-[2px] border-[#DCDCDC]"
                 formMethod="dialog"
               >
                 Recheck
               </button>
               <button
-                className="bg-[#1C25E7] px-16 text-[16px] py-2 text-[#F3F3F3] rounded-[8px] mt-2"
+                className="bg-[#1C25E7] px-28 text-[16px] py-2 text-[#F3F3F3] rounded-[8px] mt-2"
                 onClick={() => onSubmit()}
               >
                 Submit
