@@ -100,7 +100,7 @@ function Verif() {
               <button
                 className="bg-[#1C25E7] px-7 py-2 rounded-lg text-[#F3F3F3] inline-block"
                 onClick={() => {
-                  if (user?.status === "Inactive") {
+                  if (user?.status === "inactive") {
                     dispatch(
                       activateUser(dataRegister.token, user?.accessToken)
                     )
