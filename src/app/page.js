@@ -16,21 +16,23 @@ export default function Home() {
       {loading && <Loader />}
       <div className="bg-white min-h-screen">
         {auth ? (
-          <div className="w-full  px-28 py-10 ">
+          <div className="w-full lg:px-28 px-5 py-10 ">
             <p className="text-[18px] font-semibold text-[#2E2D2D] mb-5">
-              Welcome,{" "}
-              {auth && (
+              Welcome
+              {firstName ? (
                 <span>
-                  {" "}
+                  {", "}
                   {firstName !== ""
-                    ? gender === "Male"
+                    ? gender === "male"
                       ? `Mr. ${firstName}`
                       : `Mrs. ${firstName}`
                     : ""}
                 </span>
+              ) : (
+                <>!</>
               )}
             </p>
-            <div className="flex gap-5">
+            <div className="lg:flex gap-5 hidden">
               <div className="w-3/4 flex flex-col gap-7">
                 <HomeComponent.Verif />
                 <HomeComponent.Services />
@@ -39,17 +41,27 @@ export default function Home() {
                 <HomeComponent.MyApplicant />
               </div>
             </div>
+            <div className="flex flex-col gap-5 lg:hidden">
+              <HomeComponent.Verif />
+              <HomeComponent.MyApplicant />
+              <HomeComponent.Services />
+            </div>
+            <HomeComponent.Faq />
           </div>
         ) : (
           <>
             <div className="w-full lg:-mt-[87px]">
               <HomeComponent.Hero />
             </div>
-            <HomeComponent.Steps />
-            <HomeComponent.Services />
-            {/* <HomeComponent.Appointment /> */}
+            <div className="lg:px-28 px-5">
+              <HomeComponent.Steps />
+              <HomeComponent.Services />
+              <HomeComponent.Appointment />
+            </div>
             <HomeComponent.Application />
-            <HomeComponent.Faq />
+            <div className="lg:px-28 px-5">
+              <HomeComponent.Faq />
+            </div>
           </>
         )}
       </div>

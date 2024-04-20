@@ -23,10 +23,10 @@ function FormStartRegister({ onClick }) {
   return (
     <>
       {loading && <Loader />}
-      <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
+      <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10">
         <div className="flex flex-col gap-2">
-          <h1 className="text-headForm capitalize">Start registering </h1>
-          <p className="font-thin text-[16px] text-[#646464]">
+          <h1 className="text-headForm">Start Registering</h1>
+          <p className="font-thin lg:text-[16px] text-[#646464]">
             Please complete the information below
           </p>
         </div>
@@ -35,7 +35,7 @@ function FormStartRegister({ onClick }) {
           <label className="text-label">Phone Number</label>
           <input
             type="text"
-            className={`text-input focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-gray-400 bg-transparent`}
+            className="text-input focus:outline-none pb-1 text-[18px] text-[#2E2D2D] bg-inherit"
             placeholder="Phone Number"
             value={phoneNumber}
             onChange={handleChangePhoneNumber}
@@ -47,7 +47,7 @@ function FormStartRegister({ onClick }) {
           )}
         </div>
 
-        <p className="text-[18px] text-[#646464]">
+        <p className="lg:text-[18px] text-[16px] text-[#646464]">
           We will send an OTP to your phone Number
         </p>
 
@@ -63,7 +63,7 @@ function FormStartRegister({ onClick }) {
           >
             Submit
           </button>
-          <p className="text-[18px] text-[#646464]">
+          <p className="lg:text-[18px] text-[16px] text-[#646464]">
             Already have an account?{" "}
             <Link href="/login" className="text-[#1C25E7]">
               Login Now

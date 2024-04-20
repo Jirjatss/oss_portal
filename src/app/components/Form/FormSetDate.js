@@ -30,12 +30,12 @@ function FormSetDate({ onContinue }) {
   }, [dispatch, user]);
 
   return (
-    <div className="grid grid-cols-2 my-10 gap-x-10">
+    <div className="grid lg:grid-cols-2 grid-cols-1 my-10 gap-x-10">
       <div>
-        <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-2">
+        <h1 className="lg:text-[28px] text-[24px] text-[#2E2D2D] font-semibold mb-2">
           Select Date
         </h1>
-        <p className="text-[16px] text-[#646464]">
+        <p className="text-[16px] text-[#646464]  lg:mb-0 mb-10">
           Please note, there’s a limit of 100 appointments per day. If today is
           fully booked, you can choose another available day and time. Once
           submitted, you’ll receive a schedule confirmation from the officer.

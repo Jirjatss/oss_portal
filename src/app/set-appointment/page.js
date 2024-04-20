@@ -41,8 +41,8 @@ const SetAppointment = () => {
 
   return (
     <>
-      <div className="px-28 bg-white py-10 min-h-screen">
-        <div className="flex justify-between">
+      <div className="lg:px-52 px-5 bg-white py-10 min-h-screen">
+        <div className="flex lg:flex-row flex-col justify-between ">
           <div
             className="flex gap-2 cursor-pointer"
             onClick={() => {
@@ -55,7 +55,7 @@ const SetAppointment = () => {
               Set Appointment
             </p>
           </div>
-          <div className="flex gap-3 items-center">
+          <div className="flex lg:flex-row flex-col lg:gap-3 gap-1 items-center  lg:mt-0 mt-5">
             <div className="w-[98px] h-[8.5px] bg-[#DCDCDC] rounded-[20px] relative">
               <div
                 className={`${

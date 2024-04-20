@@ -35,10 +35,11 @@ function FormAppointmentProfile() {
     phoneNumber,
     email,
   } = personalDetail || {};
+  console.log("personalDetail:", personalDetail);
 
   const identityTypeForm = [
-    { name: "Citizen Card", code: "CitizenCard" },
-    { name: "Passport", code: "Passport" },
+    { name: "Citizen Card", code: "citizenCard" },
+    { name: "Passport", code: "passport" },
   ];
 
   const handleChangeSelect = (e) => {
@@ -82,7 +83,7 @@ function FormAppointmentProfile() {
           <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-2">
             Your Profile
           </h1>
-          <p className="text-[16px] text-[#646464]">
+          <p className="text-[16px] text-[#646464] lg:mb-0 mb-10">
             Completing your profile will assist officers in accurately tracking
             your attendance. Please ensure your profile is up-to-date.
           </p>

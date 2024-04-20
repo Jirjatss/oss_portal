@@ -11,7 +11,7 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
     setIsValidEmail(emailRegex.test(email));
   }, [email]);
   return (
-    <div className="flex flex-col items-center justify-center text-center px-44 gap-10 relative">
+    <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10 relative">
       <button className="absolute top-7 left-7 flex gap-3" onClick={onClick}>
         <OSSIcons name="LeftArrow" className="flex m-auto" />
         <p className="text-[#2E2D2D] text-[18px] font-bold">Back</p>
@@ -26,7 +26,7 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
         <label className="text-label">Email</label>
         <input
           type="email"
-          className="text-input focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-gray-400 bg-transparent"
+          className="text-input focus:outline-none pb-1 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-gray-400 bg-transparent"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -40,7 +40,7 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
           isDisabled || !isValidEmail
             ? "bg-[#DCDCDC] cursor-not-allowed"
             : "bg-[#1C25E7]"
-        }  w-full rounded-[8px] text-white -mt-2`}
+        }  w-full rounded-[8px] text-white lg:-mt-2 mt-5`}
         disabled={isDisabled || !isValidEmail}
         onClick={() => {
           onClickSubmit();

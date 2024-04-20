@@ -89,7 +89,7 @@ function Service() {
   };
 
   return (
-    <div className="px-28 bg-white py-10 min-h-screen">
+    <div className="px-52 bg-white py-10 min-h-screen">
       <div
         className="flex gap-2 cursor-pointer"
         onClick={() => {
@@ -102,7 +102,7 @@ function Service() {
           Service {title}
         </p>
       </div>
-      {isSubmission || id !== "" ? (
+      {isSubmission || id !== null ? (
         <FormSubmisson code={code} />
       ) : (
         <div className="flex gap-16 mt-7">

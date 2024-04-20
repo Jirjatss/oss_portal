@@ -77,7 +77,7 @@ function InputDropdown({
           }
         >
           <span
-            className={`-ml-2 capitalize text-start  text-[18px] ${
+            className={`-ml-2 capitalize text-start  lg:text-[18px] text-[16px] ${
               selectedTopic ? "text-[#2E2D2D]" : "text-gray-400"
             }`}
             style={{ textAlign: "left" }}
@@ -109,7 +109,7 @@ function InputDropdown({
         >
           {listTopic.map((e, idx) => (
             <MenuItem
-              className="text-gray-900 w-full text-start"
+              className="text-gray-900 w-full text-start lg:text-[18px] text-[16px]"
               key={e.name + idx}
               onClick={() => handleChangeTopic({ name: name, value: e.value })}
               sx={{

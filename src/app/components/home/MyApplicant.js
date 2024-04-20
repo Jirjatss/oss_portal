@@ -29,22 +29,30 @@ function MyApplicant() {
 
   return (
     <div className="border-[#DCDCDC] rounded-[20px] border-[1px] p-[24px]">
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col lg:gap-10 gap-5">
         <div className="flex justify-between items-center">
-          <p className="text-[18px] text-[#363131] font-semibold">
-            My Applications
-          </p>
-          {!isEmptyApplications && (
-            <Link
-              href="/my-applications"
-              className="text-[#1C25E7] text-[18px] font-semibold cursor-pointer"
-            >
-              See All
-            </Link>
-          )}
+          <div className="flex items-center gap-3">
+            <div className="lg:hidden">
+              <Image
+                src={isEmptyApplications ? EmptyApplicant : MyApplicants}
+                width={20}
+                height={20}
+                alt={"Empty"}
+              />
+            </div>
+            <p className="text-[18px] text-[#363131] font-semibold">
+              My Applications
+            </p>
+          </div>
+          <Link
+            href="/my-applications"
+            className="text-[#1C25E7] lg:text-[18px] text-[16px] font-semibold cursor-pointer"
+          >
+            See All
+          </Link>
         </div>
 
-        <div className="bg-[#DCDCDC] rounded-xl justify-center items-center flex p-5 m-auto">
+        <div className="bg-[#DCDCDC] rounded-xl justify-center items-center lg:flex p-5 m-auto  hidden">
           <Image
             src={isEmptyApplications ? EmptyApplicant : MyApplicants}
             width={50}

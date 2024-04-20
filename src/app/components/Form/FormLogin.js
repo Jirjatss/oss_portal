@@ -48,10 +48,10 @@ function FormLogin({ forgotPassword }) {
   }, [user]);
 
   return (
-    <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
+    <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10">
       <div className="flex flex-col gap-2">
         <h1 className="text-headForm">Welcome Back</h1>
-        <p className="font-thin text-[16px] text-[#646464]">
+        <p className="font-thin lg:text-[16px] text-[#646464]">
           Please log in to your account
         </p>
       </div>
@@ -91,12 +91,14 @@ function FormLogin({ forgotPassword }) {
             )}
           </div>
         </div>
-        <button
-          className="text-[15px] text-[#1C25E7] text-end mr-3"
-          onClick={forgotPassword}
-        >
-          Forgot Password?
-        </button>
+        <div className="flex justify-end">
+          <button
+            className="text-[15px] text-[#1C25E7] mr-3 max-w-fit"
+            onClick={forgotPassword}
+          >
+            Forgot Password?
+          </button>
+        </div>
       </div>
       <div className="flex flex-col gap-5 w-full">
         <button
@@ -108,7 +110,7 @@ function FormLogin({ forgotPassword }) {
         >
           Login
         </button>
-        <p className="text-[18px] text-[#646464]">
+        <p className="lg:text-[18px] text-[16px] text-[#646464]">
           Don’t have an account yet?{" "}
           <Link href="/register" className="text-[#1C25E7]">
             Register Here

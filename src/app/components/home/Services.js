@@ -21,30 +21,49 @@ export const ServicesCard = ({ title, icon, desc, url }) => {
     <Link href={url}>
       <div
         className={`w-full border-[1px] border-[#DCDCDC] rounded-[20px] ${
-          user ? "px-[15px] py-[20px]" : "p-[20px]"
-        } flex flex-col gap-[24px] col-span-1 cursor-pointer`}
+          user ? "lg:px-[15px] px-2 py-[20px]" : "lg:p-[20px] p-2"
+        } flex flex-col lg:gap-[24px] gap-2 col-span-1 cursor-pointer`}
       >
         <div className="flex justify-between">
           <div
-            className={`w-[64px] h-[64px] ${
+            className={`lg:w-[64px] lg:h-[64px] w-[54px] h-[54px] ${
               title === "Set Appointment" ? "bg-[#F0EFFD]" : "bg-[#E7953E]"
             }  rounded-[12.8px] flex justify-center items-center`}
           >
-            <Image src={icon} width={40} height={40} alt={title} />
+            <Image
+              src={icon}
+              width={40}
+              height={40}
+              alt={title}
+              className="lg:block hidden"
+            />
+            <Image
+              src={icon}
+              width={30}
+              height={30}
+              alt={title}
+              className="lg:hidden block"
+            />
           </div>
-          <button>
+          <button className="lg:hidden block">
+            <OSSIcons name="RightArrow" styleDiv={{ width: "25px" }} />
+          </button>
+          <button className="lg:block hidden">
             <OSSIcons name="RightArrow" />
           </button>
         </div>
         <div>
           <h1
             className={`${
-              user ? "text-[18px]" : "text-[24px]"
+              user ? "lg:text-[18px] text-[16px]" : "lg:text-[24px] text-[16px]"
             } font-semibold text-[#2E2D2D] mb-1`}
           >
             {title}
           </h1>
-          <p className="text-[#646464] text-[16px]" style={{ fontWeight: 400 }}>
+          <p
+            className="text-[#646464] lg:text-[16px] text-[12px]"
+            style={{ fontWeight: 400 }}
+          >
             {desc}
           </p>
         </div>
@@ -94,7 +113,11 @@ const Services = () => {
       {
         icon: Booking,
         title: "Set Appointment",
-        desc: "Book appointments with government officials",
+        desc: (
+          <>
+            Book appointments with government <br /> officials
+          </>
+        ),
         url: "/set-appointment",
       },
       ...prevService,
@@ -102,25 +125,25 @@ const Services = () => {
   }
 
   return (
-    <div className={`${!user && "px-28 pt-24"}`} id="services">
+    <div className={`${!user && "lg:pt-24 pt-16"}`} id="services">
       {user ? (
         <>
-          <h1 className="text-[28px] leading-[57.6px] text-[#363131] text-start capitalize font-semibold">
+          <h1 className="lg:text-[28px] text-[24px] lg:leading-[57.6px] text-[#363131] text-start capitalize font-semibold mt-5 lg:mt-0">
             What your needs today?
           </h1>
-          <p className="mb-10 text-[#646464] text-[16px]">
+          <p className="lg:mb-10 mb-5 text-[#646464] text-[16px]">
             Easily upload, process, and manage documents for efficient
             administration.
           </p>
         </>
       ) : (
-        <h1 className="text-[40px] px-3 leading-[57.6px] text-[#363131] text-start capitalize mb-10">
+        <h1 className="lg:text-[40px] text-[28px] lg:px-3 lg:leading-[57.6px] text-[#363131] text-start capitalize mb-10">
           Choose the <b>various services</b> you need here
         </h1>
       )}
 
       {user ? (
-        <div className="grid grid-cols-3 gap-3 gap-y-5">
+        <div className="grid lg:grid-cols-3 grid-cols-2 gap-3 gap-y-5">
           {service.map((e, index) => (
             <ServicesCard
               key={index}
@@ -132,7 +155,7 @@ const Services = () => {
           ))}
         </div>
       ) : (
-        <div className="grid grid-cols-4 gap-5">
+        <div className="grid lg:grid-cols-4 grid-cols-2 gap-5">
           {service.map((e, index) => (
             <ServicesCard
               key={index}

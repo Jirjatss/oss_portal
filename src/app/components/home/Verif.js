@@ -31,7 +31,7 @@ function Verif() {
   const verifComplete = firstName !== "";
 
   const buttonTitle =
-    user?.status === "inactive" ? "Resend to Email" : "Verification";
+    user?.status === "Inactive" ? "Resend to Email" : "Verification";
 
   const titleDecider = () => {
     if (user?.status === "inactive") return "Verification your mail first";
@@ -78,12 +78,12 @@ function Verif() {
           )}
         </div>
 
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-3 items-center">
-            <h1 className="text-[#2E2D2D] font-semibold text-[28px]">
+        <div className="flex flex-col gap-4 lg:mt-0 mt-9">
+          <div className="flex lg:flex-row flex-col lg:gap-3 lg:items-center">
+            <h1 className="text-[#2E2D2D] font-semibold lg:text-[28px] text-[18px] leading-none capitalize">
               {titleDecider()}
             </h1>
-            <div className="-mt-2.5">
+            <div className="lg:-mt-2.5 hidden lg:flex">
               <Image
                 src={iconDecider()}
                 width={30}
@@ -100,7 +100,7 @@ function Verif() {
               <button
                 className="bg-[#1C25E7] px-7 py-2 rounded-lg text-[#F3F3F3] inline-block"
                 onClick={() => {
-                  if (user?.status === "inactive") {
+                  if (user?.status === "Inactive") {
                     dispatch(
                       activateUser(dataRegister.token, user?.accessToken)
                     )

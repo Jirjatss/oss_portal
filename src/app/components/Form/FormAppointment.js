@@ -23,13 +23,10 @@ function FormAppointment({ onContinue }) {
   const { services } = useSelector((state) => state.serviceReducer);
 
   const isDisabled =
-    (user &&
-      (!input.location || !input.officeLocationCode || !input.serviceType)) ||
-    (!user &&
-      (!input.location ||
-        !input.officeLocationCode ||
-        !input.serviceType ||
-        !input.serviceId));
+    !input.location ||
+    !input.officeLocationCode ||
+    !input.serviceType ||
+    !input.serviceId;
 
   const handleChangeSelect = (e) => {
     const { name, value } = e;
@@ -78,10 +75,10 @@ function FormAppointment({ onContinue }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 my-10 gap-x-10">
       <div>
-        <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-2">
+        <h1 className="lg:text-[28px] text-[24px] text-[#2E2D2D] font-semibold mb-2">
           Choose Location
         </h1>
-        <p className="text-[16px] text-[#646464]">
+        <p className="text-[16px] text-[#646464] lg:mb-0 mb-10">
           Select your nearest office location and purpose of visit to streamline
           your appointment process.
         </p>

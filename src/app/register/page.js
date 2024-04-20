@@ -34,8 +34,8 @@ function Register() {
   };
 
   return (
-    <div className="min-h-screen bg-white grid grid-cols-2">
-      <div className="relative">
+    <div className="min-h-screen bg-white grid lg:grid-cols-2 grid-cols-1">
+      <div className="relative lg:flex hidden h-screen">
         <Image
           src="/assets/images/login.png"
           alt="Your Image"
@@ -70,19 +70,21 @@ function Register() {
       ) : (
         <FormStartRegister onClick={showModalOtp} />
       )}
-      <ModalSuccess
-        id="verified_otp"
-        title="Your Phone Verified"
-        description=" One more step to unlock full access. Create your account to register
+      <div className="lg:mx-0 mx-5">
+        <ModalSuccess
+          id="verified_otp"
+          title="Your Phone Verified"
+          description=" One more step to unlock full access. Create your account to register
         in this website!"
-        onClick={() => setFormRegister(true)}
-      />
-      <ModalSuccess
-        id="sent_otp"
-        title="We sent an OTP to your Phone Number"
-        description="Please check your short message and input the OTP Number to continue register"
-        onClick={() => setFormOtp(true)}
-      />
+          onClick={() => setFormRegister(true)}
+        />
+        <ModalSuccess
+          id="sent_otp"
+          title="We sent an OTP to your Phone Number"
+          description="Please check your short message and input the OTP Number to continue register"
+          onClick={() => setFormOtp(true)}
+        />
+      </div>
     </div>
   );
 }

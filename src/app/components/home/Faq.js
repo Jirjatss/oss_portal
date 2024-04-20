@@ -40,11 +40,11 @@ function Faq() {
 
   return (
     <div
-      className=" px-28 grid grid-cols-2 justify-between gap-10 py-24"
+      className="grid lg:grid-cols-2 grid-cols-1 justify-between gap-10 lg:py-24  pt-16"
       id="contact-us"
     >
       <div>
-        <h1 className="text-[40px] font-bold capitalize text-[#363131] mb-5">
+        <h1 className="lg:text-[40px] text-[28px] font-bold capitalize text-[#363131] mb-5">
           frequently asked questions
         </h1>
         <div className="flex flex-col gap-7">
@@ -58,25 +58,28 @@ function Faq() {
             >
               <div
                 className={`flex flex-col w-full ${
-                  selectedIndex === idx ? "" : "h-[64px]"
+                  selectedIndex === idx ? "" : "lg:h-[64px] h-[55px]"
                 } border-b border-[#DCDCDC]`}
               >
                 <div
                   className={`flex items-center justify-between gap-[15px] `}
                 >
-                  <p className="text-[18px] text-[#646464] font-semibold">
+                  <p className="lg:text-[18px] text-[14px] text-[#646464] font-semibold">
                     {e.question}
                   </p>
-                  <div className="cursor-pointer">
-                    <OSSIcons name="Plus" width={24} height={24} />
+                  <div className="cursor-pointer lg:hidden">
+                    <OSSIcons name="Plus" styleDiv={{ width: "20px" }} />
+                  </div>
+                  <div className="cursor-pointer lg:block hidden">
+                    <OSSIcons name="Plus" />
                   </div>
                 </div>
                 <div
-                  className={` rounded-md bg-white shadow-xs transition-all ease-in-out duration-500 w-[500px] ${
+                  className={` rounded-md bg-white shadow-xs transition-all ease-in-out duration-500 lg:w-[500px] w-4/5 ${
                     selectedIndex === idx ? "max-h-[500px]" : "max-h-0"
                   } overflow-hidden`}
                 >
-                  <p className="text-[#646464] mb-5 mt-2 text-justify">
+                  <p className="text-[#646464] lg:text-[16px] text-[12px] mb-5 mt-2 text-justify">
                     {ReactHtmlParser(e.answer)}
                   </p>
                 </div>

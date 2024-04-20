@@ -28,8 +28,8 @@ function Login() {
     <>
       {loading && <Loader message="Please wait, your login in progress..." />}
 
-      <div className="min-h-screen bg-white grid grid-cols-2">
-        <div className="relative">
+      <div className="min-h-screen bg-white grid lg:grid-cols-2 grid-cols-1">
+        <div className="relative lg:flex hidden h-screen">
           <Image
             src="/assets/images/login.png"
             alt="Your Image"
@@ -56,16 +56,18 @@ function Login() {
         ) : (
           <FormLogin forgotPassword={() => setFormForgotPassword(true)} />
         )}
-
-        <ModalSendLinkPassword onClick={() => setFormResetPassword(true)} />
-        <ModalSuccess
-          title={"Password successfully reset"}
-          description={"Please log in again with the new password"}
-          onClick={() => {
-            setFormForgotPassword(false);
-            setFormResetPassword(false);
-          }}
-        />
+        <div className="lg:mx-0 mx-5">
+          <ModalSendLinkPassword onClick={() => setFormResetPassword(true)} />
+          <ModalSuccess
+            id={"successResetPassword"}
+            title={"Password successfully reset"}
+            description={"Please log in again with the new password"}
+            onClick={() => {
+              setFormForgotPassword(false);
+              setFormResetPassword(false);
+            }}
+          />
+        </div>
       </div>
     </>
   );

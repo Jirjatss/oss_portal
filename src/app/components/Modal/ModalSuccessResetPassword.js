@@ -4,7 +4,7 @@ import { OSSIcons } from "../../../../public/assets/icons/parent";
 function ModalSuccessResetPassword({ onClick }) {
   return (
     <dialog id="successResetPassword" className="modal">
-      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px] min-w-[594px] relative">
+      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px] lg:min-w-[594px] relative">
         <form method="dialog">
           <button className="absolute top-7 right-5" formMethod="dialog">
             <OSSIcons name={"Cancel"} fill="#2E2D2D" />
@@ -20,7 +20,7 @@ function ModalSuccessResetPassword({ onClick }) {
           </p>
           <form method="dialog">
             <button
-              className="bg-[#1C25E7] px-28 text-[16px] py-2 text-[#F3F3F3] rounded-[8px] mt-2"
+              className="bg-[#1C25E7] px-16 text-[16px] py-2 text-[#F3F3F3] rounded-[8px] mt-2"
               formMethod="dialog"
               onClick={onClick}
             >

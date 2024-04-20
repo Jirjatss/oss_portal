@@ -90,7 +90,7 @@ function FormRegister({}) {
   return (
     <>
       {loading && <Loader message="Please wait, your login in progress..." />}
-      <div className="flex flex-col items-center justify-center text-center px-44 gap-10">
+      <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10">
         <div className="flex flex-col gap-2">
           <h1 className="text-headForm">Start Registering</h1>
         </div>
@@ -99,7 +99,7 @@ function FormRegister({}) {
             <label className="text-label">Email</label>
             <input
               type="email"
-              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 text-[18px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
+              className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
               placeholder="Email"
               value={input.email}
               onChange={handleChangeInput}
@@ -116,7 +116,7 @@ function FormRegister({}) {
                 type={showPassword.password ? "text" : "password"}
                 value={input.password}
                 onChange={handleChangeInput}
-                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
+                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
                 placeholder="Password"
                 name="password"
               />
@@ -145,7 +145,7 @@ function FormRegister({}) {
                 type={showPassword.reenterPassword ? "text" : "password"}
                 value={input.reenterPassword}
                 onChange={handleChangeInput}
-                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
+                className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
                 placeholder="Reenter Password"
                 name="reenterPassword"
               />
@@ -296,7 +296,7 @@ function FormRegister({}) {
           >
             Submit
           </button>
-          <p className="text-[18px] text-[#646464]">
+          <p className="lg:text-[18px] text-[16px] text-[#646464]">
             Already have account?{" "}
             <Link href="/login" className="text-[#1C25E7]">
               Login Now

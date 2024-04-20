@@ -72,7 +72,7 @@ function FormOtpModal({ onSubmit }) {
   return (
     <dialog id="form_otp_modal" className="modal">
       {loading && <Loader />}
-      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px]  relative lg:w-[594px]">
+      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px]  relative lg:w-[594px] lg:mx-0 mx-5">
         <form method="dialog">
           <button className="absolute top-7 right-5" formMethod="dialog">
             <OSSIcons name={"Cancel"} fill="#2E2D2D" />
@@ -80,7 +80,7 @@ function FormOtpModal({ onSubmit }) {
         </form>
 
         <div className="mt-7 text-center flex flex-col gap-3">
-          <h1 className="text-[26px] font-bold text-[#2E2D2D]">
+          <h1 className="lg:text-[26px] text-[24px] font-bold text-[#2E2D2D]">
             Input OTP Code
           </h1>
           <p className="text-[16px] font-thin text-[#646464]">
@@ -114,7 +114,7 @@ function FormOtpModal({ onSubmit }) {
           )}
 
           <div className="mt-5">
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
               <button
                 onClick={() => {
                   dispatch(requestOtp(personalDetail?.phoneNumber))
@@ -134,19 +134,20 @@ function FormOtpModal({ onSubmit }) {
                   !showResendButton
                     ? "bg-[#DCDCDC] cursor-not-allowed text-[#646464]"
                     : "bg-[#FFFFFF] text-[#1C25E7]"
-                } px-4 text-[16px] py-2 rounded-[8px] mt-2 border-[2px] border-[#DCDCDC]`}
+                } px-4 text-[16px] py-2 rounded-[8px] mt-2 border-[2px] border-[#DCDCDC] lg:flex hidden`}
                 formMethod="dialog"
               >
                 {!showResendButton
                   ? `Request resend code in ${timer}s`
                   : " Resend Code Again"}
               </button>
+
               <button
                 className={`${
                   otp.some((element) => element === "")
                     ? "bg-[#DCDCDC] cursor-not-allowed text-[#646464]"
                     : "bg-[#1C25E7] text-[#F3F3F3] "
-                }  px-28 text-[16px] py-2  rounded-[8px] mt-2`}
+                }  px-16 text-[16px] py-2  rounded-[8px] mt-2 font-semibold`}
                 formMethod={successSubmit && "dialog"}
                 disabled={otp.some((element) => element === "")}
                 onClick={() => {
@@ -171,6 +172,31 @@ function FormOtpModal({ onSubmit }) {
               >
                 Submit
               </button>
+
+              <p className="lg:text-[18px] text-[16px] text-[#646464] lg:hidden">
+                {showResendButton ? (
+                  <button
+                    onClick={() => {
+                      dispatch(requestOtp(personalDetail?.phoneNumber))
+                        .then(() => {
+                          setShowResendButton(false);
+                          setTimer(30);
+                          startTimer();
+                          setSentOtp("We sent an OTP to your phone Number");
+                        })
+                        .catch((err) => {
+                          console.log(err);
+                          toast.error(err.response.data.errorMessage);
+                        });
+                    }}
+                    className="text-[#1C25E7] focus:outline-none font-semibold"
+                  >
+                    Resend Code Again
+                  </button>
+                ) : (
+                  `You can request resend code in ${timer}s`
+                )}
+              </p>
             </div>
           </div>
         </div>

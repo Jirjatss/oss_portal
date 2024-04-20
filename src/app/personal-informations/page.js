@@ -38,57 +38,56 @@ function Verification() {
   }, [isShowOtp]);
 
   return (
-    <>
-      <div className="px-28 bg-white py-10 min-h-screen">
-        <div className="flex justify-between items-center mb-10">
-          <div
-            className="flex gap-2 cursor-pointer"
-            onClick={() => {
-              if (step === 1) router.back();
-              else setStep(step - 1);
-            }}
-          >
-            <OSSIcons name="LeftArrow" />
-            <p className="text-[18px] font-semibold text-[#2E2D2D]">
-              Personal Information
-            </p>
-          </div>
-          {!personalDetail?.firstName && (
-            <div className="flex gap-3 items-center">
-              <div className="w-[98px] h-[8.5px] bg-[#DCDCDC] rounded-[20px] relative">
-                <div
-                  className={`${
-                    step === 1 ? "w-1/3" : step === 2 ? "w-2/3" : "w-full"
-                  } bg-[#000A80] rounded-[20px] h-[8.5px] absolute top-0`}
-                ></div>
-              </div>
-              <p className="text-[16px] text-[#646464]">{step}/3 Steps</p>
-            </div>
-          )}
-        </div>
-
-        {step === 1 && (
-          <FormIdentify
-            onClick={() => {
-              if (personalDetail?.firstName) {
-                requestEditProfile();
-              } else nextHandler();
-            }}
-          />
-        )}
-        {step === 2 && <FormContact onClick={() => nextHandler()} />}
-        {step === 3 && <FormUploadPhoto />}
-        {isShowOtp && <FormOtpModal />}
-        <ModalSuccess
-          id="personal_informations"
-          title="Your Data Have Submitted"
-          description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
+    <div className="lg:px-52 px-5 bg-white py-10 min-h-screen">
+      <div className="flex lg:flex-row flex-col justify-between mb-10">
+        <div
+          className="flex gap-2 cursor-pointer"
           onClick={() => {
-            router.push("/");
+            if (step === 1) router.back();
+            else setStep(step - 1);
+          }}
+        >
+          <OSSIcons name="LeftArrow" />
+          <p className="text-[18px] font-semibold text-[#2E2D2D]">
+            Personal Information
+          </p>
+        </div>
+        {!personalDetail?.firstName && (
+          <div className="flex lg:flex-row flex-col lg:gap-3 gap-1 items-center  lg:mt-0 mt-5">
+            <div className="w-[98px] h-[8.5px] bg-[#DCDCDC] rounded-[20px] relative">
+              <div
+                className={`${
+                  step === 1 ? "w-1/3" : step === 2 ? "w-2/3" : "w-full"
+                } bg-[#000A80] rounded-[20px] h-[8.5px] absolute top-0`}
+              ></div>
+            </div>
+            <p className="text-[16px] text-[#646464]">{step}/3 Steps</p>
+          </div>
+        )}
+      </div>
+
+      {step === 1 && (
+        <FormIdentify
+          onClick={() => {
+            if (personalDetail?.firstName) {
+              requestEditProfile();
+            } else nextHandler();
           }}
         />
-      </div>
-    </>
+      )}
+      {step === 2 && <FormContact onClick={() => nextHandler()} />}
+      <div className="max-w-screen-md">{step === 3 && <FormUploadPhoto />}</div>
+      {isShowOtp && <FormOtpModal />}
+
+      <ModalSuccess
+        id="personal_informations"
+        title="Your Data Have Submitted"
+        description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
+        onClick={() => {
+          router.push("/");
+        }}
+      />
+    </div>
   );
 }
 

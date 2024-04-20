@@ -27,6 +27,7 @@ function FormIdentify({ onClick }) {
 
   const [input, setInput] = useState({});
   const { personalDetail, residenceDetail, birthDetail } = profile || {};
+  console.log("personalDetail:", personalDetail);
   const { dateOfBirth } = birthDetail || {};
   const { countryCode, municipalityCode, postAdministrativeCode, sucosCode } =
     residenceDetail || {};
@@ -112,29 +113,29 @@ function FormIdentify({ onClick }) {
   ]);
 
   const genderForm = [
-    { name: "Male", code: "Male" },
-    { name: "Female", code: "Female" },
+    { name: "Male", code: "male" },
+    { name: "Female", code: "female" },
   ];
   const identityTypeForm = [
-    { name: "Citizen Card", code: "CitizenCard" },
-    { name: "Passport", code: "Passport" },
+    { name: "Citizen Card", code: "citizenCard" },
+    { name: "Passport", code: "passport" },
   ];
 
   return (
     <>
       {loading && <Loader />}
       <div>
-        <h1 className="text-[28px] font-semibold text-[#2E2D2D] mb-5">
+        <h1 className="lg:text-[28px] text-[24px] font-semibold text-[#2E2D2D] mb-5">
           {personalDetail?.firstName ? "Profile" : "Identify"}
         </h1>
         {!personalDetail?.firstName && (
           <p className="text-[#646464] text-[16px] mb-10">
-            please to complete your personal data for account completion.
+            Please to complete your personal data for account completion.
           </p>
         )}
       </div>
       <div className="flex flex-col gap-6 mb-10">
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
           <div className="flex flex-col">
             <label className="text-label">First Name</label>
             <input
@@ -158,7 +159,7 @@ function FormIdentify({ onClick }) {
             />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
           <InputDropdown
             label={"Gender"}
             topic={genderForm}
@@ -174,7 +175,7 @@ function FormIdentify({ onClick }) {
             selectedTopic={input.IdentityType}
           />
         </div>
-        <div className="grid grid-cols-2 gap-10">
+        <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
           <div className="flex flex-col">
             <label className="text-label">Identity Number</label>
             <input
@@ -199,7 +200,7 @@ function FormIdentify({ onClick }) {
           Place of birth
         </h1>
         <div className="flex flex-col gap-6 mb-16">
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
               label={"Country"}
               topic={region}
@@ -216,7 +217,7 @@ function FormIdentify({ onClick }) {
               selectedTopic={input?.municipality}
             />
           </div>
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
               label={"City"}
               topic={city}
@@ -240,7 +241,7 @@ function FormIdentify({ onClick }) {
         disabled={isDisabled}
         className={`${
           isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
-        } py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px]`}
+        } py-4 lg:px-32 text-[#F3F3F3] flex m-auto rounded-[8px] lg:w-fit w-full text-center items-center justify-center  `}
         onClick={() => {
           const filteredInput = {
             FirstName: input.FirstName,

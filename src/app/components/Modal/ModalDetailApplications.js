@@ -10,12 +10,12 @@ function ModalDetailApplications({ data }) {
   }
   return (
     <dialog id="detailModal" className="modal">
-      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px] min-w-[594px] relative">
-        <div className="flex justify-between">
-          <h1 className="-mt-1 text-[25px] font-semibold text-[#2E2D2D] mb-5">
+      <div className=" bg-white flex flex-col px-10 py-7 lg:rounded-[20px] lg:w-[594px] w-full lg:h-fit h-screen relative">
+        <div className="flex lg:flex-row flex-row-reverse lg:justify-between justify-end gap-6 lg:mb-0 mb-5">
+          <h1 className="-mt-1 lg:text-[25px] text-[18px] font-semibold text-[#2E2D2D] mb-5">
             Detail Status
           </h1>
-          <form method="dialog" className="border-none -mt-.5">
+          <form method="dialog" className="border-none lg:-mt-.5">
             <button formMethod="dialog">
               <OSSIcons name={"Cancel"} fill="#2E2D2D" />
             </button>
@@ -23,7 +23,7 @@ function ModalDetailApplications({ data }) {
         </div>
         {data && (
           <ol className="relative ms-3">
-            {data.reverse().map((e, i) => {
+            {data.map((e, i) => {
               const { status, notes, createdAt } = e;
               return (
                 <div key={i}>

@@ -95,14 +95,14 @@ function FormContact({ onClick }) {
     <>
       {loading && <Loader />}
       <div>
-        <h1 className="text-[28px] font-semibold text-[#2E2D2D] mb-2">
+        <h1 className="lg:text-[28px] text-[24px] font-semibold text-[#2E2D2D] mb-2">
           Contact and Residance
         </h1>
         <p className="text-[#646464] text-[16px] mb-10">
           please to complete your personal data for account completion.
         </p>
       </div>
-      <div className="grid grid-cols-2 gap-10 mb-10">
+      <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5 mb-10">
         <div className="flex flex-col">
           <label className="text-label">Email</label>
           <input
@@ -131,7 +131,7 @@ function FormContact({ onClick }) {
           Local Residence
         </h1>
         <div className="flex flex-col gap-6 mb-16">
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <div className="flex flex-col">
               <label className="text-label">Address</label>
               <input
@@ -143,7 +143,7 @@ function FormContact({ onClick }) {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
               label={"Country"}
               topic={region}
@@ -160,7 +160,7 @@ function FormContact({ onClick }) {
               selectedTopic={input?.municipality}
             />
           </div>
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
               label={"City"}
               topic={city}

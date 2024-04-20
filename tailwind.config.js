@@ -36,14 +36,14 @@ module.exports = {
           "@apply font-lato font-semibold text-black": {},
         },
         ".text-input": {
-          "@apply border-b-[1px] border-[#B0B0B0] focus:outline-none pb-1 text-[18px]  bg-transparent":
+          "@apply border-b-[1px] border-[#B0B0B0] focus:outline-none pb-1 lg:text-[18px] text-[16px] bg-transparent":
             {},
         },
         ".text-label": {
-          "@apply text-[16px] font-thin text-[#646464] mb-1": {},
+          "@apply lg:text-[16px] text-[14px] font-thin text-[#646464] mb-1": {},
         },
         ".text-headForm": {
-          "@apply text-[28px] font-bold": {},
+          "@apply lg:text-[28px] text-[24px] font-bold": {},
         },
       });
     },

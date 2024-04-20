@@ -205,12 +205,12 @@ const MyApplications = () => {
     return (
       <div className="border-[#DCDCDC] border-[1px] mt-8 p-[24px] rounded-[20px] flex flex-col">
         <div
-          className={`grid grid-cols-6 justify-center items-center gap-2 ${
+          className={`grid-cols-6 justify-center items-center gap-2 ${
             (status === "completed" ||
               status === "rejectedFromBackOffice" ||
               status === "rejectedFromFrontOffice") &&
             "border-b-[1px] border-[#DCDCDC] pb-4"
-          }`}
+          } lg:grid hidden`}
         >
           <div
             className={`w-[64px] h-[64px]  bg-[#E7953E]
@@ -262,14 +262,80 @@ const MyApplications = () => {
             Detail
           </div>
         </div>
+        {/* mobile */}
+        <div
+          className={`flex flex-col justify-center items-center gap-2 ${
+            (status === "completed" ||
+              status === "rejectedFromBackOffice" ||
+              status === "rejectedFromFrontOffice") &&
+            "border-b-[1px] border-[#DCDCDC] pb-4"
+          } lg:hidden`}
+        >
+          <div className="flex justify-between w-full items-center">
+            <div
+              className={`w-[54px] h-[54px]  bg-[#E7953E]
+                 rounded-md flex justify-center items-center`}
+            >
+              <Image
+                src={iconDecider(serviceType)}
+                width={30}
+                height={30}
+                alt={serviceType}
+              />
+            </div>
+            <div
+              className="flex flex-col justify-between items-end text-[#1C25E7] font-semibold cursor-pointer"
+              onClick={() => {
+                dispatch(getDetailApplicationStatus(id, user.accessToken)).then(
+                  () => detailModal.showModal()
+                );
+              }}
+            >
+              Detail
+            </div>
+          </div>
+          <div className="flex justify-between w-full items-center mt-3 border-b-[1px] border-[#DCDCDC] pb-4 gap-16">
+            <div className="flex flex-col justify-between lg:gap-3 gap-1">
+              <p className="text-[#646464] text-[16px]">Service Type</p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {serviceTypeDecider(serviceType)}
+              </p>
+            </div>
+            <div className="flex flex-col justify-between lg:gap-3 gap-1 items-end text-end">
+              <p className="text-[#646464] text-[16px]">Applying</p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {serviceTypeDecider(service)}
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-between w-full items-center pt-4 gap-5">
+            <div className="flex flex-col justify-between lg:gap-3 gap-1">
+              <p className="text-[#646464] text-[16px]">Apply Date</p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {dateFormatter(appliedAt)}
+              </p>
+            </div>
+            <div className="flex flex-col justify-between lg:gap-3 gap-1 text-end">
+              <p className="text-[#646464] text-[16px]">Status</p>
+              <span
+                className={`${statusColorDecider(
+                  status
+                )} text-[12px] w-fit p-2 bg-opacity-15 rounded-[4px] font-semibold `}
+              >
+                {statusDecider(status)}
+              </span>
+            </div>
+          </div>
+        </div>
+
         {status === "completed" && (
-          <div className="flex gap-4 justify-end items-center mt-3">
+          <div className="flex lg:gap-4 gap-2 lg:flex-row flex-col justify-end items-center mt-3">
             <p className="text-[14px] text-[#646464]">
               Your documents are ready to be picked up at the office
             </p>
             <Link
               href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
-              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px]"
+              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
               Schedule Pick Up
             </Link>
@@ -277,16 +343,16 @@ const MyApplications = () => {
         )}
         {(status === "rejectedFromBackOffice" ||
           status === "rejectedFromFrontOffice") && (
-          <div className="flex gap-4 justify-end items-center mt-3">
+          <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 justify-end items-center mt-3">
             <Link
               href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
-              className="border-[#DCDCDC] border-[1px] bg-[#FFFFFF] text-[#1C25E7] p-[8px] px-4 rounded-[8px] text-[16px]"
+              className="border-[#DCDCDC] border-[1px] bg-[#FFFFFF] text-[#1C25E7] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
               Correct at Office
             </Link>
             <Link
               href={`/${serviceType}?id=${id}`}
-              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px]"
+              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
               Correct Online
             </Link>
@@ -354,7 +420,7 @@ const MyApplications = () => {
 
   return (
     <>
-      <div className="px-28 bg-white py-10 min-h-screen">
+      <div className="lg:px-52 px-5 bg-white py-10 min-h-screen">
         {loading && <Loader />}
         <div
           className="flex gap-2 cursor-pointer"

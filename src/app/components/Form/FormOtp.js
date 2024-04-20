@@ -12,10 +12,16 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
   const [timer, setTimer] = useState(30);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
+  const [isDisabled, setIsDisabled] = useState(true);
 
   useEffect(() => {
     inputRefs[0].current.focus();
   }, []);
+
+  useEffect(() => {
+    if (otp.join("").length === 4) setIsDisabled(false);
+    else setIsDisabled(true);
+  }, [otp]);
 
   const handleChange = (index, event) => {
     const value = event.target.value;
@@ -61,6 +67,7 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
         setShowResendButton(false);
         setTimer(30);
         startTimer();
+        setOtp(["", "", "", ""]);
       })
       .catch((err) => {
         toast.error(err.response.data.errorMessage);
@@ -70,14 +77,14 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
   return (
     <>
       {loading && <Loader />}
-      <div className="flex flex-col items-center justify-center text-center px-44 gap-10 relative">
+      <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10 relative">
         <button className="absolute top-7 left-7 flex gap-3" onClick={onClick}>
           <OSSIcons name="LeftArrow" className="flex m-auto" />
           <p className="text-[#2E2D2D] text-[18px] font-bold">Back</p>
         </button>
         <div className="flex flex-col gap-2">
           <h1 className="text-headForm capitalize">Input OTP Code</h1>
-          <p className="font-thin text-[16px] text-[#646464]">
+          <p className="font-thin lg:text-[16px] text-[#646464]">
             OTP Code sent to your phone number registered
           </p>
         </div>
@@ -100,7 +107,10 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
 
         <div className="flex flex-col gap-5 w-full">
           <button
-            className="py-4 bg-[#1C25E7] w-full rounded-[8px] text-white -mt-2"
+            disabled={isDisabled}
+            className={`py-4 ${
+              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
+            } w-full rounded-[8px] text-white -mt-2`}
             onClick={() => {
               dispatch(
                 verifyOtp({
@@ -118,7 +128,7 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
           >
             Submit
           </button>
-          <p className="text-[18px] text-[#646464]">
+          <p className="lg:text-[18px] text-[16px] text-[#646464]">
             {showResendButton ? (
               <button
                 onClick={handleResendClick}

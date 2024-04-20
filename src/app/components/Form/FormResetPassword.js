@@ -69,12 +69,12 @@ function FormResetPassword({ back, onSubmit }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center text-center px-44 gap-10 relative">
+    <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10 relative">
       <button className="absolute top-7 left-7 flex gap-3" onClick={back}>
         <OSSIcons name="LeftArrow" className="flex m-auto" />
         <p className="text-[#2E2D2D] text-[18px] font-bold">Back</p>
       </button>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 lg:mt-0 mt-16">
         <h1 className="text-headForm">Reset Your Password</h1>
       </div>
       <div className="flex flex-col text-start w-full">
@@ -84,7 +84,7 @@ function FormResetPassword({ back, onSubmit }) {
             type={showPassword.password ? "text" : "password"}
             value={input.password}
             onChange={handleChangeInput}
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
             placeholder="Password"
             name="password"
           />
@@ -112,7 +112,7 @@ function FormResetPassword({ back, onSubmit }) {
             type={showPassword.reenterPassword ? "text" : "password"}
             value={input.reenterPassword}
             onChange={handleChangeInput}
-            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 text-[18px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
+            className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
             placeholder="Reenter Password"
             name="reenterPassword"
           />
@@ -225,7 +225,7 @@ function FormResetPassword({ back, onSubmit }) {
                   className="text-[14px] text-[#313131]"
                   style={{ fontWeight: 400 }}
                 >
-                  Minimum 8 Characters
+                  Minimum 8 Chars
                 </p>
               </div>
             </div>
