@@ -105,13 +105,6 @@ function FormIdentify({ onClick }) {
     subDistrictCode,
   ]);
 
-  useEffect(() => {
-    if (user.status === "inactive") {
-      router.push("/");
-      toast.error("Verification Your Email First");
-    }
-  }, [user]);
-
   const genderForm = [
     { name: "Male", code: "male" },
     { name: "Female", code: "female" },
