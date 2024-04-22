@@ -138,7 +138,10 @@ function Verif() {
               <button
                 className="bg-[#1C25E7] px-7 py-2 rounded-lg text-[#F3F3F3] inline-block"
                 onClick={() => {
-                  if (user?.status === "inactive") {
+                  if (
+                    user?.status === "inactive" &&
+                    profile?.status === "inactive"
+                  ) {
                     dispatch(getTokenHandler(user?.accessToken)).then(
                       (token) => {
                         router.push(`/verification-email?token=${token}`);
