@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
+import { useDispatch } from "react-redux";
+import { forgotPasswordHandler } from "@/app/store/actions/userAction";
+import { toast } from "sonner";
 
 function FormForgotPassword({ onClick, onClickSubmit }) {
   const [email, setEmail] = useState("");
   const isDisabled = email === "";
   const [isValidEmail, setIsValidEmail] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     setIsValidEmail(emailRegex.test(email));
   }, [email]);
+
   return (
     <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10 relative">
       <button className="absolute top-7 left-7 flex gap-3" onClick={onClick}>
@@ -43,7 +48,11 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
         }  w-full rounded-[8px] text-white lg:-mt-2 mt-5`}
         disabled={isDisabled || !isValidEmail}
         onClick={() => {
-          onClickSubmit();
+          // onClickSubmit();
+          dispatch(forgotPasswordHandler(email)).then((data) => {
+            if (!data) toast.error("Email Not Found");
+            else onClickSubmit();
+          });
         }}
       >
         Request Reset Password

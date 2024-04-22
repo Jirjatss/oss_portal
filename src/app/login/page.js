@@ -26,7 +26,7 @@ function Login() {
 
   return (
     <>
-      {loading && <Loader message="Please wait, your login in progress..." />}
+      {loading && <Loader />}
 
       <div className="min-h-screen bg-white grid lg:grid-cols-2 grid-cols-1">
         <div className="relative lg:flex hidden h-screen">

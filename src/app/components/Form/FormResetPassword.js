@@ -2,6 +2,8 @@
 
 import React, { useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
+import { useDispatch, useSelector } from "react-redux";
+import { resetPasswordHandler } from "@/app/store/actions/userAction";
 
 function FormResetPassword({ back, onSubmit }) {
   const [showPassword, setShowPassword] = useState({
@@ -13,6 +15,8 @@ function FormResetPassword({ back, onSubmit }) {
     password: "",
     reenterPassword: "",
   });
+  const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.userReducer);
 
   const [passwordValid, setPasswordValid] = useState(false);
   const [isUppercaseValid, setIsUppercaseValid] = useState(false);
@@ -238,7 +242,16 @@ function FormResetPassword({ back, onSubmit }) {
           passwordValid ? "bg-[#1C25E7] " : "bg-[#DCDCDC] cursor-not-allowed"
         } w-full rounded-[8px] text-white -mt-2`}
         disabled={!passwordValid}
-        onClick={onSubmit}
+        onClick={() => {
+          dispatch(
+            resetPasswordHandler({
+              activationToken: token,
+              password: input.password,
+            })
+          ).then(() => {
+            onSubmit();
+          });
+        }}
       >
         Submit
       </button>

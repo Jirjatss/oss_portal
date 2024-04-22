@@ -304,3 +304,59 @@ export const getTokenHandler = (access_token) => {
     }
   };
 };
+
+export const forgotPasswordSuccess = (payload) => {
+  return {
+    type: GET_TOKEN,
+    payload,
+  };
+};
+
+export const forgotPasswordHandler = (email) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      const { data } = await axios({
+        method: "POST",
+        url: "https://api.ardhiansyah.com/auth/forget-password",
+        data: { email: email },
+      });
+
+      dispatch({
+        type: LOADING_FALSE,
+      });
+      dispatch(forgotPasswordSuccess(data.data));
+      return data.data;
+    } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
+      console.log(error);
+      throw error;
+    }
+  };
+};
+
+export const resetPasswordHandler = (val) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      // console.log(val);
+      const { data } = await axios({
+        method: "POST",
+        url: "https://api.ardhiansyah.com/auth/reset-password",
+        data: val,
+      });
+      dispatch({
+        type: LOADING_FALSE,
+      });
+      return data.data;
+    } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
+      console.log(error);
+      throw error;
+    }
+  };
+};
