@@ -47,7 +47,7 @@ function Service() {
   const ServicesHeader = () => {
     return (
       <>
-        <div className=" flex lg:grid lg:grid-cols-4 lg:gap-3 gap-1 justify-start overflow-y-hidden overflow-x-auto  border-b-[1px] border-b-[#DCDCDC]">
+        <div className=" flex lg:grid lg:grid-cols-4 lg:gap-3 gap-1 justify-start overflow-y-hidden overflow-x-auto border-b-[1px] border-b-[#DCDCDC]">
           {services.map((e, i) => (
             <div
               key={i}
@@ -57,7 +57,6 @@ function Service() {
                   : "text-[#646464]"
               } cursor-pointer w-full lg:w-[150px] lg:text-[16px] text-[14px]`}
               onClick={() => setIndex(i)}
-              style={{ whiteSpace: "pre-line" }}
             >
               <p className="mb-1 text-center lg:text-[16px] text-[14px]">
                 {e.title}

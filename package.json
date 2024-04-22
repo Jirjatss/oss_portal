@@ -19,6 +19,7 @@
     "@tailwindcss/line-clamp": "^0.4.4",
     "axios": "^1.6.7",
     "daisyui": "^4.7.2",
+    "date-fns": "^3.6.0",
     "dayjs": "^1.11.10",
     "lodash": "^4.17.21",
     "next": "14.1.0",

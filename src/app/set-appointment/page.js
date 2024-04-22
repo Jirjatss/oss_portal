@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../public/assets/icons/parent";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import FormAppointment from "../components/Form/FormAppointment";
 import FormSetDate from "../components/Form/FormSetDate";
 import FormAppointmentProfile from "../components/Form/FormAppointmentProfile";
@@ -16,6 +16,8 @@ const SetAppointment = () => {
   const user = useAuthUser();
   const router = useRouter();
   const dispatch = useDispatch();
+  const searchParams = useSearchParams();
+  const reschedule = searchParams.get("reschedule");
 
   const [step, setStep] = useState(1);
 
@@ -31,6 +33,10 @@ const SetAppointment = () => {
   useEffect(() => {
     if (user) dispatch(getUserInformation(user.accessToken));
   }, [user, dispatch]);
+
+  useEffect(() => {
+    if (reschedule && reschedule === "true") setStep(2);
+  }, [reschedule]);
 
   useEffect(() => {
     if (user && firstName === "") {
@@ -55,16 +61,18 @@ const SetAppointment = () => {
               Set Appointment
             </p>
           </div>
-          <div className="flex lg:flex-row flex-col lg:gap-3 gap-1 items-center  lg:mt-0 mt-5">
-            <div className="w-[98px] h-[8.5px] bg-[#DCDCDC] rounded-[20px] relative">
-              <div
-                className={`${
-                  step === 1 ? "w-1/2" : step === 2 ? "w-2/3" : "w-full"
-                } bg-[#000A80] rounded-[20px] h-[8.5px] absolute top-0`}
-              ></div>
+          {!reschedule && (
+            <div className="flex lg:flex-row flex-col lg:gap-3 gap-1 items-center  lg:mt-0 mt-5">
+              <div className="w-[98px] h-[8.5px] bg-[#DCDCDC] rounded-[20px] relative">
+                <div
+                  className={`${
+                    step === 1 ? "w-1/2" : step === 2 ? "w-2/3" : "w-full"
+                  } bg-[#000A80] rounded-[20px] h-[8.5px] absolute top-0`}
+                ></div>
+              </div>
+              <p className="text-[16px] text-[#646464]">{step}/3 Steps</p>
             </div>
-            <p className="text-[16px] text-[#646464]">{step}/3 Steps</p>
-          </div>
+          )}
         </div>
         {step === 1 && <FormAppointment onContinue={nextHandler} />}
         {step === 2 && <FormSetDate onContinue={nextHandler} />}

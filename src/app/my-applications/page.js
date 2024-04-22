@@ -265,13 +265,13 @@ const MyApplications = () => {
               alt={serviceType}
             />
           </div>
-          <div className="flex flex-col justify-between gap-3 -ml-12 max-w-[170px] min-h-[80px]">
+          <div className="flex flex-col  gap-3 -ml-12 max-w-[170px] min-h-[80px]">
             <p className="text-[#646464] text-[16px]">Service Type</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
               {serviceTypeDecider(serviceType)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-3 -ml-12 min-h-[80px]">
+          <div className="flex flex-col  gap-3 -ml-12 min-h-[80px]">
             <p className="text-[#646464] text-[16px]">Applying</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
               {serviceTypeDecider(service)}
@@ -390,7 +390,7 @@ const MyApplications = () => {
               Correct at Office
             </Link>
             <Link
-              href={`/${serviceType}?id=${id}`}
+              href={`/${serviceType}?id=${id}&serviceId=${serviceId}`}
               className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
               Correct Online
@@ -426,13 +426,13 @@ const MyApplications = () => {
               {officeLocation}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-2">
+          <div className="flex flex-col justify-between gap-2 max-w-[200px]">
             <p className="text-[#646464] text-[16px]">Service</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {serviceTypeDecider(serviceType)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-2">
+          <div className="flex flex-col justify-between gap-2 max-w-[200px]">
             <p className="text-[#646464] text-[16px]">Purpose</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {serviceTypeDecider(service)}

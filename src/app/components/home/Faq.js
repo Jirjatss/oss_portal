@@ -86,10 +86,10 @@ function Faq() {
                     {e.question}
                   </p>
                   {selectedIndexes[idx] ? (
-                    <div className="flex mr-2">
+                    <div className="flex lg:mr-2 mr-1">
                       <img
                         src="/assets/icons/dash.png"
-                        className="w-4 h-4 cursor-pointer "
+                        className="lg:w-4 lg:h-4 w-3 h-3 cursor-pointer "
                       />
                     </div>
                   ) : (

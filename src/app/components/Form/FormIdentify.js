@@ -106,7 +106,7 @@ function FormIdentify({ onClick }) {
   ]);
 
   useEffect(() => {
-    if (user.status !== "active") {
+    if (user.status === "inactive") {
       router.push("/");
       toast.error("Verification Your Email First");
     }

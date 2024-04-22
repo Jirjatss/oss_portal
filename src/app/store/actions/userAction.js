@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  GET_TOKEN,
   GET_USER,
   GET_USER_INFORMATION,
   HIDE_VERIF,
@@ -178,7 +179,6 @@ export const activateUser = (token, accessToken) => {
   return async (dispatch) => {
     dispatch(loading());
     try {
-      console.log(token);
       const { data } = await axios({
         method: "POST",
         url: "https://api.ardhiansyah.com/auth/activate",
@@ -265,6 +265,37 @@ export const editProfile = (val, access_token) => {
           type: LOADING_FALSE,
         });
       }
+    } catch (error) {
+      dispatch({
+        type: LOADING_FALSE,
+      });
+      throw error;
+    }
+  };
+};
+
+export const getTokenSuccess = (payload) => {
+  return {
+    type: GET_TOKEN,
+    payload,
+  };
+};
+
+export const getTokenHandler = (access_token) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      const { data } = await axios({
+        url: "https://api.ardhiansyah.com/auth/resend-activation-token",
+        headers: {
+          Authorization: `${access_token}`,
+        },
+      });
+      // dispatch(getTokenSuccess(data.data));
+      dispatch({
+        type: LOADING_FALSE,
+      });
+      return data.data;
     } catch (error) {
       dispatch({
         type: LOADING_FALSE,

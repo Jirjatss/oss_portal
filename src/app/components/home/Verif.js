@@ -1,5 +1,6 @@
 import {
   activateUser,
+  getTokenHandler,
   getUserInformation,
   hideVerif,
 } from "@/app/store/actions/userAction";
@@ -20,33 +21,56 @@ function Verif() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useAuthUser();
+
   const [isVerifComplete, setIsVerifComplete] = useState(false);
-  const { dataRegister, profile, isShowVerif } = useSelector(
-    (state) => state.userReducer
-  );
+  const { profile, isShowVerif } = useSelector((state) => state.userReducer);
+  console.log("profile:", profile);
+
+  useEffect(() => {
+    if (user?.status === "active")
+      dispatch(getUserInformation(user?.accessToken));
+  }, [user]);
 
   const { personalDetail } = profile || {};
   const { firstName } = personalDetail || {};
 
   useEffect(() => {
-    if (firstName !== null && firstName !== "" && firstName !== undefined)
+    if (
+      firstName !== null &&
+      firstName !== "" &&
+      firstName !== undefined &&
+      profile?.status !== "needToFillPersonalInformation" &&
+      profile?.status !== "inactive"
+    )
       setIsVerifComplete(true);
     else setIsVerifComplete(false);
   }, [firstName]);
 
   const buttonTitle =
-    user?.status === "Inactive" ? "Resend to Email" : "Verification";
+    user?.status === "Inactive" || profile?.status === "inactive"
+      ? "Resend to Email"
+      : "Verification";
 
   const titleDecider = () => {
     if (user?.status === "inactive") return "Verification your mail first";
-    if (user?.status === "active" && (firstName === "" || firstName === null))
+    if (
+      user?.status === "needToFillPersonalInformation" ||
+      profile?.status === "needToFillPersonalInformation" ||
+      firstName === "" ||
+      firstName === null
+    )
       return "Verification your account first";
     if (isVerifComplete) return "Verification Successful!";
   };
 
   const iconDecider = () => {
     if (user?.status === "inactive") return ResendVerif;
-    if (user?.status === "active" && (firstName === "" || firstName === null))
+    if (
+      user?.status === "needToFillPersonalInformation" ||
+      profile?.status === "needToFillPersonalInformation" ||
+      firstName === "" ||
+      firstName === null
+    )
       return FlowStep1;
     if (isVerifComplete) return VerifSuccess;
   };
@@ -54,17 +78,16 @@ function Verif() {
   const descriptionDecider = () => {
     if (user?.status === "inactive")
       return "To be able to use all the available facilities, please to verifiy your email first so you can eligible to continue.";
-    if (user?.status === "active" && (firstName === "" || firstName === null))
+    if (
+      user?.status === "needToFillPersonalInformation" ||
+      profile?.status === "needToFillPersonalInformation" ||
+      firstName === "" ||
+      firstName === null
+    )
       return "To be able to use all the available facilities, please to complete your personal data first so you can eligible to continue.";
     if (isVerifComplete)
       return "Congratulations! Your data has been verified, granting you complete access to our facilities. Start exploring now!";
   };
-
-  useEffect(() => {
-    if (user?.status === "active") {
-      dispatch(getUserInformation(user?.accessToken));
-    }
-  }, []);
 
   if (!isShowVerif) return null;
 
@@ -105,12 +128,12 @@ function Verif() {
               <button
                 className="bg-[#1C25E7] px-7 py-2 rounded-lg text-[#F3F3F3] inline-block"
                 onClick={() => {
-                  if (user?.status === "Inactive") {
-                    dispatch(
-                      activateUser(dataRegister.token, user?.accessToken)
-                    )
-                      .then(() => toast.success("Success Activate"))
-                      .catch((err) => console.log(err));
+                  if (user?.status === "inactive") {
+                    dispatch(getTokenHandler(user?.accessToken)).then(
+                      (token) => {
+                        router.push(`/verification-email?token=${token}`);
+                      }
+                    );
                   } else {
                     router.push("/personal-informations");
                   }

@@ -1,4 +1,5 @@
 import {
+  GET_TOKEN,
   GET_USER,
   GET_USER_INFORMATION,
   HIDE_VERIF,
@@ -20,6 +21,7 @@ const initialState = {
   dataRegister: null,
   personalInformation: null,
   isShowVerif: false,
+  token: null,
 };
 
 const userReducer = (state = initialState, action) => {
@@ -79,6 +81,12 @@ const userReducer = (state = initialState, action) => {
         loading: false,
         user: null,
         profile: null,
+      };
+
+    case GET_TOKEN:
+      return {
+        loading: false,
+        token: action.payload,
       };
 
     case REQUEST_OTP:

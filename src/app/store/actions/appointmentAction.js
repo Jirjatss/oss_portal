@@ -74,3 +74,27 @@ export const setAppointment = (val, access_token) => {
     }
   };
 };
+
+export const rescheduleAppointment = (id, val, access_token) => {
+  return async (dispatch) => {
+    dispatch(loading());
+    try {
+      // console.log(id, val, access_token);
+      const { data } = await axios({
+        method: "PUT",
+        url: `https://api.ardhiansyah.com/appointments/${id}`,
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+        data: val,
+      });
+      dispatch(getMyAppointments(access_token));
+      dispatch({
+        type: LOADING_FALSE,
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+};

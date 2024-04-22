@@ -7,8 +7,10 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 
 export default function Home() {
   const auth = useAuthUser();
+
   const { profile, loading } = useSelector((state) => state.userReducer);
   const { personalDetail } = profile || {};
+
   const { firstName, gender } = personalDetail || {};
 
   return (
