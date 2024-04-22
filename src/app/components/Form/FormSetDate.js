@@ -22,7 +22,6 @@ function FormSetDate({ onContinue }) {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const appointmentId = searchParams.get("appointmentId");
-  console.log("appointmentId:", appointmentId);
   const { appointmentData } = useSelector((state) => state.appointmentReducer);
   const { loading } = useSelector((state) => state.userReducer);
   const [selectedDate, setSelectedDate] = useState(null);

@@ -19,6 +19,7 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { getServicesTypeHandler } from "@/app/store/actions/serviceAction";
+import { toast } from "sonner";
 
 export const ServicesCard = ({ title, icon, desc, url }) => {
   const user = useAuthUser();
@@ -74,7 +75,9 @@ const Services = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getServicesTypeHandler());
+    dispatch(getServicesTypeHandler()).catch((err) =>
+      toast.error("Failed to fetch")
+    );
   }, []);
 
   useEffect(() => {

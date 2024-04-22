@@ -13,7 +13,6 @@ import { setAppointment } from "@/app/store/actions/appointmentAction";
 function FormOtpAppointment({ data }) {
   const [timer, setTimer] = useState(30);
   const { dataRegister, loading } = useSelector((state) => state.userReducer);
-  // console.log("dataRegister:", dataRegister);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [successSubmit, setSuccessSubmit] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");

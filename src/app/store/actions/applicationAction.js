@@ -53,7 +53,6 @@ export const editMyApplication = (id, val, access_token) => {
       const formData = new FormData();
 
       val.forEach((file) => {
-        console.log(file, "ini");
         formData.append(`Files`, file);
       });
 
