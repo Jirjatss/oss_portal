@@ -20,7 +20,7 @@ const initialState = {
   user: null,
   dataRegister: null,
   personalInformation: null,
-  isShowVerif: false,
+  isShowVerif: true,
   token: null,
 };
 

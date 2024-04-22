@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { activateUser, getUserInformation } from "../store/actions/userAction";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
@@ -13,18 +13,20 @@ function VerificationEmail() {
   const token = searchParams.get("token");
   const user = useAuthUser();
   const router = useRouter();
-
+  const [successVerif, setSuccessVerif] = useState(false);
   const dispatch = useDispatch();
+  useEffect(() => {
+    if (successVerif) {
+      window.location.href = "/";
+    }
+  }, [successVerif]);
 
   return (
     <div className="bg-white min-h-screen flex lg:px-28 px-5 pt-4">
       <div
         onClick={() => {
           dispatch(activateUser(token, user?.access_token))
-            .then(() => {
-              dispatch(getUserInformation(user?.access_token));
-              router.push("/");
-            })
+            .then(() => setSuccessVerif(true))
             .catch((err) => toast.error("Failed to verification your email"));
         }}
         className="text-blue-700 cursor-pointer"

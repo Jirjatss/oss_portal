@@ -24,11 +24,22 @@ function Verif() {
 
   const [isVerifComplete, setIsVerifComplete] = useState(false);
   const { profile, isShowVerif } = useSelector((state) => state.userReducer);
-  console.log("profile:", profile);
+
+  const [title, setTitle] = useState(null);
 
   useEffect(() => {
-    if (user?.status === "active")
-      dispatch(getUserInformation(user?.accessToken));
+    if (user?.status === "inactive" && profile?.status === "inactive")
+      setTitle("Verification your mail first");
+    if (
+      user?.status === "needToFillPersonalInformation" ||
+      profile?.status === "needToFillPersonalInformation"
+    )
+      setTitle("Verification your account first");
+    if (isVerifComplete) setTitle("Verification Successful!");
+  }, [user, profile]);
+
+  useEffect(() => {
+    dispatch(getUserInformation(user?.accessToken));
   }, [user]);
 
   const { personalDetail } = profile || {};
@@ -47,17 +58,16 @@ function Verif() {
   }, [firstName]);
 
   const buttonTitle =
-    user?.status === "Inactive" || profile?.status === "inactive"
+    user?.status === "inactive" && profile?.status === "inactive"
       ? "Resend to Email"
       : "Verification";
 
   const titleDecider = () => {
-    if (user?.status === "inactive") return "Verification your mail first";
+    if (profile?.status === "inactive" && !profile)
+      return "Verification your mail first";
     if (
       user?.status === "needToFillPersonalInformation" ||
-      profile?.status === "needToFillPersonalInformation" ||
-      firstName === "" ||
-      firstName === null
+      profile?.status === "needToFillPersonalInformation"
     )
       return "Verification your account first";
     if (isVerifComplete) return "Verification Successful!";
@@ -76,7 +86,7 @@ function Verif() {
   };
 
   const descriptionDecider = () => {
-    if (user?.status === "inactive")
+    if (user?.status === "inactive" && !profile)
       return "To be able to use all the available facilities, please to verifiy your email first so you can eligible to continue.";
     if (
       user?.status === "needToFillPersonalInformation" ||
@@ -109,7 +119,7 @@ function Verif() {
         <div className="flex flex-col gap-4 lg:mt-0 mt-9">
           <div className="flex lg:flex-row flex-col lg:gap-3 lg:items-center">
             <h1 className="text-[#2E2D2D] font-semibold lg:text-[28px] text-[18px] leading-none capitalize">
-              {titleDecider()}
+              {title}
             </h1>
             <div className="lg:-mt-2.5 hidden lg:flex">
               <Image
