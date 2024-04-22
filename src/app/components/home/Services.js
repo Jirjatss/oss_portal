@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import {
   Passport,
@@ -9,41 +9,35 @@ import {
   CitizenCard,
   Akta,
   Booking,
+  Mariage,
+  Criminal,
+  Cr,
 } from "../../../../public/assets/emoji/index";
 import Image from "next/image";
 import Link from "next/link";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { getServicesTypeHandler } from "@/app/store/actions/serviceAction";
 
 export const ServicesCard = ({ title, icon, desc, url }) => {
   const user = useAuthUser();
   return (
     <Link href={url}>
       <div
-        className={`w-full border-[1px] border-[#DCDCDC] rounded-[20px] ${
-          user ? "lg:px-[15px] px-2 py-[20px]" : "lg:p-[20px] p-2"
+        className={`w-full lg:min-h-[250px] min-h-[170px] border-[1px] border-[#DCDCDC] rounded-[20px] ${
+          user ? "lg:px-[15px] p-4" : "lg:p-[20px] p-4"
         } flex flex-col lg:gap-[24px] gap-2 col-span-1 cursor-pointer`}
       >
         <div className="flex justify-between">
           <div
-            className={`lg:w-[64px] lg:h-[64px] w-[54px] h-[54px] ${
-              title === "Set Appointment" ? "bg-[#F0EFFD]" : "bg-[#E7953E]"
+            className={`lg:w-[64px] lg:h-[64px] items-start flex justify-start ${
+              title === "Set Appointment"
+                ? "lg:bg-[#F0EFFD]"
+                : "lg:bg-[#E7953E]"
             }  rounded-[12.8px] flex justify-center items-center`}
           >
-            <Image
-              src={icon}
-              width={40}
-              height={40}
-              alt={title}
-              className="lg:block hidden"
-            />
-            <Image
-              src={icon}
-              width={30}
-              height={30}
-              alt={title}
-              className="lg:hidden block"
-            />
+            <Image src={icon} width={40} height={40} alt={title} />
           </div>
           <button className="lg:hidden block">
             <OSSIcons name="RightArrow" styleDiv={{ width: "25px" }} />
@@ -55,8 +49,8 @@ export const ServicesCard = ({ title, icon, desc, url }) => {
         <div>
           <h1
             className={`${
-              user ? "lg:text-[18px] text-[16px]" : "lg:text-[24px] text-[16px]"
-            } font-semibold text-[#2E2D2D] mb-1`}
+              user ? "lg:text-[18px] text-[14px]" : "lg:text-[24px] text-[14px]"
+            } font-semibold text-[#2E2D2D] mb-1 leading-tight lg:mt-0 mt-2`}
           >
             {title}
           </h1>
@@ -74,55 +68,70 @@ export const ServicesCard = ({ title, icon, desc, url }) => {
 
 const Services = () => {
   const user = useAuthUser();
-  const router = useRouter();
-  const [service, setService] = useState([
-    {
-      icon: Akta,
-      title: "Birth of Certificate",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/birth-of-certificate",
-    },
-    {
-      icon: CitizenCard,
-      title: "Citizen ID",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/citizen-id",
-    },
-    {
-      icon: Passport,
-      title: "Passport",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/passport",
-    },
-    {
-      icon: Family,
-      title: "Family Card",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/family-card",
-    },
-    {
-      icon: Driving,
-      title: "Driving License",
-      desc: "Secure your identity. Obtain your birth certificate now!",
-      url: "/driving-license",
-    },
-  ]);
+  // const router = useRouter();
+  const { servicesType } = useSelector((state) => state.serviceReducer);
+  const [service, setService] = useState([]);
+  const dispatch = useDispatch();
 
-  if (user && !service.some((item) => item.title === "Set Appointment")) {
-    setService((prevService) => [
-      {
-        icon: Booking,
-        title: "Set Appointment",
-        desc: (
-          <>
-            Book appointments with government <br /> officials
-          </>
-        ),
-        url: "/set-appointment",
-      },
-      ...prevService,
-    ]);
-  }
+  useEffect(() => {
+    dispatch(getServicesTypeHandler());
+  }, []);
+
+  useEffect(() => {
+    if (servicesType && servicesType.length > 0) {
+      const updatedService = servicesType.map((e) => {
+        let icon;
+        switch (e.name) {
+          case "family-card":
+            icon = Family;
+            break;
+          case "general-passport":
+            icon = Passport;
+            break;
+          case "driving-license":
+            icon = Driving;
+            break;
+          case "citizen-id":
+            icon = CitizenCard;
+            break;
+          case "birth-certificate":
+            icon = Akta;
+            break;
+          case "marriage-certificate":
+            icon = Mariage;
+            break;
+          case "criminal-record-certificate":
+            icon = Criminal;
+            break;
+          case "commercial-registration":
+            icon = Cr;
+            break;
+          default:
+            icon = Family;
+        }
+        return {
+          icon: icon,
+          url: `/${e.name}`,
+          title: e.name
+            .split("-")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" "),
+        };
+      });
+      if (
+        user &&
+        !updatedService.some((item) => item.title === "Set Appointment")
+      ) {
+        updatedService.unshift({
+          icon: Booking,
+          title: "Set Appointment",
+          desc: "Book appointments with government officials",
+          url: "/set-appointment",
+        });
+      }
+      setService(updatedService);
+    }
+  }, [servicesType, user]);
 
   return (
     <div className={`${!user && "lg:pt-24 pt-16"}`} id="services">
@@ -144,11 +153,11 @@ const Services = () => {
 
       {user ? (
         <div className="grid lg:grid-cols-3 grid-cols-2 gap-3 gap-y-5">
-          {service.map((e, index) => (
+          {service?.map((e, index) => (
             <ServicesCard
               key={index}
               title={e.title}
-              desc={e.desc}
+              desc={"Secure your identity. Obtain your birth certificate now!"}
               icon={e.icon}
               url={e.url}
             />
@@ -156,11 +165,11 @@ const Services = () => {
         </div>
       ) : (
         <div className="grid lg:grid-cols-4 grid-cols-2 gap-5">
-          {service.map((e, index) => (
+          {service?.map((e, index) => (
             <ServicesCard
               key={index}
               title={e.title}
-              desc={e.desc}
+              desc={"Secure your identity. Obtain your birth certificate now!"}
               icon={e.icon}
               url={e.url}
             />

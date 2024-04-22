@@ -23,12 +23,6 @@ function Application() {
         </h1>
         <div className="lg:flex gap-3 hidden">
           <Image
-            src="/assets/images/appstore.png"
-            width={220}
-            height={40}
-            alt=""
-          />
-          <Image
             src="/assets/images/googlestore.png"
             width={220}
             height={10}
@@ -36,12 +30,6 @@ function Application() {
           />
         </div>
         <div className="grid grid-cols-2 gap-3 lg:hidden pb-7">
-          <Image
-            src="/assets/images/appstore.png"
-            width={250}
-            height={150}
-            alt=""
-          />
           <Image
             src="/assets/images/googlestore.png"
             width={250}

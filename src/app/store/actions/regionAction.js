@@ -49,7 +49,7 @@ export const getRegionMunicipality = (access_token) => {
     // dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/regions/municipality",
+        url: "https://api.ardhiansyah.com/regions/state",
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -75,7 +75,7 @@ export const getRegionPostAdministrative = (access_token, query) => {
     // dispatch(loading());
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/regions/post-administrative?${query}`,
+        url: `https://api.ardhiansyah.com/regions/district?${query}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -101,7 +101,7 @@ export const getRegionSucos = (access_token, query) => {
     // dispatch(loading());
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/regions/sucos?${query}`,
+        url: `https://api.ardhiansyah.com/regions/sub-district?${query}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",

@@ -22,7 +22,7 @@ export default function Home() {
               {firstName ? (
                 <span>
                   {", "}
-                  {firstName !== ""
+                  {firstName !== "" || firstName === null
                     ? gender === "male"
                       ? `Mr. ${firstName}`
                       : `Mrs. ${firstName}`

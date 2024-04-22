@@ -46,14 +46,22 @@ export const setAppointment = (val, access_token) => {
   return async (dispatch) => {
     dispatch(loading());
     try {
-      const { data } = await axios({
-        method: "POST",
-        url: "https://api.ardhiansyah.com/appointments",
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-        data: val,
-      });
+      if (access_token) {
+        const { data } = await axios({
+          method: "POST",
+          url: "https://api.ardhiansyah.com/appointments",
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+          data: val,
+        });
+      } else {
+        const { data } = await axios({
+          method: "POST",
+          url: "https://api.ardhiansyah.com/appointments",
+          data: val,
+        });
+      }
       dispatch(setAppointmentSuccess());
       dispatch({
         type: LOADING_FALSE,

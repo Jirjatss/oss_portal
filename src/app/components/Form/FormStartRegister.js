@@ -8,7 +8,7 @@ function FormStartRegister({ onClick }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [validPhoneNumber, setValidPhoneNumber] = useState(true);
 
-  const regexPhoneNumber = /^\+[1-9]\d{1,14}$/; // Pola nomor telepon internasional
+  const regexPhoneNumber = /^\+[1-9]\d{1,14}$/;
 
   const { loading } = useSelector((state) => state.userReducer);
   const dispatch = useDispatch();

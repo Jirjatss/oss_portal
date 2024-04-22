@@ -100,7 +100,7 @@ function FormUploadPhoto({ onClick }) {
   }, [personalInformation.Photo, personalInformation.Identity]);
 
   return (
-    <div className="px-52">
+    <>
       {loading && <Loader />}
       <div>
         <div>
@@ -263,7 +263,7 @@ function FormUploadPhoto({ onClick }) {
         </button>
       </div>
 
-      <SubmitConfirmation onSubmit={onSubmit} />
+      {/* <SubmitConfirmation onSubmit={onSubmit} /> */}
 
       <ModalSuccess
         id="success_modal"
@@ -274,7 +274,7 @@ function FormUploadPhoto({ onClick }) {
           router.push("/");
         }}
       />
-    </div>
+    </>
   );
 }
 

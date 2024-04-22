@@ -11,6 +11,7 @@ import { LOADING } from "../store/actions/action_type";
 import FormOtpModal from "../components/Modal/FormOtp";
 import ModalSuccess from "../components/Modal/ModalSuccess";
 import { requestOtp, showVerif } from "../store/actions/userAction";
+import SubmitConfirmation from "../components/Modal/SubmitConfirmation";
 
 function Verification() {
   const router = useRouter();
@@ -76,9 +77,11 @@ function Verification() {
         />
       )}
       {step === 2 && <FormContact onClick={() => nextHandler()} />}
-      <div className="max-w-screen-md">{step === 3 && <FormUploadPhoto />}</div>
-      {isShowOtp && <FormOtpModal />}
 
+      {step === 3 && <FormUploadPhoto />}
+
+      {isShowOtp && <FormOtpModal />}
+      <SubmitConfirmation />
       <ModalSuccess
         id="personal_informations"
         title="Your Data Have Submitted"

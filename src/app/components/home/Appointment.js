@@ -8,7 +8,8 @@ import { Booking } from "../../../../public/assets/emoji/index";
 function Appointment() {
   const user = useAuthUser();
   return (
-    <div
+    <Link
+      href="/set-appointment"
       className="lg:pt-24 pt-16 flex lg:flex-row flex-col text-black lg:gap-10 gap-3"
       id="set-appointment"
     >
@@ -73,7 +74,7 @@ function Appointment() {
           </div>
         </Link>
       </div>
-    </div>
+    </Link>
   );
 }
 

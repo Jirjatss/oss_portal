@@ -15,11 +15,11 @@ function MyApplicant() {
   const { myApplications } = useSelector((state) => state.applicationReducer);
   const dispatch = useDispatch();
   const router = useRouter();
-  const isEmptyApplications = myApplications?.length === 0;
+  const isEmptyApplications = myApplications?.length === 0 || !myApplications;
 
   useEffect(() => {
     const fetchData = () => {
-      if (user) {
+      if (user && user.status === "active") {
         dispatch(getMyApplications(user?.accessToken));
       }
     };
@@ -62,7 +62,7 @@ function MyApplicant() {
         </div>
 
         <div className="flex justify-center items-center flex-col text-center gap-4">
-          {myApplications?.length !== 0 ? (
+          {myApplications?.length !== 0 && myApplications !== null ? (
             <p className="text-[18px] text-[#363131] font-semibold">
               {myApplications?.length} Applications{" "}
               <span className="text-[18px] text-[#646464] font-thin">

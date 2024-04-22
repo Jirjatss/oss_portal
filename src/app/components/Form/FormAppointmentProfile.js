@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import InputDropdown from "../TagComponents/InputDropdown";
 import { useDispatch, useSelector } from "react-redux";
-import { setAppointmentData } from "@/app/store/actions/appointmentAction";
 import FormOtpAppointment from "../Modal/FormOtpAppointment";
 import { requestOtp } from "@/app/store/actions/userAction";
 import Loader from "../Loader";
+import { toast } from "sonner";
 
 function FormAppointmentProfile() {
   const user = useAuthUser();
@@ -15,13 +15,7 @@ function FormAppointmentProfile() {
   const { appointmentData } = useSelector((state) => state.appointmentReducer);
   const [isShowModal, setIsShowModal] = useState(false);
   const [input, setInput] = useState({});
-  const isDisabledButton =
-    !input.firstName ||
-    !input.lastName ||
-    !input.identityNumber ||
-    !input.identityType ||
-    !input.email ||
-    !input.phoneNumber;
+  const [isDisabledButton, setIsDisabledButton] = useState(true);
 
   const isDisabled = user;
   const [data, setData] = useState({});
@@ -35,12 +29,18 @@ function FormAppointmentProfile() {
     phoneNumber,
     email,
   } = personalDetail || {};
-  console.log("personalDetail:", personalDetail);
 
   const identityTypeForm = [
-    { name: "Citizen Card", code: "citizenCard" },
-    { name: "Passport", code: "passport" },
+    { name: "Citizen Card", code: "citizenCard", id: 1 },
+    { name: "Passport", code: "passport", id: 2 },
   ];
+
+  const [validPhoneNumber, setValidPhoneNumber] = useState(true);
+
+  const validatePhoneNumber = (phoneNumber) => {
+    const regexPhoneNumber = /^\+[1-9]\d{1,14}$/;
+    return regexPhoneNumber.test(phoneNumber);
+  };
 
   const handleChangeSelect = (e) => {
     const { name, value } = e;
@@ -48,7 +48,13 @@ function FormAppointmentProfile() {
       ...input,
       [name]: value,
     });
+
+    if (name === "phoneNumber") {
+      setValidPhoneNumber(validatePhoneNumber(value));
+    }
   };
+
+  useEffect(() => {});
 
   useEffect(() => {
     if (user)
@@ -70,6 +76,19 @@ function FormAppointmentProfile() {
     user,
     phoneNumber,
   ]);
+
+  useEffect(() => {
+    if (
+      !input.firstName ||
+      !input.lastName ||
+      !input.identityNumber ||
+      !input.identityType ||
+      !input.email ||
+      !validPhoneNumber
+    )
+      setIsDisabledButton(true);
+    else setIsDisabledButton(false);
+  }, [input, validPhoneNumber]);
 
   useEffect(() => {
     if (isShowModal) form_otp_appointment.showModal();
@@ -165,7 +184,13 @@ function FormAppointmentProfile() {
               placeholder="Phone Number"
               value={input.phoneNumber}
               name="phoneNumber"
+              onChange={(e) => handleChangeSelect(e.target)}
             />
+            {!validPhoneNumber && (
+              <p className="text-[12px] text-red-500">
+                Invalid phone number format
+              </p>
+            )}
           </div>
           <button
             disabled={isDisabledButton}
@@ -191,12 +216,20 @@ function FormAppointmentProfile() {
                 });
               }
               setIsShowModal(false);
-              dispatch(requestOtp(personalDetail?.phoneNumber))
-                .then(() => setIsShowModal(true))
-                .catch((err) => {
-                  console.log(err);
-                  toast.error(err.response.data.errorMessage);
-                });
+              if (!user) {
+                dispatch(requestOtp(input.phoneNumber))
+                  .then(() => setIsShowModal(true))
+                  .catch((err) => {
+                    console.log(err);
+                    toast.error(err.response.data.errorMessage);
+                  });
+              } else
+                dispatch(requestOtp(personalDetail?.phoneNumber))
+                  .then(() => setIsShowModal(true))
+                  .catch((err) => {
+                    console.log(err);
+                    toast.error(err.response.data.errorMessage);
+                  });
             }}
           >
             Submit

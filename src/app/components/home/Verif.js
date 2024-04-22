@@ -20,7 +20,7 @@ function Verif() {
   const router = useRouter();
   const dispatch = useDispatch();
   const user = useAuthUser();
-
+  const [isVerifComplete, setIsVerifComplete] = useState(false);
   const { dataRegister, profile, isShowVerif } = useSelector(
     (state) => state.userReducer
   );
@@ -28,30 +28,35 @@ function Verif() {
   const { personalDetail } = profile || {};
   const { firstName } = personalDetail || {};
 
-  const verifComplete = firstName !== "";
+  useEffect(() => {
+    if (firstName !== null && firstName !== "" && firstName !== undefined)
+      setIsVerifComplete(true);
+    else setIsVerifComplete(false);
+  }, [firstName]);
 
   const buttonTitle =
     user?.status === "Inactive" ? "Resend to Email" : "Verification";
 
   const titleDecider = () => {
     if (user?.status === "inactive") return "Verification your mail first";
-    if (user?.status === "active" && firstName === "")
+    if (user?.status === "active" && (firstName === "" || firstName === null))
       return "Verification your account first";
-    if (verifComplete) return "Verification Successful!";
+    if (isVerifComplete) return "Verification Successful!";
   };
 
   const iconDecider = () => {
     if (user?.status === "inactive") return ResendVerif;
-    if (user?.status === "active" && firstName === "") return FlowStep1;
-    if (verifComplete) return VerifSuccess;
+    if (user?.status === "active" && (firstName === "" || firstName === null))
+      return FlowStep1;
+    if (isVerifComplete) return VerifSuccess;
   };
 
   const descriptionDecider = () => {
     if (user?.status === "inactive")
       return "To be able to use all the available facilities, please to verifiy your email first so you can eligible to continue.";
-    if (user?.status === "active" && firstName === "")
+    if (user?.status === "active" && (firstName === "" || firstName === null))
       return "To be able to use all the available facilities, please to complete your personal data first so you can eligible to continue.";
-    if (verifComplete)
+    if (isVerifComplete)
       return "Congratulations! Your data has been verified, granting you complete access to our facilities. Start exploring now!";
   };
 
@@ -67,7 +72,7 @@ function Verif() {
     <>
       <div className="border-[#DCDCDC] rounded-[20px] border-[1px] p-[24px] relative">
         <div className="absolute top-5 right-5">
-          {verifComplete ? (
+          {isVerifComplete ? (
             <button onClick={() => dispatch(hideVerif())}>
               <OSSIcons name={"Cancel"} fill="#2E2D2D" />
             </button>
@@ -95,7 +100,7 @@ function Verif() {
           <p className="text-[#646464] text-[16px] -mt-2 lg:w-3/5">
             {descriptionDecider()}
           </p>
-          {!verifComplete && (
+          {!isVerifComplete && (
             <div>
               <button
                 className="bg-[#1C25E7] px-7 py-2 rounded-lg text-[#F3F3F3] inline-block"

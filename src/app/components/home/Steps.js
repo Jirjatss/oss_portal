@@ -84,13 +84,13 @@ const Steps = () => {
             return (
               <div key={i}>
                 <li
-                  class={`${
+                  className={`${
                     i !== steps.length - 1 &&
                     "border-l-[2px] border-[#DCDCDC] border-dashed pb-10"
                   } `}
                 >
                   <span
-                    class={`absolute flex items-center justify-center -start-6`}
+                    className={`absolute flex items-center justify-center -start-6`}
                   >
                     <div className=" bg-[#D9D7F9] flex justify-center items-center rounded-[8px] p-3 relative">
                       <Image src={icon} width={30} height={30} alt={"Empty"} />
@@ -98,10 +98,10 @@ const Steps = () => {
                   </span>
                   <div className="ms-12">
                     <h1 className="text-transparent">data</h1>
-                    <p class="text-[#2E2D2D]  text-[24px] -mt-7 font-semibold">
+                    <p className="text-[#2E2D2D]  text-[24px] -mt-7 font-semibold">
                       {title}
                     </p>
-                    <p class="text-[#646464] text-[14px] mt-3">{desc}</p>
+                    <p className="text-[#646464] text-[14px] mt-3">{desc}</p>
                   </div>
                 </li>
               </div>

@@ -15,11 +15,13 @@ import {
 } from "@/app/store/actions/userAction";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { formattedDate } from "@/app/universalFunction";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 function FormIdentify({ onClick }) {
   const user = useAuthUser();
   const dispatch = useDispatch();
-
+  const router = useRouter();
   const { profile } = useSelector((state) => state.userReducer);
   const { region, municipality, city, town, loading } = useSelector(
     (state) => state.regionReducer
@@ -27,9 +29,8 @@ function FormIdentify({ onClick }) {
 
   const [input, setInput] = useState({});
   const { personalDetail, residenceDetail, birthDetail } = profile || {};
-  console.log("personalDetail:", personalDetail);
   const { dateOfBirth } = birthDetail || {};
-  const { countryCode, municipalityCode, postAdministrativeCode, sucosCode } =
+  const { countryCode, districtCode, stateCode, subDistrictCode } =
     residenceDetail || {};
   const { firstName, lastName, identityNumber, identityType, gender } =
     personalDetail || {};
@@ -53,17 +54,11 @@ function FormIdentify({ onClick }) {
         region: countryCode,
         IdentityType: identityType,
         Gender: gender,
-        town: sucosCode,
-        municipality: municipalityCode,
-        city: postAdministrativeCode,
+        town: subDistrictCode,
+        municipality: stateCode,
+        city: districtCode,
       }));
-  }, [
-    sucosCode,
-    municipalityCode,
-    postAdministrativeCode,
-    countryCode,
-    dateOfBirth,
-  ]);
+  }, [stateCode, districtCode, subDistrictCode, countryCode, dateOfBirth]);
 
   const isDisabled =
     !input.FirstName ||
@@ -76,29 +71,27 @@ function FormIdentify({ onClick }) {
 
   useEffect(() => {
     const fetchData = () => {
-      if (user?.status === "active") {
-        dispatch(getUserInformation(user?.accessToken));
-        dispatch(getRegionCountry(user?.accessToken));
-        dispatch(getRegionMunicipality(user?.accessToken));
-        if (input.municipality || municipalityCode) {
-          dispatch(
-            getRegionPostAdministrative(
-              user?.accessToken,
-              `municipalityCode=${input.municipality || municipalityCode}`
-            )
-          );
-        }
-        if (input.city || postAdministrativeCode) {
-          dispatch(
-            getRegionSucos(
-              user?.accessToken,
-              `postAdministrativeCode=${input.city || postAdministrativeCode}`
-            )
-          );
-        }
+      dispatch(getUserInformation(user?.accessToken));
+      dispatch(getRegionCountry(user?.accessToken));
+      dispatch(getRegionMunicipality(user?.accessToken));
+      if (input.municipality || stateCode) {
+        dispatch(
+          getRegionPostAdministrative(
+            user?.accessToken,
+            `stateCode=${input.municipality || stateCode}`
+          )
+        );
       }
-      if (user) dispatch(getUserInformation(user.accessToken));
+      if (input.city || districtCode) {
+        dispatch(
+          getRegionSucos(
+            user?.accessToken,
+            `districtCode=${input.city || districtCode}`
+          )
+        );
+      }
     };
+    if (user) dispatch(getUserInformation(user.accessToken));
 
     fetchData();
   }, [
@@ -107,10 +100,17 @@ function FormIdentify({ onClick }) {
     input.municipality,
     input.city,
     countryCode,
-    municipalityCode,
-    sucosCode,
-    postAdministrativeCode,
+    districtCode,
+    stateCode,
+    subDistrictCode,
   ]);
+
+  useEffect(() => {
+    if (user.status !== "active") {
+      router.push("/");
+      toast.error("Verification Your Email First");
+    }
+  }, [user]);
 
   const genderForm = [
     { name: "Male", code: "male" },
@@ -223,7 +223,7 @@ function FormIdentify({ onClick }) {
               topic={city}
               handleChange={(e) => handleChangeSelect(e)}
               name="city"
-              isDisabled={!input.municipality && !postAdministrativeCode}
+              isDisabled={!input.municipality && !stateCode}
               selectedTopic={input?.city}
             />
             <InputDropdown
@@ -231,7 +231,7 @@ function FormIdentify({ onClick }) {
               topic={town}
               handleChange={(e) => handleChangeSelect(e)}
               name="town"
-              isDisabled={!input.city && !postAdministrativeCode}
+              isDisabled={!input.city && !stateCode}
               selectedTopic={input.town}
             />
           </div>

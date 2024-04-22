@@ -108,8 +108,7 @@ const FormSubmission = ({ code }) => {
   const { personalDetail } = profile || {};
   const { detailById } = useSelector((state) => state.applicationReducer);
 
-  const { familyDetail, deliveryTime, files } = detailById || {};
-  console.log("files:", files);
+  const { familyDetail, deliveryTime, files, serviceType } = detailById || {};
 
   const { dateOfBirth, familyType, firstName, gender, lastName } =
     familyDetail || {};
@@ -130,17 +129,17 @@ const FormSubmission = ({ code }) => {
     image.images.length === 0 ||
     upload.length === 0;
 
-  const deliverTime = [{ name: `normal`, code: `normal` }];
+  const deliverTime = [{ name: `normal`, code: `normal`, id: 1 }];
   const requester = [
-    { name: `self`, code: "self" },
-    { name: `child`, code: `child` },
-    { name: `spouse`, code: `spouse` },
-    { name: `parent`, code: `parent` },
+    { name: `self`, code: "self", id: 1 },
+    { name: `child`, code: `child`, id: 2 },
+    { name: `spouse`, code: `spouse`, id: 3 },
+    { name: `parent`, code: `parent`, id: 4 },
   ];
   const [isOther, setIsOther] = useState(false);
   const genderForm = [
-    { name: "male", code: "male" },
-    { name: "female", code: "female" },
+    { name: "male", code: "male", id: 1 },
+    { name: "female", code: "female", id: 2 },
   ];
 
   const handleImageChange = (event) => {
@@ -154,13 +153,13 @@ const FormSubmission = ({ code }) => {
       "application/pdf",
     ];
     if (!allowedTypes.includes(selectedImage.type)) {
-      alert("Hanya file JPG, JPEG, PDF, dan PNG yang diperbolehkan.");
+      toast.error("Only JPG, JPEG, PDF, and PNG files are allowed.");
       return;
     }
 
     const maxSize = 10 * 1024 * 1024;
     if (selectedImage.size > maxSize) {
-      alert("Ukuran file terlalu besar. Maksimal 10 MB.");
+      toast.error("File size is too large. Maximum 10 MB.");
       return;
     }
 
@@ -226,9 +225,15 @@ const FormSubmission = ({ code }) => {
   };
 
   const deleteImage = (index) => {
+    setUpload((prevUpload) => prevUpload.filter((_, i) => i !== index));
+
     setImage((prevState) => {
       const updatedImages = prevState.images.filter((_, i) => i !== index);
       return { images: updatedImages };
+    });
+
+    setCheckedImages((prevState) => {
+      return prevState.filter((item) => item !== index);
     });
   };
 
@@ -267,6 +272,7 @@ const FormSubmission = ({ code }) => {
         DateOfBirth: formattedDate(dateOfBirth),
         gender: gender,
         deliverTime: deliveryTime,
+        serviceId: 1,
       });
       setImage(() => ({
         checkedImages: true,
@@ -300,7 +306,7 @@ const FormSubmission = ({ code }) => {
     <>
       {image?.images && <ModalPreview image={image.images[indexImage]} />}
       {loading && <Loader message="Please wait, your data is submitting..." />}
-      <div className="grid grid-cols-1 lg:grid-cols-2 my-10 gap-x-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2  my-10 gap-x-10">
         <div>
           <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-5">
             {id ? "Resubmit Document " : "Submit Document"}
@@ -311,7 +317,7 @@ const FormSubmission = ({ code }) => {
               : "Please upload clear and legible copies of your photos and documents.Ensure all details are visible for accurate processing, and following how to apply instructions"}
           </p>
         </div>
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-5 lg:mt-0 mt-7">
           <InputDropdown
             label={"Applying For"}
             topic={services}

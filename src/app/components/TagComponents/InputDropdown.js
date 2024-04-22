@@ -28,8 +28,10 @@ function InputDropdown({
           .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
           .join(" ")
       : e.name,
+    id: e.id,
     value: e.code,
   }));
+
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
     setMenuOpen(!menuOpen);
@@ -83,11 +85,25 @@ function InputDropdown({
             style={{ textAlign: "left" }}
           >
             {selectedTopic &&
-            listTopic.some((item) => item.value === selectedTopic)
+            listTopic.some((item) => {
+              if (
+                label === "Office Representative" ||
+                label === "Office Location"
+              ) {
+                return item.id === selectedTopic;
+              } else return item.value === selectedTopic;
+            })
               ? listTopic
-                  .filter((item) => item.value === selectedTopic)
+                  .filter((item) => {
+                    if (
+                      label === "Office Location" ||
+                      label === "Office Representative"
+                    ) {
+                      return item.id === selectedTopic;
+                    } else return item.value === selectedTopic;
+                  })
                   .map((filteredItem, index) => (
-                    <p key={index}>{filteredItem.name}</p>
+                    <p key={index + filteredItem.name}>{filteredItem.name}</p>
                   ))
               : `Please Select ${label}`}
           </span>
@@ -111,19 +127,40 @@ function InputDropdown({
             <MenuItem
               className="text-gray-900 w-full text-start lg:text-[18px] text-[16px]"
               key={e.name + idx}
-              onClick={() => handleChangeTopic({ name: name, value: e.value })}
+              onClick={() => {
+                let value = e.value;
+                if (
+                  label === "Office Location" ||
+                  label === "Office Representative"
+                )
+                  value = e.id;
+                handleChangeTopic({ name: name, value: value });
+              }}
               sx={{
                 backgroundColor:
-                  selectedTopic === e.name
+                  selectedTopic === e.name ||
+                  selectedTopic === e.value ||
+                  selectedTopic === e.id
                     ? "transparent !important"
                     : "inherit",
-                fontWeight: selectedTopic === e.name ? "bold" : "normal",
+                fontWeight:
+                  selectedTopic === e.name ||
+                  selectedTopic === e.value ||
+                  selectedTopic === e.id
+                    ? "bold"
+                    : "normal",
               }}
-              selected={selectedTopic === e.name}
+              selected={
+                label === "Office Location" || label === "Office Representative"
+                  ? selectedTopic === e.id
+                  : selectedTopic === e.name
+              }
             >
               <div className="flex gap-3">
                 {e.name}
-                {selectedTopic === e.name && <CheckIcon fontSize="small" />}
+                {(selectedTopic === e.name ||
+                  selectedTopic === e.value ||
+                  selectedTopic === e.id) && <CheckIcon fontSize="small" />}
               </div>
             </MenuItem>
           ))}

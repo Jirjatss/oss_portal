@@ -74,16 +74,13 @@ function FormContact({ onClick }) {
         dispatch(
           getRegionPostAdministrative(
             user?.accessToken,
-            `municipalityCode=${input.municipality}`
+            `stateCode=${input.municipality}`
           )
         );
       }
       if (input.city) {
         dispatch(
-          getRegionSucos(
-            user?.accessToken,
-            `postAdministrativeCode=${input.city}`
-          )
+          getRegionSucos(user?.accessToken, `districtCode=${input.city}`)
         );
       }
     };

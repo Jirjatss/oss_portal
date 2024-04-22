@@ -72,9 +72,13 @@ const SetAppointment = () => {
         <ModalSuccess
           id="appointment_success"
           title="Your Appointement Have Submitted"
-          description="Your Appointment is being reviewed by our team. Verification may take some time. Thank you for your patience!"
+          description={
+            user
+              ? "Your Appointment is being reviewed by our team. Verification may take some time. Thank you for your patience!"
+              : "Your Appointment is being reviewed by our team. Verification will sent to your email, please check regularly."
+          }
           onClick={() => {
-            router.push("/my-applications");
+            router.push(user ? "/my-applications" : "/");
           }}
         />
       </div>

@@ -8,6 +8,9 @@ import {
   Akta,
   Family,
   CitizenCard,
+  Mariage,
+  Cr,
+  Criminal,
 } from "../../../public/assets/emoji/index";
 import empty from "../../../public/assets/images/zzz.png";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,6 +38,7 @@ const MyApplications = () => {
 
   const { myAppointments } = useSelector((state) => state.appointmentReducer);
   const [filterStatus, setFilterStatus] = useState("All");
+  const [filterStatusAppointment, setFilterStatusAppointmen] = useState("All");
   const [filterApps, setFilterApps] = useState("Service");
 
   const filteredApplications = myApplications?.filter((app) => {
@@ -42,6 +46,11 @@ const MyApplications = () => {
     if (filterStatus === "waiting approval")
       return app.status.includes("waitingApproval");
     return app.status.includes(filterStatus);
+  });
+
+  const filteredAppointments = myAppointments?.filter((e) => {
+    if (filterStatusAppointment === "All") return true;
+    return e.status.includes(filterStatusAppointment);
   });
 
   const serviceTypeDecider = (serviceType) => {
@@ -54,7 +63,7 @@ const MyApplications = () => {
 
   useEffect(() => {
     const fetchData = () => {
-      if (user) {
+      if (user && user.status === "active") {
         dispatch(getMyApplications(user?.accessToken));
         dispatch(getMyAppointments(user.accessToken));
       }
@@ -126,29 +135,61 @@ const MyApplications = () => {
     }, [filterStatus]);
 
     return (
-      <>
-        <div className="max-w-fit grid grid-cols-7 gap-3 justify-start">
-          {status.map((e, i) => (
-            <div
-              key={i}
-              className={`${
-                index === i
-                  ? "border-[#2E2D2D] text-[#2E2D2D] font-semibold"
-                  : "text-[#646464] border-[#DCDCDC]"
-              } cursor-pointer px-1 lg:w-[150px] text-[16px] border-[1px] flex justify-center items-center py-2 rounded-[8px]`}
-              onClick={() => {
-                setIndex(i);
-                setFilterStatus(e);
-              }}
-              style={{ whiteSpace: "pre-line" }}
-            >
-              <p className="text-center">
-                {e.charAt(0).toUpperCase() + e.slice(1)}
-              </p>
-            </div>
-          ))}
-        </div>
-      </>
+      <div className="flex lg:grid lg:grid-cols-7 lg:gap-3 gap-1 justify-start overflow-y-hidden overflow-x-auto lg:pb-0 pb-2">
+        {status.map((e, i) => (
+          <div
+            key={i}
+            className={`${
+              index === i
+                ? "border-[#2E2D2D] text-[#2E2D2D] font-semibold"
+                : "text-[#646464] border-[#DCDCDC]"
+            } cursor-pointer px-1 min-w-[150px]  lg:text-[16px] text-[14px] border-[1px] flex justify-center items-center lg:py-2 py-1 rounded-[8px] `}
+            onClick={() => {
+              setIndex(i);
+              setFilterStatus(e);
+            }}
+          >
+            <p className="text-center">
+              {e.charAt(0).toUpperCase() + e.slice(1)}
+            </p>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const HeaderStatusAppointment = () => {
+    const [index, setIndex] = useState(0);
+    const status = ["All", "waiting approval", "reject", "completed", "absent"];
+
+    useEffect(() => {
+      const newIndex = status.findIndex((s) => s === filterStatusAppointment);
+      if (newIndex !== -1) {
+        setIndex(newIndex);
+      }
+    }, [filterStatusAppointment]);
+
+    return (
+      <div className="flex lg:grid lg:grid-cols-7 lg:gap-3 gap-1 justify-start overflow-y-hidden overflow-x-auto lg:pb-0 pb-2">
+        {status.map((e, i) => (
+          <div
+            key={i}
+            className={`${
+              index === i
+                ? "border-[#2E2D2D] text-[#2E2D2D] font-semibold"
+                : "text-[#646464] border-[#DCDCDC]"
+            } cursor-pointer px-1 min-w-[150px]  lg:text-[16px] text-[14px] border-[1px] flex justify-center items-center lg:py-2 py-1 rounded-[8px] `}
+            onClick={() => {
+              setIndex(i);
+              setFilterStatusAppointmen(e);
+            }}
+          >
+            <p className="text-center">
+              {e.charAt(0).toUpperCase() + e.slice(1)}
+            </p>
+          </div>
+        ))}
+      </div>
     );
   };
 
@@ -164,11 +205,14 @@ const MyApplications = () => {
     } = applications || {};
 
     const iconDecider = (serviceType) => {
-      if (serviceType === "citizen-card") return CitizenCard;
-      if (serviceType === "passport") return Passport;
-      if (serviceType === "driving-license") return Driving;
-      if (serviceType === "birth-of-certificate") return Akta;
       if (serviceType === "family-card") return Family;
+      if (serviceType === "general-passport") return Passport;
+      if (serviceType === "driving-license") return Driving;
+      if (serviceType === "citizen-id") return CitizenCard;
+      if (serviceType === "birth-certificate") return Akta;
+      if (serviceType === "marriage-certificate") return Mariage;
+      if (serviceType === "criminal-record-certificate") return Criminal;
+      if (serviceType === "commercial-registration") return Cr;
     };
 
     const statusColorDecider = (status) => {
@@ -206,9 +250,7 @@ const MyApplications = () => {
       <div className="border-[#DCDCDC] border-[1px] mt-8 p-[24px] rounded-[20px] flex flex-col">
         <div
           className={`grid-cols-6 justify-center items-center gap-2 ${
-            (status === "completed" ||
-              status === "rejectedFromBackOffice" ||
-              status === "rejectedFromFrontOffice") &&
+            (status === "completed" || status.includes("reject")) &&
             "border-b-[1px] border-[#DCDCDC] pb-4"
           } lg:grid hidden`}
         >
@@ -223,25 +265,25 @@ const MyApplications = () => {
               alt={serviceType}
             />
           </div>
-          <div className="flex flex-col justify-between gap-3 -ml-12">
+          <div className="flex flex-col justify-between gap-3 -ml-12 max-w-[170px] min-h-[80px]">
             <p className="text-[#646464] text-[16px]">Service Type</p>
-            <p className="text-[#2E2D2D] text-[16px] font-semibold">
+            <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
               {serviceTypeDecider(serviceType)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-3 -ml-12">
+          <div className="flex flex-col justify-between gap-3 -ml-12 min-h-[80px]">
             <p className="text-[#646464] text-[16px]">Applying</p>
-            <p className="text-[#2E2D2D] text-[16px] font-semibold">
+            <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
               {serviceTypeDecider(service)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-3 ">
+          <div className="flex flex-col  gap-3 min-h-[80px]">
             <p className="text-[#646464] text-[16px]">Apply Date</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {dateFormatter(appliedAt)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-3 ml-16 w-full">
+          <div className="flex flex-col  gap-3 ml-16 w-full min-h-[80px]">
             <p className="text-[#646464] text-[16px]">Status</p>
             <span
               className={`${statusColorDecider(
@@ -265,9 +307,7 @@ const MyApplications = () => {
         {/* mobile */}
         <div
           className={`flex flex-col justify-center items-center gap-2 ${
-            (status === "completed" ||
-              status === "rejectedFromBackOffice" ||
-              status === "rejectedFromFrontOffice") &&
+            (status === "completed" || status.includes("reject")) &&
             "border-b-[1px] border-[#DCDCDC] pb-4"
           } lg:hidden`}
         >
@@ -341,8 +381,7 @@ const MyApplications = () => {
             </Link>
           </div>
         )}
-        {(status === "rejectedFromBackOffice" ||
-          status === "rejectedFromFrontOffice") && (
+        {status.includes("rejected") && (
           <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 justify-end items-center mt-3">
             <Link
               href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
@@ -362,16 +401,25 @@ const MyApplications = () => {
     );
   };
 
-  const CardListAppointments = ({ appointments, key }) => {
-    const { bookingCode, officeLocation, serviceType, scheduledAt, service } =
-      appointments || {};
+  const CardListAppointments = ({ appointments }) => {
+    const {
+      bookingCode,
+      officeLocation,
+      serviceType,
+      scheduledAt,
+      service,
+      status,
+      id,
+    } = appointments || {};
 
     return (
-      <div
-        className="border-[#DCDCDC] border-[1px] mt-8 p-[24px] rounded-[20px]"
-        key={key}
-      >
-        <div className="grid grid-cols-5 justify-center items-center gap-2">
+      <div className="border-[#DCDCDC] border-[1px] mt-8 p-[24px] rounded-[20px]">
+        <div
+          className={`grid-cols-5 justify-center items-center gap-2 lg:grid hidden ${
+            status.includes("reject") &&
+            "lg:border-none border-b-[1px] border-[#DCDCDC] pb-4"
+          }`}
+        >
           <div className="flex flex-col justify-between gap-2">
             <p className="text-[#646464] text-[16px]">Location</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
@@ -396,13 +444,88 @@ const MyApplications = () => {
               {formattedDateAppointment(scheduledAt)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-2">
-            <p className="text-[#646464] text-[16px]">Code Booking</p>
+          <div className="flex flex-col justify-between gap-2 ml-8">
+            <p className="text-[#646464] text-[16px]">
+              {status === "confirm" ? "Code Booking" : "Status"}
+            </p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
-              {bookingCode}
+              {status === "confirm"
+                ? bookingCode
+                : status
+                    .replace(/([A-Z])/g, " $1")
+                    .trim()
+                    .split("-")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
             </p>
           </div>
         </div>
+
+        {/* Mobile */}
+        <div className="flex flex-col justify-between items-center gap-2 lg:hidden">
+          <div className="grid grid-cols-2 justify-between w-full border-b-[#DCDCDC] border-b-[1px] pb-4">
+            <div className="flex flex-col justify-between gap-2 w-full">
+              <p className="text-[#646464] text-[16px]">Location</p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {officeLocation}
+              </p>
+            </div>
+            <div className="flex flex-col justify-between gap-2 text-end">
+              <p className="text-[#646464] text-[16px]">Date</p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {formattedDateAppointment(scheduledAt)}
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 justify-between w-full border-b-[#DCDCDC] border-b-[1px] pt-2 pb-4">
+            <div className="flex flex-col justify-between gap-2 w-full ">
+              <p className="text-[#646464] text-[16px]">Service</p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {serviceTypeDecider(serviceType)}
+              </p>
+            </div>
+            <div className="flex flex-col justify-between gap-2 w-full items-end">
+              <p className="text-[#646464] text-[16px]">Purpose</p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {serviceTypeDecider(service)}
+              </p>
+            </div>
+          </div>
+          <div className="flex justify-between w-full pt-2">
+            <div className="flex flex-col justify-between gap-2 w-full ">
+              <p className="text-[#646464] text-[16px]">
+                {status === "confirm" ? "Code Booking" : "Status"}
+              </p>
+              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {status === "confirm"
+                  ? bookingCode
+                  : status
+                      .replace(/([A-Z])/g, " $1")
+                      .trim()
+                      .split("-")
+                      .map(
+                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                      )
+                      .join(" ")}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {status.includes("reject") && (
+          <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 justify-end items-center mt-3 border-t-[1px] border-t-[#DCDCDC] pt-4">
+            <p className="text-[14px] text-[#646464] lg:mb-0 mb-2">
+              Sorry, your appointment have rejected cause some reason, you can
+              do reschedule appointment again
+            </p>
+            <Link
+              href={`/set-appointment?appointmentId=${id}&reschedule=true`}
+              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:w-[180px] text-center"
+            >
+              Reschedule
+            </Link>
+          </div>
+        )}
       </div>
     );
   };
@@ -420,7 +543,7 @@ const MyApplications = () => {
 
   return (
     <>
-      <div className="lg:px-52 px-5 bg-white py-10 min-h-screen">
+      <div className="lg:px-48 px-5 bg-white py-10 min-h-screen">
         {loading && <Loader />}
         <div
           className="flex gap-2 cursor-pointer"
@@ -433,13 +556,13 @@ const MyApplications = () => {
         </div>
 
         <div className="flex gap-16 mt-7">
-          <div className="flex-1 flex-col">
+          <div className="flex-1 flex-col w-screen overflow-hidden">
             <Header />
 
-            {filterApps === "Service" ? (
+            {filterApps === "Service" && (
               <>
                 <HeaderStatus />
-                {filteredApplications?.length === 0 ? (
+                {filteredApplications?.length === 0 || !filteredApplications ? (
                   <EmptyData string="Service" />
                 ) : (
                   filteredApplications?.map((e, idx) => (
@@ -447,12 +570,18 @@ const MyApplications = () => {
                   ))
                 )}
               </>
-            ) : myAppointments?.length === 0 ? (
-              <EmptyData string="Appointment" />
-            ) : (
-              myAppointments.map((e, i) => (
-                <CardListAppointments key={i} appointments={e} />
-              ))
+            )}
+            {filterApps !== "Service" && (
+              <>
+                <HeaderStatusAppointment />
+                {filteredAppointments?.length === 0 || !filteredAppointments ? (
+                  <EmptyData string="Appointment" />
+                ) : (
+                  filteredAppointments.map((e, i) => (
+                    <CardListAppointments key={i} appointments={e} />
+                  ))
+                )}
+              </>
             )}
           </div>
         </div>

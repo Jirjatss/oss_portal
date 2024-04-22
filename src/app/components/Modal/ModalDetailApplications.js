@@ -28,25 +28,25 @@ function ModalDetailApplications({ data }) {
               return (
                 <div key={i}>
                   <li
-                    class={`${
+                    className={`${
                       i !== data.length - 1 &&
                       "border-l-[2px] border-[#DCDCDC] border-dashed pb-7"
                     } `}
                   >
                     <span
-                      class={`${
+                      className={`${
                         i === data.length - 1 ? "bg-[#1C25E7]" : "bg-[#D9D7F9]"
                       } absolute flex items-center justify-center w-3 h-3  rounded-full -start-1 ring-4 ring-[#D9D7F9]`}
                     ></span>
                     <div className="ms-6">
                       <h1 className="text-transparent">data</h1>
-                      <p class="text-[#646464] text-[12px] -mt-7">
+                      <p className="text-[#646464] text-[12px] -mt-7">
                         {dateFormatter(createdAt)}
                       </p>
-                      <p class="text-[#2E2D2D] text-[14px] font-semibold">
+                      <p className="text-[#2E2D2D] text-[14px] font-semibold">
                         {statusFormatted(status)}
                       </p>
-                      <p class="text-[#646464] text-[14px]">{notes}</p>
+                      <p className="text-[#646464] text-[14px]">{notes}</p>
                     </div>
                   </li>
                 </div>

@@ -27,11 +27,14 @@ function Service() {
   const [code, setCode] = useState("");
 
   useEffect(() => {
-    if (pathname.includes("/passport")) setCode("1");
-    if (pathname.includes("/driving-license")) setCode("2");
-    if (pathname.includes("/citizen-id")) setCode("7");
-    if (pathname.includes("/family-card")) setCode("4");
-    if (pathname.includes("/birth-of-certificate")) setCode("8");
+    if (pathname.includes("/citizen-id")) setCode("1");
+    if (pathname.includes("/general-passport")) setCode("2");
+    if (pathname.includes("/birth-certificate")) setCode("3");
+    if (pathname.includes("/marriage-certificate")) setCode("4");
+    if (pathname.includes("/criminal-record-certificate")) setCode("5");
+    if (pathname.includes("/driving-license")) setCode("6");
+    if (pathname.includes("/commercial-registration")) setCode("7");
+    if (pathname.includes("/family-card")) setCode("8");
   }, [pathname]);
 
   const services = [
@@ -44,7 +47,7 @@ function Service() {
   const ServicesHeader = () => {
     return (
       <>
-        <div className="border-b-[1px] border-[#646464] max-w-fit grid grid-cols-4 gap-3">
+        <div className=" flex lg:grid lg:grid-cols-4 lg:gap-3 gap-1 justify-start overflow-y-hidden overflow-x-auto  border-b-[1px] border-b-[#DCDCDC]">
           {services.map((e, i) => (
             <div
               key={i}
@@ -52,11 +55,13 @@ function Service() {
                 index === i
                   ? "border-[#1C25E7] border-b-[2px] text-[#1C25E7] font-semibold"
                   : "text-[#646464]"
-              } cursor-pointer px-3 lg:w-[150px] text-[16px] `}
+              } cursor-pointer w-full lg:w-[150px] lg:text-[16px] text-[14px]`}
               onClick={() => setIndex(i)}
               style={{ whiteSpace: "pre-line" }}
             >
-              <p className="mb-1 text-center">{e.title}</p>
+              <p className="mb-1 text-center lg:text-[16px] text-[14px]">
+                {e.title}
+              </p>
             </div>
           ))}
         </div>
@@ -66,20 +71,44 @@ function Service() {
 
   const Submission = ({ onClick }) => {
     return (
-      <div className="bg-white rounded-[20px] p-[20px] border-[1px] border-[#DCDCDC] flex flex-col gap-1 lg:w-[206px] h-fit">
-        <h1 className="text-[18px] font-semibold text-[#2E2D2D]">
-          Ready to submit?
-        </h1>
-        <p className="text-[14px] text-[#646464]">
-          Make sure you have read and understand the following provisions
-        </p>
-        <button
-          className="bg-[#1C25E7] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold"
-          onClick={onClick}
-        >
-          Start Submission
-        </button>
-      </div>
+      <>
+        <div className="bg-white rounded-[20px] p-[20px] border-[1px] border-[#DCDCDC] lg:flex flex-col gap-1 lg:w-[206px] h-fit hidden">
+          <h1 className="text-[18px] font-semibold text-[#2E2D2D]">
+            Ready to submit?
+          </h1>
+          <p className="text-[14px] text-[#646464]">
+            Make sure you have read and understand the following provisions
+          </p>
+          <button
+            className="bg-[#1C25E7] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold"
+            onClick={onClick}
+          >
+            Start Submission
+          </button>
+        </div>
+      </>
+    );
+  };
+  const SubmissionMobile = ({ onClick }) => {
+    return (
+      <>
+        <div className="bg-white rounded-[20px] p-[20px] border-[1px] border-[#DCDCDC] lg:hidden flex flex-row lg:gap-1 gap-5 lg:w-[206px] h-fit mt-7">
+          <div className="flex flex-col">
+            <h1 className="text-[18px] font-semibold text-[#2E2D2D]">
+              Ready to submit?
+            </h1>
+            <p className="text-[14px] text-[#646464]">
+              Make sure you have read and understand the following provisions
+            </p>
+          </div>
+          <button
+            className="bg-[#1C25E7] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold h-fit"
+            onClick={onClick}
+          >
+            Start Submission
+          </button>
+        </div>
+      </>
     );
   };
 
@@ -89,7 +118,7 @@ function Service() {
   };
 
   return (
-    <div className="px-52 bg-white py-10 min-h-screen">
+    <div className="lg:px-52 px-5 bg-white py-10 min-h-screen  w-screen overflow-hidden">
       <div
         className="flex gap-2 cursor-pointer"
         onClick={() => {
@@ -105,8 +134,8 @@ function Service() {
       {isSubmission || id !== null ? (
         <FormSubmisson code={code} />
       ) : (
-        <div className="flex gap-16 mt-7">
-          <div className="flex-1 flex-col">
+        <div className="flex gap-16 mt-7 ">
+          <div className="flex-1 flex-col w-screen overflow-hidden">
             <h1 className="lg:text-[28px] font-semibold text-[#2E2D2D] mb-10">
               Category
             </h1>
@@ -169,6 +198,7 @@ function Service() {
                 </ul>
               </div>
             </div>
+            <SubmissionMobile onClick={startSubmission} />
           </div>
           <Submission onClick={startSubmission} />
         </div>

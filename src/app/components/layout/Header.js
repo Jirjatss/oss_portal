@@ -273,6 +273,37 @@ const Header = () => {
                 <li>
                   <a
                     href="/#services"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                    aria-current="page"
+                  >
+                    Services
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={() => setIsMenuOpen(false)}
+                    href={`${auth ? "/set-appointment" : "/#set-appointment"}`}
+                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                    aria-current="page"
+                  >
+                    Set Appointment
+                  </a>
+                </li>
+                <li>
+                  <a
+                    onClick={() => setIsMenuOpen(false)}
+                    href="/#contact-us"
+                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                    aria-current="page"
+                  >
+                    Contact us
+                  </a>
+                </li>
+
+                <li>
+                  <a
+                    href="/login"
                     onClick={() => {
                       setIsMenuOpen(false);
                       handleLogout();
