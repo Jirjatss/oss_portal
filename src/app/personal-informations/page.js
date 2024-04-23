@@ -79,9 +79,8 @@ function Verification() {
       {step === 2 && <FormContact onClick={() => nextHandler()} />}
 
       {step === 3 && <FormUploadPhoto />}
-
       {isShowOtp && <FormOtpModal />}
-      <SubmitConfirmation />
+
       <ModalSuccess
         id="personal_informations"
         title="Your Data Have Submitted"

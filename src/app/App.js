@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import Navbar from "../app/components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { Provider } from "react-redux";
@@ -9,7 +9,11 @@ import { Toaster } from "sonner";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit/AuthProvider";
 import createRefresh from "react-auth-kit/createRefresh";
+import { appWithTranslation } from "next-i18next";
+import nextI18NextConfig from "../../next-i18next.config";
 import axios from "axios";
+import Loader from "./components/Loader";
+// import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const App = ({ children }) => {
   useEffect(() => {
@@ -67,15 +71,17 @@ const App = ({ children }) => {
   });
 
   return (
-    <AuthProvider store={storeKit}>
-      <Provider store={store}>
-        <Navbar />
-        {children}
-        <Toaster position="bottom-left" richColors />
-        <Footer />
-      </Provider>
-    </AuthProvider>
+    <Suspense fallback={<Loader />}>
+      <AuthProvider store={storeKit}>
+        <Provider store={store}>
+          <Navbar />
+          {children}
+          <Toaster position="bottom-left" richColors />
+          <Footer />
+        </Provider>
+      </AuthProvider>
+    </Suspense>
   );
 };
 
-export default App;
+export default appWithTranslation(App, nextI18NextConfig);

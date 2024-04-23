@@ -218,7 +218,7 @@ export const submitPersonalInformations = (val, access_token) => {
           formData.append(key, value);
         });
 
-        const { data } = await axios.post(
+        const { data } = await axios.put(
           "https://api.ardhiansyah.com/personal-informations",
           formData,
           {

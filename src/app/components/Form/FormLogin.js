@@ -9,8 +9,20 @@ import { login } from "@/app/store/actions/userAction";
 import { toast } from "sonner";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import { useTranslation } from "next-i18next";
 
 function FormLogin({ forgotPassword }) {
+  const { t, i18n } = useTranslation();
+  console.log("i18n:", i18n);
+
+  // useEffect(() => {
+  //   console.log(i18n, "itu");
+  //   if (!i18n.resolvedLanguage) {
+  //     console.log(i18n, "ini");
+  //     i18n.changeLanguage("en");
+  //   }
+  // }, [i18n]);
+
   const user = useAuthUser();
   const dispatch = useDispatch();
   const router = useRouter();
@@ -29,6 +41,12 @@ function FormLogin({ forgotPassword }) {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  // useEffect(() => {
+  //   if (!i18n.resolvedLanguage) {
+  //     i18n.changeLanguage(i18n.language);
+  //   }
+  // }, []);
 
   const isDisabled = inputLogin.email === "" || inputLogin.password === "";
   const signIn = useSignIn();
@@ -51,6 +69,7 @@ function FormLogin({ forgotPassword }) {
     <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10">
       <div className="flex flex-col gap-2">
         <h1 className="text-headForm">Welcome Back</h1>
+        {/* <p>{t("app_title")}</p> */}
         <p className="font-thin lg:text-[16px] text-[#646464]">
           Please log in to your account
         </p>

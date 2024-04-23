@@ -28,10 +28,11 @@ function FormIdentify({ onClick }) {
   );
 
   const [input, setInput] = useState({});
-  const { personalDetail, residenceDetail, birthDetail } = profile || {};
-  const { dateOfBirth } = birthDetail || {};
-  const { countryCode, districtCode, stateCode, subDistrictCode } =
-    residenceDetail || {};
+  const { personalDetail, birthDetail } = profile || {};
+
+  const { dateOfBirth, subDistrictId, countryCode, districtCode, stateCode } =
+    birthDetail || {};
+
   const { firstName, lastName, identityNumber, identityType, gender } =
     personalDetail || {};
 
@@ -54,11 +55,11 @@ function FormIdentify({ onClick }) {
         region: countryCode,
         IdentityType: identityType,
         Gender: gender,
-        town: subDistrictCode,
+        town: subDistrictId,
         municipality: stateCode,
         city: districtCode,
       }));
-  }, [stateCode, districtCode, subDistrictCode, countryCode, dateOfBirth]);
+  }, [stateCode, districtCode, subDistrictId, countryCode, dateOfBirth]);
 
   const isDisabled =
     !input.FirstName ||
@@ -91,7 +92,6 @@ function FormIdentify({ onClick }) {
         );
       }
     };
-    if (user) dispatch(getUserInformation(user.accessToken));
 
     fetchData();
   }, [
@@ -102,12 +102,12 @@ function FormIdentify({ onClick }) {
     countryCode,
     districtCode,
     stateCode,
-    subDistrictCode,
+    subDistrictId,
   ]);
 
   const genderForm = [
-    { name: "Male", code: "male" },
-    { name: "Female", code: "female" },
+    { name: "Male", code: "male", id: 1 },
+    { name: "Female", code: "female", id: 2 },
   ];
   const identityTypeForm = [
     { name: "Citizen Card", code: "citizenCard" },
@@ -243,7 +243,7 @@ function FormIdentify({ onClick }) {
             IdentityType: input.IdentityType,
             IdentityNumber: input.IdentityNumber,
             DateOfBirth: input.DateOfBirth,
-            PlaceOfBirthCode: input.town,
+            PlaceOfBirthId: input.town,
           };
           dispatch(savePersonalInformation(filteredInput));
           onClick();

@@ -5,13 +5,19 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckIcon from "@mui/icons-material/Check";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const LanguageSelector = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const { i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState("TL");
 
   const languages = [
+    {
+      lang: "tl",
+      label: "TL",
+    },
     {
       lang: "en",
       label: "EN",

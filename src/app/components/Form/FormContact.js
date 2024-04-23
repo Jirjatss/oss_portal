@@ -187,7 +187,7 @@ function FormContact({ onClick }) {
             savePersonalInformation({
               ...personalInformation,
               Address: input.address,
-              ResidenceCode: input.town,
+              ResidenceId: input.town,
             })
           );
           onClick();

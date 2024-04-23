@@ -88,7 +88,8 @@ function InputDropdown({
             listTopic.some((item) => {
               if (
                 label === "Office Representative" ||
-                label === "Office Location"
+                label === "Office Location" ||
+                label === "Town"
               ) {
                 return item.id === selectedTopic;
               } else return item.value === selectedTopic;
@@ -97,7 +98,8 @@ function InputDropdown({
                   .filter((item) => {
                     if (
                       label === "Office Location" ||
-                      label === "Office Representative"
+                      label === "Office Representative" ||
+                      label === "Town"
                     ) {
                       return item.id === selectedTopic;
                     } else return item.value === selectedTopic;
@@ -131,7 +133,8 @@ function InputDropdown({
                 let value = e.value;
                 if (
                   label === "Office Location" ||
-                  label === "Office Representative"
+                  label === "Office Representative" ||
+                  label === "Town"
                 )
                   value = e.id;
                 handleChangeTopic({ name: name, value: value });

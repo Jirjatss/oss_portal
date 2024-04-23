@@ -93,11 +93,11 @@ function FormUploadPhoto({ onClick }) {
   }, []);
 
   const isDisabled = !upload.citizenPhoto || !upload.identityDocument;
-  useEffect(() => {
-    if (personalInformation.Photo && personalInformation.Identity) {
-      onClick();
-    }
-  }, [personalInformation.Photo, personalInformation.Identity]);
+  // useEffect(() => {
+  //   if (personalInformation.Photo && personalInformation.Identity) {
+  //     onClick();
+  //   }
+  // }, [personalInformation.Photo, personalInformation.Identity]);
 
   return (
     <>
@@ -263,7 +263,7 @@ function FormUploadPhoto({ onClick }) {
         </button>
       </div>
 
-      {/* <SubmitConfirmation onSubmit={onSubmit} /> */}
+      <SubmitConfirmation onSubmit={onSubmit} />
 
       <ModalSuccess
         id="success_modal"
