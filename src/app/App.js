@@ -74,16 +74,16 @@ const App = ({ children }) => {
   });
 
   return (
-    <Suspense fallback="loading">
-      <AuthProvider store={storeKit}>
-        <Provider store={store}>
-          <Navbar />
-          {children}
-          <Toaster position="bottom-left" richColors />
-          <Footer />
-        </Provider>
-      </AuthProvider>
-    </Suspense>
+    // <Suspense fallback="loading">
+    <AuthProvider store={storeKit}>
+      <Provider store={store}>
+        <Navbar />
+        {children}
+        <Toaster position="bottom-left" richColors />
+        <Footer />
+      </Provider>
+    </AuthProvider>
+    // </Suspense>
   );
 };
 

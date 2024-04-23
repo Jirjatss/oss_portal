@@ -5,7 +5,7 @@ module.exports = {
     // debug: true,
   },
 
-  // react: {
-  //   useSuspense: false,
-  // },
+  react: {
+    useSuspense: false,
+  },
 };
