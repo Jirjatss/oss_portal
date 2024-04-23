@@ -5,14 +5,14 @@ function Application() {
   return (
     <div className="bg-[#2E2D2D] lg:px-28 lg:mt-24 mt-10 flex lg:flex-row flex-col lg:gap-10 gap-5">
       <Image
-        src="/assets/images/app.PNG"
+        src="/assets/images/app.png"
         className="h-[340px] lg:block hidden"
         width={900}
         height={325}
         alt=""
       />
       <img
-        src="/assets/images/app.PNG"
+        src="/assets/images/app.png"
         className="h-full w-full lg:hidden"
         alt=""
       />
