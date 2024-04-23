@@ -2,27 +2,20 @@
 
 import React, { useEffect, useState } from "react";
 import InputDropdown from "../TagComponents/InputDropdown";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "sonner";
+import { getServicesTypeHandler } from "@/app/store/actions/serviceAction";
 
 function FormFaq() {
+  const dispatch = useDispatch();
   const [input, setInput] = useState({});
-  const topic = [
-    {
-      name: "Applicant",
-      code: "Applicant",
-    },
-    {
-      name: "Officer",
-      code: "Officer",
-    },
-  ];
+  const { servicesType } = useSelector((state) => state.serviceReducer);
 
-  const handleChangeSelect = (e) => {
-    const { name, value } = e;
-    setInput({
-      ...input,
-      [name]: value,
-    });
-  };
+  useEffect(() => {
+    dispatch(getServicesTypeHandler()).catch((err) =>
+      toast.error("Failed to fetch")
+    );
+  }, []);
 
   return (
     <div className="lg:border-[1px] lg:border-[#DCDCDC] rounded-[20px] lg:px-10 py-8 flex flex-col lg:gap-8 gap-6">
@@ -31,42 +24,42 @@ function FormFaq() {
           className="lg:text-[32px] text-[28px] text-[#363131] capitalize"
           style={{ fontWeight: 700 }}
         >
-          Have a Question?
+          Iha Pergunta Ruma?
         </h1>
         <p className="lg:text-[16px] text-[12px] font-thin text-[#646464] lg:mt-2">
-          Please leave any questions you have here
+          Favór husik pergunta saida deit ita boot hakarak husu iha ne’e.
         </p>
       </div>
       <div className="flex flex-col gap-6">
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
           <div className="flex flex-col">
-            <label className="text-label">First Name</label>
+            <label className="text-label">Naran Primeiru</label>
             <input
               type="text"
               className="text-input text-black placeholder-gray-400"
-              placeholder="Your First Name"
+              placeholder="Ita-nia naran primeiru"
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-label">Last Name</label>
+            <label className="text-label">Apelidu</label>
             <input
               type="text"
               className="text-input text-[#2E2D2D] placeholder-gray-400"
-              placeholder="Your Last Name"
+              placeholder="Ita-nia apelidu"
             />
           </div>
         </div>
         <div className="flex flex-col">
-          <label className="text-label">Email</label>
+          <label className="text-label">E-mail</label>
           <input
             type="email"
             className="text-input text-black placeholder-gray-400"
-            placeholder="Your Email"
+            placeholder="Ita-nia e-mail"
           />
         </div>
         <InputDropdown
-          label={"Topic"}
-          topic={topic}
+          label={"Asuntu"}
+          topic={servicesType}
           name="topic"
           handleChange={(e) => handleChangeSelect(e)}
           selectedTopic={input.topic}
@@ -78,7 +71,7 @@ function FormFaq() {
             rows="3"
             value={input.message}
             onChange={(e) => handleChangeSelect(e.target)}
-            placeholder="Describe your feedback here"
+            placeholder="Deskreve Ita-nia hanoin iha ne'e."
             maxLength={240}
             name="message"
           />

@@ -14,7 +14,7 @@ function Appointment() {
       id="set-appointment"
     >
       <h1 className="lg:text-[40px] text-[28px] capitalize w-[240px]">
-        <b>Need meeting</b> with Officer?
+        <b>Presiza enkontru ho</b> ofisiál ida?
       </h1>
       <div className="border-[1px] border-[#DCDCDC] rounded-[20px] lg:flex flex-1 p-6 gap-8 items-center hidden">
         <div className="bg-[#D9D7F9] rounded-[12.8px] w-[64px] h-[64px] flex justify-center items-center">
@@ -22,11 +22,11 @@ function Appointment() {
         </div>
         <div className="flex flex-col flex-1">
           <h1 className="text-[24px] font-bold leading-[48px]">
-            Set Appointment Online First
+            Marka Ajendamentu Online Dahuluk
           </h1>
           <p className="text-[16px] text-[#646464]">
-            Effortlessly book appointments with government officials <br />{" "}
-            online for a seamless service experience
+            Marka ajendamentu fasil liu ho ofisiál governu sira liu husi online
+            deit hodi hetan esperiénsia servisu ne’ebé lais tebes.
           </p>
         </div>
         <button className="">

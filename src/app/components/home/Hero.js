@@ -6,20 +6,19 @@ const Hero = () => {
     <div className="relative">
       <div className="flex md:h-[640px] lg:bg-hero bg-hero-mobile bg-cover py-24">
         <div className="absolute inset-0 bg-white opacity-70 lg:hidden h-[640px]"></div>
-        <div className="flex m-auto h-[344px] w-[538px] flex-col text-center gap-5 relative z-10">
+        <div className="flex m-auto h-[344px] w-[560px] flex-col text-center gap-5 relative z-10">
           <h1 className="lg:text-[48px] text-[32px] lg:px-3 lg:leading-[57.6px] leading-[38.4px] text-[#363131] px-5">
-            <b>Process Documents </b>
-            In The Government Only <b>From Your Hands</b>
+            Prosesu Dokumentu Sira Iha Governu Husi Ita-nia Liman Rasik De’it.
           </h1>
           <p className="lg:text-[24px] text-[16px] text-[#646464] mb-2 px-2">
-            Now all your document can be handled online, much faster, more
-            timely and easier to handle.
+            Agora ita-boot sira-nia dokumentu hotu bele trata online, lalais
+            liu, oportunu no fasil liu atu kontrola.
           </p>
           <Link
             href="/#services"
             className="bg-[#1C25E7] text-white px-4 py-3 rounded-xl w-[300px] md:block m-auto hidden"
           >
-            Explore Now
+            Esplora Agora
           </Link>
         </div>
       </div>
@@ -29,7 +28,7 @@ const Hero = () => {
             href="/#services"
             className="bg-[#1C25E7] text-white px-4 py-3 rounded-xl w-[300px]"
           >
-            Explore Now
+            Esplora Agora
           </Link>
         </div>
       </div>

@@ -60,7 +60,6 @@ function FormLogin({ forgotPassword }) {
     <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10">
       <div className="flex flex-col gap-2">
         <h1 className="text-headForm">Welcome Back</h1>
-        <p>{t("app_title")}</p>
         <p className="font-thin lg:text-[16px] text-[#646464]">
           Please log in to your account
         </p>

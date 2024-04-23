@@ -10,18 +10,18 @@ const Steps = () => {
   const steps = [
     {
       icon: FlowStep1,
-      title: "Step 1",
-      desc: "Fill the form and attached the required document",
+      title: "Pasu 1",
+      desc: "Halo Kompletu Formuláriu No Aneksa Dokumentu Ne'ebé Presiza.",
     },
     {
       icon: FlowStep2,
-      title: "Step 2",
-      desc: "Submit for online registration and wait for the approval",
+      title: "Pasu 2",
+      desc: "Submete ba Rejistu Online no Hein ba Aprovasaun.",
     },
     {
       icon: FlowStep3,
-      title: "Step 3",
-      desc: "Get the approval and wait till the process reach to the completion",
+      title: "Pasu 3",
+      desc: "Hetan Aprovasaun No Hein To'o Prosesu Ne'e Remata.",
     },
   ];
   return (
@@ -30,7 +30,7 @@ const Steps = () => {
       id="step"
     >
       <h1 className="lg:text-[40px] text-[28px] px-3 lg:leading-[57.6px] text-[#363131] text-center">
-        <b>Easy Application</b> In Three Steps!
+        Aplikasaun Fasil Iha Pasu Tolu De’it!
       </h1>
       <div className="lg:flex lg:flex-row flex-col mt-7 m-auto justify-between hidden">
         <div className="w-[220px] h-[214px] flex justify-center items-center flex-col gap-2">
@@ -39,11 +39,11 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              Step 1
+              Pasu 1
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
-              Fill the form <br />
-              and attached the required document
+              Halo Kompletu Formuláriu <br />
+              No Aneksa Dokumentu Ne’ebé Presiza.
             </p>
           </div>
         </div>
@@ -54,10 +54,10 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              Step 2
+              Pasu 2
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
-              Submit For Online registration and wait for the approval
+              Submete ba Rejistu Online no Hein ba Aprovasaun.
             </p>
           </div>
         </div>
@@ -68,10 +68,10 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              Step 3
+              Pasu 3
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
-              Get the approval and wait till the process reach to the completion
+              Hetan Aprovasaun No Hein To’o Prosesu Ne’e Remata.
             </p>
           </div>
         </div>

@@ -65,20 +65,20 @@ const Header = () => {
             </li>
             {!auth && (
               <li className="m-auto ">
-                <Link href="/#step">How To Apply</Link>
+                <Link href="/#step">Oinsá atu Aplika?</Link>
               </li>
             )}
             <li className="m-auto">
-              <Link href="/#services">Services</Link>
+              <Link href="/#services">Servisu Sira</Link>
             </li>
             <li className="m-auto">
               <Link href={`${auth ? "/set-appointment" : "/#set-appointment"}`}>
-                Set Appointment
+                Hatama Enkontru
               </Link>
             </li>
             <li className="m-auto">
               <Link href="/#contact-us" style={{ scrollBehavior: "smooth" }}>
-                Contact us
+                Kontaktu Ami
               </Link>
             </li>
           </ul>
@@ -168,7 +168,7 @@ const Header = () => {
               </li>
               <li className="m-auto">
                 <button className="bg-[#1C25E7] text-white py-2 px-3 rounded-lg block m-auto">
-                  <Link href="/register">Sign Up</Link>
+                  <Link href="/register">Rejistu</Link>
                 </button>
               </li>
             </ul>
@@ -277,7 +277,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Services
+                    Servisu Sira
                   </a>
                 </li>
                 <li>
@@ -287,7 +287,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Set Appointment
+                    Hatama Enkontru
                   </a>
                 </li>
                 <li>
@@ -297,7 +297,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Contact us
+                    Kontaktu Ami
                   </a>
                 </li>
 
@@ -323,7 +323,7 @@ const Header = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold mt-1"
                   >
-                    How To Apply
+                    Oinsá atu Aplika?
                   </Link>
 
                   <li>
@@ -333,7 +333,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Services
+                      Servisu Sira
                     </a>
                   </li>
                   <li>
@@ -345,7 +345,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Set Appointment
+                      Hatama Enkontru
                     </a>
                   </li>
                   <li>
@@ -355,7 +355,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Contact us
+                      Kontaktu Ami
                     </a>
                   </li>
                 </ul>
@@ -372,7 +372,7 @@ const Header = () => {
                     className="bg-[#1C25E7] text-white py-2 px-3 rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <Link href="/register">Sign Up</Link>
+                    <Link href="/register">Rejistu</Link>
                   </button>
                 </div>
               </>

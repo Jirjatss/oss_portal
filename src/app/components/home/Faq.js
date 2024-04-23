@@ -7,40 +7,41 @@ import FormFaq from "../Form/FormFaq";
 function Faq() {
   const questions = [
     {
+      question: "Prosesu baibain ba aplikasaun governu nian halo nusaa? ",
+      answer:
+        "Tempu prosesu normál ba ita-nia aplikasaun sei la liu semana ida, maibé depende ba tipu servisu ne'ebé ita-boot sira aplika ba. Ita-boot nia aplikasaun sei akompaña husi ofisiál ida no ita-boot sei hetan  komentáriu ou feedback ruma atu halo tuir hodi bele halo susesu ita nia prosesu aplikasaun.",
+    },
+    {
       question:
-        "What is the usual processing time for government applications?",
+        "Dokumentu ida-ne'ebé mak obrigatóriu ba aplikante governu nian?",
       answer:
-        "The normal processing time for your applications will not exceed a week, however it depends on the type of services you applied for. Your application will be followed up by an officer and any feedback will be provided to you to accordingly for the successful of your application processing.",
+        "Kualkér dokumentu legál ne'ebé fó sai husi entidade governu nian sei obrigatóriu ba aplikante ida, hanesan: Bilhete-identidade, Sertidaun Moris RDTL, Deklarasaun Suku, Deklarasaun hosi Polísia, Kartaun Eleitoral, etc. Maibé, dokumentu sira ne'ebé presiza sei bazeia ba tipu servisu ne'ebé ita hili ona.",
     },
     {
-      question: "Which documents are mandatory for a government applicant?",
+      question:
+        "Oinsá mak aplikante sira bele halo monitorizasaun ba sira-nia submisaun nia estatutu? ",
       answer:
-        "Any legal documents issued by a government entity will be mandatory for an applicant, for example: Citizen Card, Birth Certificate, Village’s Declaration, Police Declaration, Election Card, etc. However, the documents required will be based on the type of services you will select. ",
+        "Aplikante sira bele halo monitorizasaun ba sira-nia submisaun nia estatutu liuhusi tama ba sistema no haree sira-nia submisaun ka pedidu nia estatutu. ",
     },
     {
-      question: "How can applicants track the status of their submissions?",
-      answer:
-        "Applicant can track the status of their submission by login into the system and check their submission or request status. ",
-    },
-    {
-      question: "Can the application submission be refused?",
+      question: "Bele rekuza submisaun ba aplikasaun? ",
       answer: ReactHtmlParser(`
         <div>
-          <p>Yes, the application submission can be refused:</p>
+          <p>Sin, bele rekuza submisaun ba aplikasaun: </p>
           <ul class="list-disc pl-4 mt-1">
-            <li>If your supporting documents are incomplete.</li>
-            <li>If you never follow up confirmation from the officer.</li>
-            <li>If there are technical problems that make it impossible to complete the order.</li>
+            <li>Se Ita-nia dokumentu sira la kompletu. </li>
+            <li>Se Ita nunka halo tuir ka konfirma fali ba ofisiál ida nian pergunta sira.</li>
+            <li>Se iha problema tékniku ruma ne'ebé halo susar atu kompleta orden ne'e.</li>
           </ul>
-          <p>In these cases, you will be informed by email about the recommendations and the next steps to take this to ensure that your next request can be successfully considered.</p>
+          <p>Iha kazu hirak-ne'e, ita sei hetan informasaun liuhosi e-mail kona-ba rekomendasaun sira no pasu sira tuir mai atu foti, ida-ne'e hodi asegura katak ita-nia pedidu tuir mai bele hetan konsiderasaun ho susesu. </p>
         </div>
       `),
     },
     {
-      question: "If I have questions, who can I speak to?",
+      question: "Se ha'u iha pergunta ruma, ha'u bele ko'alia ho se? ",
       answer: ReactHtmlParser(
         `
-        Please send an email to <span class="text-blue-700">portalmunicipal.mae@gmail.com</span> or contact  <span class="text-blue-700">(+670) 333 9077 </span> between 8am and 5pm, Monday to Friday except public holidays or declared point of tolerance day by Government.
+        Favór haruka e-mail ba <span class="text-blue-700">portal.mae@gmail.com</span>  ka kontaktu <span class="text-blue-700">(+670) 333 9077</span>  entre tuku 8 dadeer to'o tuku 5 lokraik, husi Segunda to'o Sesta eseptu feriadu públiku ka deklara loron pontu toleránsia husi Governu.
         `
       ),
     },

@@ -107,7 +107,7 @@ function InputDropdown({
                   .map((filteredItem, index) => (
                     <p key={index + filteredItem.name}>{filteredItem.name}</p>
                   ))
-              : `Please Select ${label}`}
+              : `Favor hili ${label}`}
           </span>
         </Button>
         <Menu
