@@ -93,11 +93,11 @@ function FormUploadPhoto({ onClick }) {
   }, []);
 
   const isDisabled = !upload.citizenPhoto || !upload.identityDocument;
-  // useEffect(() => {
-  //   if (personalInformation.Photo && personalInformation.Identity) {
-  //     onClick();
-  //   }
-  // }, [personalInformation.Photo, personalInformation.Identity]);
+  useEffect(() => {
+    if (personalInformation.Photo && personalInformation.Identity) {
+      onClick();
+    }
+  }, [personalInformation.Photo, personalInformation.Identity]);
 
   return (
     <>
@@ -146,7 +146,7 @@ function FormUploadPhoto({ onClick }) {
                     >
                       <OSSIcons name={"Cancel"} />
                     </div>
-                    <div style={{ width: "600px", height: "300px" }}>
+                    <div className="lg:w-[600px] h-[300px] max-w-screen ">
                       <Image
                         src={image.citizenPhoto}
                         alt="citizen photo"
@@ -214,7 +214,7 @@ function FormUploadPhoto({ onClick }) {
                     >
                       <OSSIcons name={"Cancel"} />
                     </div>
-                    <div style={{ width: "600px", height: "300px" }}>
+                    <div className="lg:w-[600px] h-[300px] max-w-screen ">
                       <Image
                         src={image.identityDocument}
                         alt="citizen photo"

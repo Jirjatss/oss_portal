@@ -15,12 +15,12 @@ const LanguageSelector = () => {
 
   const languages = [
     {
-      lang: "tl",
-      label: "TL",
-    },
-    {
       lang: "en",
       label: "EN",
+    },
+    {
+      lang: "tl",
+      label: "TL",
     },
     {
       lang: "pt",

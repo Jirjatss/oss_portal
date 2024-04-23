@@ -13,15 +13,7 @@ import { useTranslation } from "next-i18next";
 
 function FormLogin({ forgotPassword }) {
   const { t, i18n } = useTranslation();
-  console.log("i18n:", i18n);
-
-  // useEffect(() => {
-  //   console.log(i18n, "itu");
-  //   if (!i18n.resolvedLanguage) {
-  //     console.log(i18n, "ini");
-  //     i18n.changeLanguage("en");
-  //   }
-  // }, [i18n]);
+  // console.log("i18n:", i18n);
 
   const user = useAuthUser();
   const dispatch = useDispatch();
@@ -41,12 +33,6 @@ function FormLogin({ forgotPassword }) {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
-  // useEffect(() => {
-  //   if (!i18n.resolvedLanguage) {
-  //     i18n.changeLanguage(i18n.language);
-  //   }
-  // }, []);
 
   const isDisabled = inputLogin.email === "" || inputLogin.password === "";
   const signIn = useSignIn();

@@ -10,7 +10,7 @@ import { getServicesHandler } from "@/app/store/actions/serviceAction";
 import Loader from "../Loader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import FormOtpModalSubmisson from "../Modal/FormOtpSubmission";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   getDetailApplication,
   getDetailApplicationSuccess,
@@ -23,7 +23,7 @@ import ModalPreviewExisting from "../Modal/ModalPreviewExisting";
 const FormSubmission = ({ code }) => {
   const searchParams = useSearchParams();
   const user = useAuthUser();
-
+  const router = useRouter();
   const dispatch = useDispatch();
   const id = searchParams.get("id");
   const serviceId = searchParams.get("serviceId");
@@ -45,12 +45,12 @@ const FormSubmission = ({ code }) => {
 
   const [checkedImages, setCheckedImages] = useState([]);
   const [indexImage, setIndexImage] = useState(null);
+
   const [upload, setUpload] = useState([]);
   const [isShowModal, setIsShowModal] = useState(false);
 
   const { loading } = useSelector((state) => state.userReducer);
   const { services } = useSelector((state) => state.serviceReducer);
-  const { municipality } = useSelector((state) => state.regionReducer);
 
   const isDisabled =
     !isChecked ||
@@ -177,6 +177,26 @@ const FormSubmission = ({ code }) => {
     Files: upload,
   };
 
+  const getApplicationFilesDetail = async (filesId) => {
+    try {
+      const { data } = await axios({
+        url: `https://api.ardhiansyah.com/applications/${id}/files/${filesId}`,
+        responseType: "arraybuffer",
+      });
+
+      const base64Image = btoa(
+        new Uint8Array(data).reduce(
+          (data, byte) => data + String.fromCharCode(byte),
+          ""
+        )
+      );
+      const dataURL = `data:image/png;base64,${base64Image}`;
+      setNewImage(dataURL);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (id && user) dispatch(getDetailApplication(id, user.accessToken));
   }, [id]);
@@ -186,6 +206,13 @@ const FormSubmission = ({ code }) => {
       dispatch(getDetailApplicationSuccess(null));
     };
   }, []);
+
+  useEffect(() => {
+    if (!user) {
+      toast.error("Unauthorized");
+      router.push("/");
+    }
+  }, [user]);
 
   useEffect(() => {
     dispatch(getUserInformation(user?.accessToken));
@@ -207,7 +234,11 @@ const FormSubmission = ({ code }) => {
       setImage(() => ({
         checkedImages: true,
         images: files
-          .filter((e) => e.status !== "rejected")
+          .filter(
+            (e) =>
+              e.frontOfficeStatus === "approved" ||
+              e.backOfficeStatus === "approved"
+          )
           .map((e) => {
             return {
               title: e.fileName,
@@ -233,6 +264,14 @@ const FormSubmission = ({ code }) => {
     if (isShowModal) form_otp_modal_submisson.showModal();
   }, [isShowModal]);
 
+  useEffect(() => {
+    image.images.map((e) => {
+      if (e.isExisting) {
+        getApplicationFilesDetail(e.id);
+      }
+    });
+  }, [image]);
+
   const UploadContainer = ({
     handleImageChange,
     toggleImageCheck,
@@ -242,29 +281,6 @@ const FormSubmission = ({ code }) => {
     onClick,
     applicationId,
   }) => {
-    const getApplicationFilesDetail = async (filesId) => {
-      try {
-        const { data } = await axios({
-          url: `https://api.ardhiansyah.com/applications/${applicationId}/files/${filesId}`,
-        });
-        const arrayBufferToBase64 = (buffer) => {
-          const binary = Buffer.from(buffer).toString("base64");
-          return binary;
-        };
-
-        const base64Image = arrayBufferToBase64(data);
-        const dataURL = `data:image/png;base64,${base64Image}`;
-        setNewImage(dataURL);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-
-    // useEffect(() => {
-    //   image.images.map((e) => {
-    //     getApplicationFilesDetail(e.id);
-    //   });
-    // }, [image]);
     return (
       <div className="border-[1px] border-[#DCDCDC] p-[20px] rounded-[20px] flex flex-col gap-5">
         <div
@@ -302,7 +318,9 @@ const FormSubmission = ({ code }) => {
                 <div
                   className="p-[12px] bg-[#D9D7F9] flex justify-center items-center rounded-[8px] cursor-pointer "
                   onClick={() => {
-                    onClick();
+                    if (image.isExisting) {
+                      modal_preview_existing.showModal();
+                    } else onClick(index);
                   }}
                 >
                   <OSSIcons name="SearchFile" />
@@ -342,6 +360,7 @@ const FormSubmission = ({ code }) => {
     <>
       {image?.images && <ModalPreview image={image.images[indexImage]} />}
       {newImage && <ModalPreviewExisting image={newImage} />}
+
       {loading && <Loader message="Please wait, your data is submitting..." />}
       <div className="grid grid-cols-1 lg:grid-cols-2  my-10 gap-x-10">
         <div>
@@ -474,6 +493,7 @@ const FormSubmission = ({ code }) => {
               </Link>
             </p>
           </div>
+
           <button
             disabled={isDisabled}
             className={`${

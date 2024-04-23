@@ -79,6 +79,7 @@ function Verification() {
       {step === 2 && <FormContact onClick={() => nextHandler()} />}
 
       {step === 3 && <FormUploadPhoto />}
+
       {isShowOtp && <FormOtpModal />}
 
       <ModalSuccess

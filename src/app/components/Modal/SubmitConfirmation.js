@@ -1,10 +1,10 @@
 import React from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 
-function SubmitConfirmation({ onSubmit, data }) {
+function SubmitConfirmation({ onSubmit }) {
   return (
     <dialog id="submit_confirmation" className="modal">
-      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px]  relative  lg:mx-0 mx-5">
+      <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px] lg:min-w-[594px]  relative  lg:mx-0 mx-5">
         <form method="dialog">
           <button className="absolute top-7 right-5" formMethod="dialog">
             <OSSIcons name={"Cancel"} fill="#2E2D2D" />
