@@ -17,7 +17,10 @@ function FormAppointment({ onContinue }) {
   const user = useAuthUser();
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
+  const { profile } = useSelector((state) => state.userReducer);
+  const { residenceDetail } = profile || {};
 
+  const { stateId } = residenceDetail || {};
   const serviceTypeParams = searchParams.get("serviceType");
   const serviceParams = searchParams.get("service");
 
@@ -78,6 +81,15 @@ function FormAppointment({ onContinue }) {
     }
   }, [dispatch, input]);
 
+  // useEffect(() => {
+  //   if (stateId) {
+  //     setInput({
+  //       ...input,
+  //       officeLocationCode: stateId,
+  //     });
+  //   }
+  // }, [stateId]);
+
   useEffect(() => {
     if (
       serviceTypeParams &&
@@ -112,18 +124,9 @@ function FormAppointment({ onContinue }) {
       </div>
       <div className="flex flex-col gap-7">
         <InputDropdown
-          label={"Your Location"}
-          topic={municipality}
-          name="location"
-          handleChange={(e) => {
-            handleChangeSelect(e);
-          }}
-          selectedTopic={input.location}
-        />
-        <InputDropdown
           label={"Office Location"}
-          isDisabled={!input.location}
-          topic={municipality?.filter((item) => [1, 2].includes(item.id))}
+          // isDisabled={stateId}
+          topic={municipality}
           name="officeLocationCode"
           handleChange={(e) => {
             handleChangeSelect(e);

@@ -10,9 +10,12 @@ import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit/AuthProvider";
 import createRefresh from "react-auth-kit/createRefresh";
 import { appWithTranslation } from "next-i18next";
-import nextI18NextConfig from "../../next-i18next.config";
+
 import axios from "axios";
 import Loader from "./components/Loader";
+import nextConfig from "../../next.config.mjs";
+import nextI18nextConfig from "../../next-i18next.config";
+
 // import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const App = ({ children }) => {
@@ -71,7 +74,7 @@ const App = ({ children }) => {
   });
 
   return (
-    <Suspense fallback={<Loader />}>
+    <Suspense fallback="loading">
       <AuthProvider store={storeKit}>
         <Provider store={store}>
           <Navbar />
@@ -84,4 +87,4 @@ const App = ({ children }) => {
   );
 };
 
-export default appWithTranslation(App, nextI18NextConfig);
+export default appWithTranslation(App, nextI18nextConfig);
