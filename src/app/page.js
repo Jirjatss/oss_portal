@@ -7,7 +7,8 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { useTranslation } from "next-i18next";
 export default function Home() {
   const auth = useAuthUser();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  console.log("i18n:", i18n);
   const { profile, loading } = useSelector((state) => state.userReducer);
   const { personalDetail } = profile || {};
 

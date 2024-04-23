@@ -1,7 +1,7 @@
 "use client";
 
-import { Suspense, useEffect } from "react";
-import Navbar from "../app/components/layout/Header";
+import { useEffect } from "react";
+import Navbar from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 import { Provider } from "react-redux";
 import store from "./store/store";
@@ -12,8 +12,6 @@ import createRefresh from "react-auth-kit/createRefresh";
 import { appWithTranslation } from "next-i18next";
 
 import axios from "axios";
-import Loader from "./components/Loader";
-import nextConfig from "../../next.config.mjs";
 import nextI18nextConfig from "../../next-i18next.config";
 
 // import { serverSideTranslations } from "next-i18next/serverSideTranslations";
