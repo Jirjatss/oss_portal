@@ -20,7 +20,7 @@ export default function Home() {
         {auth ? (
           <div className="w-full lg:px-28 px-5 py-10 ">
             <p className="text-[18px] font-semibold text-[#2E2D2D] mb-5">
-              Welcome
+              Benvindu
               {firstName ? (
                 <span>
                   {", "}

@@ -17,14 +17,17 @@ const LanguageSelector = () => {
     {
       lang: "en",
       label: "EN",
+      id: 1,
     },
     {
       lang: "tl",
       label: "TL",
+      id: 2,
     },
     {
       lang: "pt",
       label: "PT",
+      id: 3,
     },
   ];
 

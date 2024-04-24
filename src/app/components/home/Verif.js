@@ -29,13 +29,13 @@ function Verif() {
 
   useEffect(() => {
     if (user?.status === "inactive" && profile?.status === "inactive")
-      setTitle("Verification your mail first");
+      setTitle("Verifika uluk Ita-nia e-mail.");
     if (
       user?.status === "needToFillPersonalInformation" ||
       profile?.status === "needToFillPersonalInformation"
     )
-      setTitle("Verification your account first");
-    if (isVerifComplete) setTitle("Verification Successful!");
+      setTitle("Foti aseitaimentu ba konta ida-ne'e primeru.");
+    if (isVerifComplete) setTitle("Verifikasaun Susesu!");
   }, [user, profile]);
 
   useEffect(() => {
@@ -59,19 +59,19 @@ function Verif() {
 
   const buttonTitle =
     user?.status === "inactive" && profile?.status === "inactive"
-      ? "Resend to Email"
-      : "Verification";
+      ? "Manda tan ba e-mail"
+      : "Verifikasaun";
 
-  const titleDecider = () => {
-    if (profile?.status === "inactive" && !profile)
-      return "Verification your mail first";
-    if (
-      user?.status === "needToFillPersonalInformation" ||
-      profile?.status === "needToFillPersonalInformation"
-    )
-      return "Verification your account first";
-    if (isVerifComplete) return "Verification Successful!";
-  };
+  // const titleDecider = () => {
+  //   if (profile?.status === "inactive" && !profile)
+  //     return "Verification your mail first";
+  //   if (
+  //     user?.status === "needToFillPersonalInformation" ||
+  //     profile?.status === "needToFillPersonalInformation"
+  //   )
+  //     return "Verification your account first";
+  //   if (isVerifComplete) return "Verification Successful!";
+  // };
 
   const iconDecider = () => {
     if (user?.status === "inactive") return ResendVerif;
@@ -87,7 +87,7 @@ function Verif() {
 
   const descriptionDecider = () => {
     if (user?.status === "inactive" && !profile)
-      return "To be able to use all the available facilities, please to verifiy your email first so you can eligible to continue.";
+      return "Para poder utilizar todos os serviços, por favor complete primeiro os seus dados pessoais e só depois estará apto a continuar ";
     if (
       user?.status === "needToFillPersonalInformation" ||
       profile?.status === "needToFillPersonalInformation" ||
@@ -96,7 +96,7 @@ function Verif() {
     )
       return "To be able to use all the available facilities, please to complete your personal data first so you can eligible to continue.";
     if (isVerifComplete)
-      return "Congratulations! Your data has been verified, granting you complete access to our facilities. Start exploring now!";
+      return "Parabéns! Ita-boot nia dadus verifika tiha ona, ita boot iha ona asesu kompletu ba ami-nia instalasaun sira. Hahú esplora agora!";
   };
 
   if (!isShowVerif) return null;
@@ -122,12 +122,7 @@ function Verif() {
               {title}
             </h1>
             <div className="lg:-mt-2.5 hidden lg:flex">
-              <Image
-                src={iconDecider()}
-                width={30}
-                height={30}
-                alt={titleDecider()}
-              />
+              <Image src={iconDecider()} width={30} height={30} alt={title} />
             </div>
           </div>
           <p className="text-[#646464] text-[16px] -mt-2 lg:w-3/5">

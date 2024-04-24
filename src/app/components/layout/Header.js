@@ -21,7 +21,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const pathname = usePathname();
-  const profile = [{ label: "Edit Profile" }, { label: "Logout" }];
+  const profile = [{ label: "Edit Perfíl" }, { label: "Sai" }];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -69,11 +69,11 @@ const Header = () => {
               </li>
             )}
             <li className="m-auto">
-              <Link href="/#services">Servisu Sira</Link>
+              <Link href="/#services">Aplikasaun</Link>
             </li>
             <li className="m-auto">
               <Link href={`${auth ? "/set-appointment" : "/#set-appointment"}`}>
-                Hatama Enkontru
+                Marka Ajendamentu
               </Link>
             </li>
             <li className="m-auto">
@@ -136,12 +136,12 @@ const Header = () => {
                       className="text-gray-900 w-full text-start"
                       key={e.label}
                       onClick={() => {
-                        if (e.label === "Logout") {
+                        if (e.label === "Sai") {
                           handleLogout();
                           setAnchorEl(null);
                           setMenuOpen(false);
                         }
-                        if (e.label === "Edit Profile") {
+                        if (e.label === "Edit Perfíl") {
                           router.push("/personal-informations");
                           setAnchorEl(null);
                           setMenuOpen(false);
@@ -267,7 +267,7 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold mt-1"
                 >
-                  Edit Profile
+                  Edit Perfíl
                 </Link>
 
                 <li>
@@ -277,7 +277,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Servisu Sira
+                    Aplikasaun
                   </a>
                 </li>
                 <li>
@@ -287,7 +287,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Hatama Enkontru
+                    Marka Ajendamentu
                   </a>
                 </li>
                 <li>
@@ -311,7 +311,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Logout
+                    Sai
                   </a>
                 </li>
               </ul>
@@ -333,7 +333,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Servisu Sira
+                      Aplikasaun
                     </a>
                   </li>
                   <li>
@@ -345,7 +345,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Hatama Enkontru
+                      Marka Ajendamentu
                     </a>
                   </li>
                   <li>
