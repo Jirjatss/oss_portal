@@ -35,10 +35,8 @@ function FormAppointment({ onContinue }) {
   const [officeLocation, setOfficeLocation] = useState(null);
 
   const isDisabled =
-    !input.location ||
-    !input.officeLocationCode ||
-    !input.serviceType ||
-    !input.serviceId;
+    // !input.location ||
+    !input.officeLocationCode || !input.serviceType || !input.serviceId;
 
   const getOfficeLocation = async () => {
     try {
@@ -166,7 +164,7 @@ function FormAppointment({ onContinue }) {
         />
 
         <button
-          //   disabled={isDisabled}
+          disabled={isDisabled}
           className={`${
             isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
           }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-5 font-semibold`}
