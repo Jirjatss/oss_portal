@@ -14,6 +14,10 @@ import useLanguage from "@/app/useLanguage";
 function MyApplicant() {
   const user = useAuthUser();
   const { myApplications } = useSelector((state) => state.applicationReducer);
+  console.log("myApplications:", myApplications);
+  const existApplication = myApplications.filter(
+    (e) => e.status !== "completed"
+  );
   const dispatch = useDispatch();
   const { t } = useLanguage();
   const isEmptyApplications = myApplications?.length === 0 || !myApplications;
@@ -63,9 +67,9 @@ function MyApplicant() {
         </div>
 
         <div className="flex justify-center items-center flex-col text-center gap-4">
-          {myApplications?.length !== 0 && myApplications !== null ? (
+          {existApplication?.length !== 0 && myApplications !== null ? (
             <p className="text-[18px] text-[#363131] font-semibold">
-              {myApplications?.length} {t("applications")}{" "}
+              {existApplication?.length} {t("applications")}{" "}
               <span className="text-[18px] text-[#646464] font-thin">
                 {" "}
                 {t("home_my_application_desc_on_going_exist")}

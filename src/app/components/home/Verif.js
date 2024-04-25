@@ -23,11 +23,10 @@ function Verif() {
   const { t } = useLanguage();
   const dispatch = useDispatch();
   const user = useAuthUser();
-  console.log("user:", user);
+
   const { lang } = useSelector((state) => state.languageReducer);
   const [isVerifComplete, setIsVerifComplete] = useState(false);
   const { profile, isShowVerif } = useSelector((state) => state.userReducer);
-  console.log("profile:", profile);
 
   const [title, setTitle] = useState(null);
 
