@@ -31,6 +31,7 @@ const FormSubmission = ({ code }) => {
   const { t } = useLanguage();
 
   const { profile } = useSelector((state) => state.userReducer);
+
   const { personalDetail } = profile || {};
   const { detailById } = useSelector((state) => state.applicationReducer);
   const [newImage, setNewImage] = useState(null);
@@ -218,9 +219,10 @@ const FormSubmission = ({ code }) => {
       toast.error("Unauthorized");
       router.push("/");
     }
-    if (profile.status !== "active") {
+    if (profile?.status !== "active") {
       toast.error("Verification your account first");
       router.push("/personal-informations");
+      // console.log(profile?.status);
     }
   }, [user, profile]);
 
