@@ -52,7 +52,7 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              {t(`step`)} 1
+              {t(`step`)} 2
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
               {t(`step_2_title`)}
@@ -66,7 +66,7 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              {t(`step`)} 1
+              {t(`step`)} 3
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
               {t(`step_3_title`)}
