@@ -218,7 +218,15 @@ const FormSubmission = ({ code }) => {
       toast.error("Unauthorized");
       router.push("/");
     }
-  }, [user]);
+    if (profile.status !== "active") {
+      toast.error("Verification your account first");
+      router.push("/personal-informations");
+    }
+  }, [user, profile]);
+
+  useEffect(() => {
+    dispatch(getUserInformation(user?.accessToken));
+  }, []);
 
   useEffect(() => {
     dispatch(getUserInformation(user?.accessToken));
