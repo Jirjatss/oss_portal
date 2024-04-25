@@ -6,49 +6,46 @@ import { OSSIcons } from "../../../public/assets/icons/parent";
 import FormSubmisson from "../components/Form/FormSubmisson";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import ModalSuccess from "../components/Modal/ModalSuccess";
+import { useDispatch, useSelector } from "react-redux";
+import { getServicesHandler } from "../store/actions/serviceAction";
+import useLanguage from "../useLanguage";
 
 function Service() {
   const auth = useAuthUser();
   const pathname = usePathname();
   const router = useRouter();
-
+  const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-
+  const code = searchParams.get("code");
+  const { t } = useLanguage();
   const [isSubmission, setIsSubmission] = useState(false);
   const [index, setIndex] = useState(0);
+  const { services } = useSelector((state) => state.serviceReducer);
+  const desc = ["", "", ""];
 
-  const title = pathname
-    .replace(/^\//, "")
-    .split("-")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+  const newServices = services?.map((e) => {
+    const splitStrings = e.name.split("-");
+    let label = splitStrings[0];
+    const title = splitStrings.slice(1).join("-");
+    if (label === "new") label = "new_text";
+    return {
+      label: label,
+      name: `home_menu_${title}_title`,
+    };
+  });
 
-  const [code, setCode] = useState("");
+  const title = pathname.replace(/^\//, "");
 
   useEffect(() => {
-    if (pathname.includes("/citizen-id")) setCode("1");
-    if (pathname.includes("/general-passport")) setCode("2");
-    if (pathname.includes("/birth-certificate")) setCode("3");
-    if (pathname.includes("/marriage-certificate")) setCode("4");
-    if (pathname.includes("/criminal-record-certificate")) setCode("5");
-    if (pathname.includes("/driving-license")) setCode("6");
-    if (pathname.includes("/commercial-registration")) setCode("7");
-    if (pathname.includes("/family-card")) setCode("8");
-  }, [pathname]);
-
-  const services = [
-    { title: `New \n ${title}` },
-    { title: `Renew \n ${title}` },
-    { title: `Loss \n ${title}` },
-    { title: `Damage \n ${title}` },
-  ];
+    dispatch(getServicesHandler(code));
+  }, []);
 
   const ServicesHeader = () => {
     return (
       <>
-        <div className="grid grid-cols-4 lg:gap-3 gap-1 justify-start  border-b-[1px] border-b-[#DCDCDC]">
-          {services.map((e, i) => (
+        <div className="grid grid-cols-4 lg:gap-3 gap-1 justify-start lg:w-3/4 w-full border-b-[1px] border-b-[#DCDCDC]">
+          {newServices?.map((e, i) => (
             <div
               key={i}
               className={`${
@@ -59,7 +56,7 @@ function Service() {
               onClick={() => setIndex(i)}
             >
               <p className="mb-1 text-center lg:text-[16px] text-[14px]">
-                {e.title}
+                {t(`${e.label}`)} <br /> {t(`${e.name}`)}
               </p>
             </div>
           ))}
@@ -71,18 +68,18 @@ function Service() {
   const Submission = ({ onClick }) => {
     return (
       <>
-        <div className="bg-white rounded-[20px] p-[20px] border-[1px] border-[#DCDCDC] lg:flex flex-col gap-1 lg:w-[206px] h-fit hidden">
+        <div className="bg-white rounded-[20px] p-[20px] border-[1px] border-[#DCDCDC] lg:flex flex-col gap-1 lg:w-[250px] h-fit hidden">
           <h1 className="text-[18px] font-semibold text-[#2E2D2D]">
-            Ready to submit?
+            {t("service_footer_title")}
           </h1>
           <p className="text-[14px] text-[#646464]">
-            Make sure you have read and understand the following provisions
+            {t("service_footer_desc")}
           </p>
           <button
             className="bg-[#1C25E7] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold"
             onClick={onClick}
           >
-            Start Submission
+            {t("service_footer_cta")}
           </button>
         </div>
       </>
@@ -94,17 +91,17 @@ function Service() {
         <div className="bg-white rounded-[20px] p-[20px] border-[1px] border-[#DCDCDC] lg:hidden flex flex-row lg:gap-1 gap-5 lg:w-[206px] h-fit mt-7">
           <div className="flex flex-col">
             <h1 className="text-[18px] font-semibold text-[#2E2D2D]">
-              Ready to submit?
+              {t("service_footer_title")}
             </h1>
             <p className="text-[14px] text-[#646464]">
-              Make sure you have read and understand the following provisions
+              {t("service_footer_desc")}
             </p>
           </div>
           <button
             className="bg-[#1C25E7] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold h-fit"
             onClick={onClick}
           >
-            Start Submission
+            {t("service_footer_cta")}
           </button>
         </div>
       </>
@@ -117,7 +114,7 @@ function Service() {
   };
 
   return (
-    <div className="lg:px-52 px-5 bg-white py-10 min-h-screen  overflow-hidden">
+    <div className="lg:px-32 px-5 bg-white py-10 min-h-screen  overflow-hidden">
       <div
         className="flex gap-2 cursor-pointer"
         onClick={() => {
@@ -127,7 +124,7 @@ function Service() {
       >
         <OSSIcons name="LeftArrow" />
         <p className="text-[18px] font-semibold text-[#2E2D2D]">
-          Service {title}
+          {t("service")} {t(`home_menu_${title}_title`)}
         </p>
       </div>
       {isSubmission || id !== null ? (
@@ -136,11 +133,11 @@ function Service() {
         <div className="flex gap-16 mt-7 ">
           <div className="flex-1 flex-col w-screen lg:max-w-fit overflow-hidden">
             <h1 className="lg:text-[28px] font-semibold text-[#2E2D2D] mb-10">
-              Category
+              {t("category")}
             </h1>
-            <ServicesHeader />
+            {services && <ServicesHeader />}
             <div className="flex flex-col gap-10 mt-10">
-              <div className="flex flex-col gap-3">
+              {/* <div className="flex flex-col gap-3">
                 <h1 className="text-[18px] text-[#2E2D2D] font-semibold">
                   📋 About Applications
                 </h1>
@@ -195,7 +192,27 @@ function Service() {
                     </ul>
                   </li>
                 </ul>
-              </div>
+              </div> */}
+              {desc.map((e, i) => {
+                let icon;
+                if (i === 0) icon = "📋";
+                if (i === 1) icon = "🗂";
+                if (i === 2) icon = "⏳";
+                return (
+                  <div className="flex flex-col gap-3" key={i}>
+                    <h1 className="text-[18px] text-[#2E2D2D] font-semibold">
+                      {icon} {t(`service_desc_title_${i + 1}`)}
+                    </h1>
+                    <p className="text-[16px] text-[#646464]">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: t(`service_desc_desc_${i + 1}`),
+                        }}
+                      />
+                    </p>
+                  </div>
+                );
+              })}
             </div>
             <SubmissionMobile onClick={startSubmission} />
           </div>
@@ -205,8 +222,8 @@ function Service() {
 
       <ModalSuccess
         id="success_submission"
-        title="Your Data Have Submitted"
-        description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
+        title={t("dialog_data_submitted_title")}
+        description={t("dialog_data_submitted_desc")}
         onClick={() => {
           router.push("/my-applications");
         }}

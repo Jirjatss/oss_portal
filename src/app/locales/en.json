@@ -7,8 +7,10 @@
   "email_error_hint": "Please enter a valid email",
   "password_empty_hint": "Password could not be empty",
   "password_not_match_hint": "Password not matched",
+  "email_error_hint": "Invalid email format",
   "password": "Password",
   "re_password": "Re-Password",
+  "phone_number_error_hint": "Invalid phone number format",
   "submit": "Submit",
   "register_phone_title": "Start Registering",
   "register_phone_sub_title": "Please complete the information below",
@@ -245,5 +247,15 @@
   "office_location": "Office Location",
   "office_representative": "Office Representative",
   "home_menu_citizenCard_title": "Citizen Card",
-  "home_menu_passport_title": "Passport"
+  "home_menu_passport_title": "Passport",
+  "success_login": "Success Login",
+  "success_logout": "Success Logout",
+  "your_profile": "Your Profile",
+  "your_profile_desc": "Completing your profile will assist officers in accurately tracking your attendance. Please ensure your profile is up-to-date.",
+  "service_desc_title_1": "About Applications",
+  "service_desc_desc_1": "Explore our Applicant Service for Citizen Id! Streamlining the application process, it ensures hassle-free access to essential services. From simplified documentation to efficient processing, we’re here to make managing your family’s needs easier. Apply today for a smoother administrative experience!",
+  "service_desc_title_2": "What you need prepare for this?",
+  "service_desc_desc_2": "<ul class=\"list-disc pl-4 mt-1\"><li>Scan of original valid CNIC/ NICOP/ Smart card.</li><li> Scan of the data page, two random pages asked by the system and the last ten passport pages of the original exhausted passport. Finger Prints Performa.</li><li>Original scan of a color picture with white background having specification 350/467 Pixels in JPEG/JPG format and not more than 3MB size.</li><li>The applicant has to submit a statement/declaration as per the prescribed format. (can be downloaded through the download tab after login to your account) that he/ she holds the original exhausted passport at the time of application and his passport pages have been exhausted due to frequent travel.</li></ul>",
+  "service_desc_title_3": "How Long It Will Take?",
+  "service_desc_desc_3": "<ul class=\"list-disc pl-4 mt-1\"><li>Duration submited : 3 Working Day</li><li>Step following: <ul class=\"list-disc ml-8 mt-1\"><li>Waiting for approval</li><li>Request Approved - In Progress, Registration Completed</li><li>Passport Delivered</li></ul></li></ul>"
 }

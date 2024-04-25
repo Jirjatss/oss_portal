@@ -12,11 +12,12 @@ import {
   submitApplication,
 } from "@/app/store/actions/applicationAction";
 import { useRouter, useSearchParams } from "next/navigation";
+import useLanguage from "@/app/useLanguage";
 
 function FormOtpModalSubmisson({ data }) {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-
+  const { t } = useLanguage();
   const [timer, setTimer] = useState(30);
   const { dataRegister, loading } = useSelector((state) => state.userReducer);
 
@@ -124,10 +125,10 @@ function FormOtpModalSubmisson({ data }) {
 
         <div className="mt-7 text-center flex flex-col gap-3">
           <h1 className="text-[26px] font-bold text-[#2E2D2D]">
-            Input OTP Code
+            {t("input_otp_title")}
           </h1>
           <p className="text-[16px] font-thin text-[#646464]">
-            OTP Code sent to your phone number registered
+            {t("input_otp_sub_title")}
           </p>
 
           <div className="flex justify-center">
@@ -166,7 +167,7 @@ function FormOtpModalSubmisson({ data }) {
                       setTimer(30);
                       startTimer();
                       setErrorMessage("");
-                      setSentOtp("We sent an OTP to your phone Number");
+                      setSentOtp(t("otp_sent_msg"));
                     })
                     .catch((err) => {
                       console.log(err);
@@ -182,8 +183,8 @@ function FormOtpModalSubmisson({ data }) {
                 formMethod="dialog"
               >
                 {!showResendButton
-                  ? `Request resend code in ${timer}s`
-                  : " Resend Code Again"}
+                  ? `${t("otp_countdown_msg")} ${timer}s`
+                  : t("otp_code_resend")}
               </button>
               <button
                 className={`${
@@ -198,7 +199,7 @@ function FormOtpModalSubmisson({ data }) {
                   else submitSubmissionHandler();
                 }}
               >
-                Submit
+                {t("submit")}
               </button>
               <p className="lg:text-[18px] text-[16px] text-[#646464] lg:hidden">
                 {showResendButton ? (
@@ -218,10 +219,10 @@ function FormOtpModalSubmisson({ data }) {
                     }}
                     className="text-[#1C25E7] focus:outline-none font-semibold"
                   >
-                    Resend Code Again
+                    {t("otp_code_resend")}
                   </button>
                 ) : (
-                  `You can request resend code in ${timer}s`
+                  `${t("otp_countdown_msg")} ${timer}s`
                 )}
               </p>
             </div>

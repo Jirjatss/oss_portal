@@ -13,11 +13,13 @@ import { useRouter } from "next/navigation";
 import SubmitConfirmation from "../Modal/SubmitConfirmation";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import ModalSuccess from "../Modal/ModalSuccess";
+import useLanguage from "@/app/useLanguage";
 
 function FormUploadPhoto({ onClick }) {
   const user = useAuthUser();
   const dispatch = useDispatch();
   const router = useRouter();
+  const { t } = useLanguage();
 
   const { personalInformation, loading } = useSelector(
     (state) => state.userReducer
@@ -105,19 +107,17 @@ function FormUploadPhoto({ onClick }) {
       <div>
         <div>
           <h1 className="lg:text-[28px] text-[14px] font-semibold text-[#2E2D2D] mb-2">
-            Upload Photo
+            {t("upload_photo")}
           </h1>
           <p className="text-[#646464] text-[16px] mb-10">
-            Please upload clear and legible copies of your photos and documents.
-            Ensure all <br />
-            details are visible for accurate processing.
+            {t("upload_photo_desc")}
           </p>
         </div>
 
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-10 mb-16">
           <div className="flex flex-col gap-5">
             <label className="text-[18px] text-[#2E2D2D] font-semibold">
-              Citizen Photo
+              {t("citizen_photo")}
             </label>
             <div className="border-[1px] border-[#DCDCDC] rounded-[20px] p-[24px] flex flex-col">
               <div
@@ -165,7 +165,7 @@ function FormUploadPhoto({ onClick }) {
                   >
                     <OSSIcons name="AddImage" />
                     <p className="text-center text-[#646464] text-[16px]">
-                      Upload in JPG, JPEG, PDF, PNG <br /> max 10 MB
+                      {t("spec_files_to_upload")}
                     </p>
                   </div>
                 )}
@@ -176,13 +176,13 @@ function FormUploadPhoto({ onClick }) {
                   document.getElementById("citizenPhotoInput").click()
                 }
               >
-                {image.citizenPhoto ? "Change Photo" : "Upload"}
+                {image.citizenPhoto ? t("change_photo") : t("upload")}
               </p>
             </div>
           </div>
           <div className="flex flex-col gap-5">
             <label className="text-[18px] text-[#2E2D2D] font-semibold">
-              Citizen Identity document
+              {t("citizen_identity_doc")}
             </label>
             <div className="border-[1px] border-[#DCDCDC] rounded-[20px] p-[24px] flex flex-col relative">
               <div
@@ -233,7 +233,7 @@ function FormUploadPhoto({ onClick }) {
                   >
                     <OSSIcons name="AddImage" />
                     <p className="text-center text-[#646464] text-[16px]">
-                      Upload in JPG, JPEG, PDF, PNG <br /> max 10 MB
+                      {t("spec_files_to_upload")}
                     </p>
                   </div>
                 )}
@@ -244,7 +244,7 @@ function FormUploadPhoto({ onClick }) {
                   document.getElementById("identityDocumentInput").click()
                 }
               >
-                {image.identityDocument ? "Change Photo" : "Upload"}
+                {image.identityDocument ? t("change_photo") : t("upload")}
               </p>
             </div>
           </div>
@@ -259,7 +259,7 @@ function FormUploadPhoto({ onClick }) {
             submit_confirmation.showModal();
           }}
         >
-          Submit
+          {t("submit")}
         </button>
       </div>
 
@@ -267,8 +267,8 @@ function FormUploadPhoto({ onClick }) {
 
       <ModalSuccess
         id="success_modal"
-        title="Your Data Have Submitted"
-        description=" Your submitted data is being reviewed by our team. Verification may take some time. Thank you for your patience!"
+        title={t("dialog_data_submitted_title")}
+        description={t("dialog_data_submitted_desc")}
         onClick={() => {
           dispatch(showVerif());
           router.push("/");

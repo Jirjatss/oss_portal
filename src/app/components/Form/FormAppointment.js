@@ -57,7 +57,7 @@ function FormAppointment({ onContinue }) {
         return {
           id: e.id,
           code: e.code,
-          name: e.address,
+          name: e.organizationName,
         };
       });
       setOfficeLocation(newData);
@@ -102,15 +102,6 @@ function FormAppointment({ onContinue }) {
     }
   }, [user, status]);
 
-  // useEffect(() => {
-  //   if (stateId) {
-  //     setInput({
-  //       ...input,
-  //       officeLocationCode: stateId,
-  //     });
-  //   }
-  // }, [stateId]);
-
   useEffect(() => {
     if (
       serviceTypeParams &&
@@ -120,7 +111,7 @@ function FormAppointment({ onContinue }) {
     )
       setInput({
         serviceType: serviceTypeParams,
-        serviceId: serviceParams,
+        serviceId: +serviceParams,
       });
     else if (
       !serviceTypeParams &&
@@ -136,11 +127,10 @@ function FormAppointment({ onContinue }) {
     <div className="grid grid-cols-1 lg:grid-cols-2 my-10 gap-x-10">
       <div>
         <h1 className="lg:text-[28px] text-[24px] text-[#2E2D2D] font-semibold mb-2">
-          Choose Location
+          {t("choose_location")}
         </h1>
         <p className="text-[16px] text-[#646464] lg:mb-0 mb-10">
-          Select your <b>nearest office location from your address</b> and
-          purpose of visit to streamline your appointment process.
+          {t("set_appointment_location_desc")}
         </p>
       </div>
       <div className="flex flex-col gap-7">
@@ -195,13 +185,14 @@ function FormAppointment({ onContinue }) {
             dispatch(
               setAppointmentData({
                 officeLocationId: input.officeRepresentativeId,
-                serviceId: input.serviceId,
+                serviceId: +input.serviceId,
+                applicationId: +input.serviceType,
               })
             );
             onContinue();
           }}
         >
-          Continue
+          {t("txt_continue")}
         </button>
       </div>
     </div>

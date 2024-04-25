@@ -23,9 +23,11 @@ function Verif() {
   const { t } = useLanguage();
   const dispatch = useDispatch();
   const user = useAuthUser();
+  console.log("user:", user);
   const { lang } = useSelector((state) => state.languageReducer);
   const [isVerifComplete, setIsVerifComplete] = useState(false);
   const { profile, isShowVerif } = useSelector((state) => state.userReducer);
+  console.log("profile:", profile);
 
   const [title, setTitle] = useState(null);
 
@@ -61,8 +63,8 @@ function Verif() {
 
   const buttonTitle =
     user?.status === "inactive" && profile?.status === "inactive"
-      ? "Resend to Email"
-      : "Verification";
+      ? t("home_need_verify_email_resend")
+      : t("home_verification_cta");
 
   const titleDecider = () => {
     if (profile?.status === "inactive" && !profile)

@@ -4,8 +4,10 @@ import React, { useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordHandler } from "@/app/store/actions/userAction";
+import useLanguage from "@/app/useLanguage";
 
 function FormResetPassword({ back, onSubmit }) {
+  const { t } = useLanguage();
   const [showPassword, setShowPassword] = useState({
     password: false,
     reenterPassword: false,
@@ -76,20 +78,20 @@ function FormResetPassword({ back, onSubmit }) {
     <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10 relative">
       <button className="absolute top-7 left-7 flex gap-3" onClick={back}>
         <OSSIcons name="LeftArrow" className="flex m-auto" />
-        <p className="text-[#2E2D2D] text-[18px] font-bold">Back</p>
+        <p className="text-[#2E2D2D] text-[18px] font-bold">{t("back")}</p>
       </button>
       <div className="flex flex-col gap-2 lg:mt-0 mt-16">
-        <h1 className="text-headForm">Reset Your Password</h1>
+        <h1 className="text-headForm">{t("reset_password_screen_title")}</h1>
       </div>
       <div className="flex flex-col text-start w-full">
-        <label className="text-label">Password</label>
+        <label className="text-label">{t("password")}</label>
         <div className="relative">
           <input
             type={showPassword.password ? "text" : "password"}
             value={input.password}
             onChange={handleChangeInput}
             className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
-            placeholder="Password"
+            placeholder={t("password")}
             name="password"
           />
           {input.password !== "" && (
@@ -110,14 +112,14 @@ function FormResetPassword({ back, onSubmit }) {
         </div>
       </div>
       <div className="flex flex-col text-start w-full">
-        <label className="text-label">Reenter Password</label>
+        <label className="text-label">{t("re_password")}</label>
         <div className="relative">
           <input
             type={showPassword.reenterPassword ? "text" : "password"}
             value={input.reenterPassword}
             onChange={handleChangeInput}
             className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
-            placeholder="Reenter Password"
+            placeholder={t("re_password")}
             name="reenterPassword"
           />
           {input.reenterPassword !== "" && (
@@ -136,12 +138,17 @@ function FormResetPassword({ back, onSubmit }) {
             </button>
           )}
         </div>
+        {input.reenterPassword !== "" && !reenterPasswordValid && (
+          <p className="text-[12px] text-red-500 mt-1">
+            {t("password_not_match_hint")}
+          </p>
+        )}
       </div>
 
       {input.password !== "" && (
         <div className="self-start -mt-2 w-full">
           <p className="text-[16px] font-thin text-[#646464] mb-3 text-start">
-            Make sure your password contains it
+            {t("register_main_pass_requirement")}
           </p>
           <div className="grid grid-cols-2">
             <div className="flex flex-col gap-2">
@@ -179,23 +186,6 @@ function FormResetPassword({ back, onSubmit }) {
                   LowerCase
                 </p>
               </div>
-              <div className="flex gap-3">
-                <div
-                  className={`w-[24px] h-[24px] rounded-full ${
-                    reenterPasswordValid
-                      ? "bg-[#000A80]"
-                      : "bg-transparent border-[1px] border-[#DCDCDC]"
-                  } justify-center items-center flex gap-3`}
-                >
-                  {reenterPasswordValid ? <OSSIcons name="Approve" /> : null}
-                </div>
-                <p
-                  className="text-[14px] text-[#313131]"
-                  style={{ fontWeight: 400 }}
-                >
-                  Password Match
-                </p>
-              </div>
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex gap-3">
@@ -212,7 +202,7 @@ function FormResetPassword({ back, onSubmit }) {
                   className="text-[14px] text-[#313131]"
                   style={{ fontWeight: 400 }}
                 >
-                  Number
+                  {t("register_main_number")}
                 </p>
               </div>
               <div className="flex gap-3">
@@ -229,7 +219,7 @@ function FormResetPassword({ back, onSubmit }) {
                   className="text-[14px] text-[#313131]"
                   style={{ fontWeight: 400 }}
                 >
-                  Minimum 8 Chars
+                  {t("register_main_min_char")}
                 </p>
               </div>
             </div>
@@ -253,7 +243,7 @@ function FormResetPassword({ back, onSubmit }) {
           });
         }}
       >
-        Submit
+        {t("submit")}
       </button>
     </div>
   );

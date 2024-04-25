@@ -12,7 +12,6 @@ import {
   Cr,
   Criminal,
 } from "../../../public/assets/emoji/index";
-import empty from "../../../public/assets/images/zzz.png";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getDetailApplicationStatus,
@@ -26,10 +25,12 @@ import { getMyAppointments } from "../store/actions/appointmentAction";
 import { formattedDateAppointment } from "../universalFunction";
 import ModalDetailApplications from "../components/Modal/ModalDetailApplications";
 import Link from "next/link";
+import useLanguage from "../useLanguage";
 
 const MyApplications = () => {
   const router = useRouter();
   const user = useAuthUser();
+  const { t } = useLanguage();
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.userReducer);
   const { myApplications, detailApplication } = useSelector(
@@ -37,8 +38,14 @@ const MyApplications = () => {
   );
 
   const { myAppointments } = useSelector((state) => state.appointmentReducer);
+
   const [filterStatus, setFilterStatus] = useState("All");
   const [filterStatusAppointment, setFilterStatusAppointmen] = useState("All");
+
+  // useEffect(() => {
+  //   console.log("filterStatusAppointment:", filterStatusAppointment);
+  // }, [filterStatusAppointment]);
+
   const [filterApps, setFilterApps] = useState("Service");
 
   const filteredApplications = myApplications?.filter((app) => {
@@ -160,7 +167,7 @@ const MyApplications = () => {
 
   const HeaderStatusAppointment = () => {
     const [index, setIndex] = useState(0);
-    const status = ["All", "waiting approval", "reject", "completed", "absent"];
+    const status = ["All", "waitingApproval", "reject", "completed", "absent"];
 
     useEffect(() => {
       const newIndex = status.findIndex((s) => s === filterStatusAppointment);
@@ -266,25 +273,25 @@ const MyApplications = () => {
             />
           </div>
           <div className="flex flex-col  gap-3 -ml-12 max-w-[170px] min-h-[80px]">
-            <p className="text-[#646464] text-[16px]">Service Type</p>
+            <p className="text-[#646464] text-[16px]">{t("service_type")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
               {serviceTypeDecider(serviceType)}
             </p>
           </div>
           <div className="flex flex-col  gap-3 -ml-12 min-h-[80px]">
-            <p className="text-[#646464] text-[16px]">Applying</p>
+            <p className="text-[#646464] text-[16px]">{t("applying")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
               {serviceTypeDecider(service)}
             </p>
           </div>
           <div className="flex flex-col  gap-3 min-h-[80px]">
-            <p className="text-[#646464] text-[16px]">Apply Date</p>
+            <p className="text-[#646464] text-[16px]">{t("apply_date")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {dateFormatter(appliedAt)}
             </p>
           </div>
           <div className="flex flex-col  gap-3 ml-16 w-full min-h-[80px]">
-            <p className="text-[#646464] text-[16px]">Status</p>
+            <p className="text-[#646464] text-[16px]">{t("status")}</p>
             <span
               className={`${statusColorDecider(
                 status
@@ -301,7 +308,7 @@ const MyApplications = () => {
               );
             }}
           >
-            Detail
+            {t("detail")}
           </div>
         </div>
         {/* mobile */}
@@ -331,18 +338,18 @@ const MyApplications = () => {
                 );
               }}
             >
-              Detail
+              {t("detail")}
             </div>
           </div>
           <div className="flex justify-between w-full items-center mt-3 border-b-[1px] border-[#DCDCDC] pb-4 gap-16">
             <div className="flex flex-col justify-between lg:gap-3 gap-1">
-              <p className="text-[#646464] text-[16px]">Service Type</p>
+              <p className="text-[#646464] text-[16px]">{t("service_type")}</p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
                 {serviceTypeDecider(serviceType)}
               </p>
             </div>
             <div className="flex flex-col justify-between lg:gap-3 gap-1 items-end text-end">
-              <p className="text-[#646464] text-[16px]">Applying</p>
+              <p className="text-[#646464] text-[16px]">{t("applying")}</p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
                 {serviceTypeDecider(service)}
               </p>
@@ -350,13 +357,13 @@ const MyApplications = () => {
           </div>
           <div className="flex justify-between w-full items-center pt-4 gap-5">
             <div className="flex flex-col justify-between lg:gap-3 gap-1">
-              <p className="text-[#646464] text-[16px]">Apply Date</p>
+              <p className="text-[#646464] text-[16px]">{t("apply_date")}</p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
                 {dateFormatter(appliedAt)}
               </p>
             </div>
             <div className="flex flex-col justify-between lg:gap-3 gap-1 text-end">
-              <p className="text-[#646464] text-[16px]">Status</p>
+              <p className="text-[#646464] text-[16px]">{t("status")}</p>
               <span
                 className={`${statusColorDecider(
                   status
@@ -371,13 +378,13 @@ const MyApplications = () => {
         {status === "completed" && (
           <div className="flex lg:gap-4 gap-2 lg:flex-row flex-col justify-end items-center mt-3">
             <p className="text-[14px] text-[#646464]">
-              Your documents are ready to be picked up at the office
+              {t("application_completed_footer_desc")}
             </p>
             <Link
               href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
               className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
-              Schedule Pick Up
+              {t("application_completed_footer_cta")}
             </Link>
           </div>
         )}
@@ -387,13 +394,13 @@ const MyApplications = () => {
               href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
               className="border-[#DCDCDC] border-[1px] bg-[#FFFFFF] text-[#1C25E7] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
-              Correct at Office
+              {t("application_rejected_footer_cta_secondary")}
             </Link>
             <Link
               href={`/${serviceType}?id=${id}&serviceId=${serviceId}`}
               className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
-              Correct Online
+              {t("application_rejected_footer_cta_primary")}
             </Link>
           </div>
         )}
@@ -421,32 +428,32 @@ const MyApplications = () => {
           }`}
         >
           <div className="flex flex-col justify-between gap-2">
-            <p className="text-[#646464] text-[16px]">Location</p>
+            <p className="text-[#646464] text-[16px]">{t("location")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {officeLocation}
             </p>
           </div>
           <div className="flex flex-col justify-between gap-2 max-w-[200px]">
-            <p className="text-[#646464] text-[16px]">Service</p>
+            <p className="text-[#646464] text-[16px]">{t("service")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {serviceTypeDecider(serviceType)}
             </p>
           </div>
           <div className="flex flex-col justify-between gap-2 max-w-[200px]">
-            <p className="text-[#646464] text-[16px]">Purpose</p>
+            <p className="text-[#646464] text-[16px]">{t("purpose")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {serviceTypeDecider(service)}
             </p>
           </div>
           <div className="flex flex-col justify-between gap-2">
-            <p className="text-[#646464] text-[16px]">Date</p>
+            <p className="text-[#646464] text-[16px]">{t("date")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {formattedDateAppointment(scheduledAt)}
             </p>
           </div>
           <div className="flex flex-col justify-between gap-2 ml-8">
             <p className="text-[#646464] text-[16px]">
-              {status === "confirm" ? "Code Booking" : "Status"}
+              {status === "confirm" ? t("code_booking") : t("status")}
             </p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {status === "confirm"
@@ -465,7 +472,7 @@ const MyApplications = () => {
         <div className="flex flex-col justify-between items-center gap-2 lg:hidden">
           <div className="grid grid-cols-2 justify-between w-full border-b-[#DCDCDC] border-b-[1px] pb-4">
             <div className="flex flex-col justify-between gap-2 w-full">
-              <p className="text-[#646464] text-[16px]">Location</p>
+              <p className="text-[#646464] text-[16px]">{t("location")}</p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
                 {officeLocation}
               </p>
@@ -494,7 +501,7 @@ const MyApplications = () => {
           <div className="flex justify-between w-full pt-2">
             <div className="flex flex-col justify-between gap-2 w-full ">
               <p className="text-[#646464] text-[16px]">
-                {status === "confirm" ? "Code Booking" : "Status"}
+                {status === "confirm" ? t("code_booking") : t("status")}
               </p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
                 {status === "confirm"
@@ -515,14 +522,13 @@ const MyApplications = () => {
         {status.includes("reject") && (
           <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 justify-end items-center mt-3 border-t-[1px] border-t-[#DCDCDC] pt-4">
             <p className="text-[14px] text-[#646464] lg:mb-0 mb-2">
-              Sorry, your appointment have rejected cause some reason, you can
-              do reschedule appointment again
+              {t("appointment_rejected_msg")}
             </p>
             <Link
               href={`/set-appointment?appointmentId=${id}&reschedule=true`}
               className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:w-[180px] text-center"
             >
-              Reschedule
+              {t("reschedule")}
             </Link>
           </div>
         )}
@@ -570,7 +576,7 @@ const MyApplications = () => {
         >
           <OSSIcons name="LeftArrow" />
           <p className="text-[18px] font-semibold text-[#2E2D2D]">
-            My Applications
+            {t("home_my_application_title")}
           </p>
         </div>
 

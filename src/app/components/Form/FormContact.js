@@ -15,12 +15,13 @@ import {
 import { LOADING_FALSE } from "@/app/store/actions/action_type";
 import Loader from "../Loader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useLanguage from "@/app/useLanguage";
 
 function FormContact({ onClick }) {
   const user = useAuthUser();
   const dispatch = useDispatch();
   const [input, setInput] = useState({});
-
+  const { t } = useLanguage();
   const { personalInformation, profile } = useSelector(
     (state) => state.userReducer
   );
@@ -93,31 +94,29 @@ function FormContact({ onClick }) {
       {loading && <Loader />}
       <div>
         <h1 className="lg:text-[28px] text-[24px] font-semibold text-[#2E2D2D] mb-2">
-          Contact and Residance
+          {t("contact_and_residence")}
         </h1>
-        <p className="text-[#646464] text-[16px] mb-10">
-          please to complete your personal data for account completion.
-        </p>
+        <p className="text-[#646464] text-[16px] mb-10">{t("personal_desc")}</p>
       </div>
       <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5 mb-10">
         <div className="flex flex-col">
-          <label className="text-label">Email</label>
+          <label className="text-label">{t("email")}</label>
           <input
             disabled
             type="email"
             className="text-input text-black placeholder-gray-400 cursor-not-allowed"
-            placeholder="Email"
+            placeholder={t("email")}
             value={email}
             name="email"
           />
         </div>
         <div className="flex flex-col">
-          <label className="text-label">Phone Number</label>
+          <label className="text-label">{t("phone_number")}</label>
           <input
             disabled
             type="text"
             className="text-input text-black placeholder-gray-400 cursor-not-allowed"
-            placeholder="Phone Number"
+            placeholder={t("phone_number")}
             value={phoneNumber}
             name="phoneNumber"
           />
@@ -125,16 +124,16 @@ function FormContact({ onClick }) {
       </div>
       <div>
         <h1 className="text-[18px] font-semibold text-[#2E2D2D] mb-8">
-          Local Residence
+          {t("local_residence")}
         </h1>
         <div className="flex flex-col gap-6 mb-16">
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <div className="flex flex-col">
-              <label className="text-label">Address</label>
+              <label className="text-label">{t("address")}</label>
               <input
                 type="text"
                 className="text-input text-black placeholder-gray-400"
-                placeholder="Address"
+                placeholder={t("address")}
                 name="address"
                 onChange={(e) => handleChangeSelect(e.target)}
               />
@@ -142,14 +141,14 @@ function FormContact({ onClick }) {
           </div>
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
-              label={"Country"}
+              label={t("country")}
               topic={region}
               handleChange={(e) => handleChangeSelect(e)}
               name="region"
               selectedTopic={input?.region}
             />
             <InputDropdown
-              label={"State"}
+              label={t("state")}
               topic={municipality}
               isDisabled={!input.region}
               handleChange={(e) => handleChangeSelect(e)}
@@ -159,7 +158,7 @@ function FormContact({ onClick }) {
           </div>
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
-              label={"City"}
+              label={t("city")}
               topic={city}
               handleChange={(e) => handleChangeSelect(e)}
               name="city"
@@ -167,7 +166,7 @@ function FormContact({ onClick }) {
               selectedTopic={input?.city}
             />
             <InputDropdown
-              label={"Town"}
+              label={t("town")}
               topic={town}
               handleChange={(e) => handleChangeSelect(e)}
               name="town"
@@ -193,7 +192,7 @@ function FormContact({ onClick }) {
           onClick();
         }}
       >
-        Continue
+        {t("txt_continue")}
       </button>
     </>
   );

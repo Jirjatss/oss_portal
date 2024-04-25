@@ -9,9 +9,11 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Loader from "../Loader";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
+import useLanguage from "@/app/useLanguage";
 
 function FormRegister({}) {
   const dispatch = useDispatch();
+  const { t } = useLanguage();
   const signIn = useSignIn();
   const { loading, dataRegister } = useSelector((state) => state.userReducer);
   const router = useRouter();
@@ -92,32 +94,34 @@ function FormRegister({}) {
       {loading && <Loader message="Please wait, your login in progress..." />}
       <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10">
         <div className="flex flex-col gap-2">
-          <h1 className="text-headForm">Start Registering</h1>
+          <h1 className="text-headForm">{t("register_main_title")}</h1>
         </div>
         <div className="flex flex-col gap-5 w-full">
           <div className="flex flex-col text-start w-full">
-            <label className="text-label">Email</label>
+            <label className="text-label">{t("email")}</label>
             <input
               type="email"
               className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] bg-transparent"
-              placeholder="Email"
+              placeholder={t("email")}
               value={input.email}
               onChange={handleChangeInput}
               name="email"
             />
             {!isValidEmail && input.email !== "" && (
-              <p className="text-red-500 text-xs mt-1">Invalid Email</p>
+              <p className="text-red-500 text-xs mt-1">
+                {t("email_error_hint")}
+              </p>
             )}
           </div>
           <div className="flex flex-col text-start w-full">
-            <label className="text-label">Password</label>
+            <label className="text-label"> {t("password")}</label>
             <div className="relative">
               <input
                 type={showPassword.password ? "text" : "password"}
                 value={input.password}
                 onChange={handleChangeInput}
                 className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
-                placeholder="Password"
+                placeholder={t("password")}
                 name="password"
               />
 
@@ -139,14 +143,14 @@ function FormRegister({}) {
             </div>
           </div>
           <div className="flex flex-col text-start w-full">
-            <label className="text-label">Reenter Password</label>
+            <label className="text-label">{t("re_password")}</label>
             <div className="relative">
               <input
                 type={showPassword.reenterPassword ? "text" : "password"}
                 value={input.reenterPassword}
                 onChange={handleChangeInput}
                 className="border-b-[1px] border-[#F0F0F0] focus:outline-none pb-1 pr-10 lg:text-[18px] text-[16px] text-[#2E2D2D] placeholder-[#646464] w-full bg-transparent"
-                placeholder="Reenter Password"
+                placeholder={t("re_password")}
                 name="reenterPassword"
               />
               {input.reenterPassword !== "" && (
@@ -167,12 +171,17 @@ function FormRegister({}) {
                 </button>
               )}
             </div>
+            {input.reenterPassword !== "" && !reenterPasswordValid && (
+              <p className="text-[12px] text-red-500 mt-1">
+                {t("password_not_match_hint")}
+              </p>
+            )}
           </div>
         </div>
         {input.password !== "" && (
           <div className="self-start -mt-2 w-full">
             <p className="text-[16px] font-thin text-[#646464] mb-3 text-start">
-              Make sure your password contains it
+              {t("register_main_pass_requirement")}
             </p>
             <div className="grid grid-cols-2">
               <div className="flex flex-col gap-2">
@@ -190,7 +199,7 @@ function FormRegister({}) {
                     className="text-[14px] text-[#313131]"
                     style={{ fontWeight: 400 }}
                   >
-                    Uppercase
+                    {t("register_main_uppercase")}
                   </p>
                 </div>
                 <div className="flex gap-3">
@@ -207,24 +216,7 @@ function FormRegister({}) {
                     className="text-[14px] text-[#313131]"
                     style={{ fontWeight: 400 }}
                   >
-                    LowerCase
-                  </p>
-                </div>
-                <div className="flex gap-3">
-                  <div
-                    className={`w-[24px] h-[24px] rounded-full ${
-                      reenterPasswordValid
-                        ? "bg-[#000A80]"
-                        : "bg-transparent border-[1px] border-[#DCDCDC]"
-                    } justify-center items-center flex gap-3`}
-                  >
-                    {reenterPasswordValid ? <OSSIcons name="Approve" /> : null}
-                  </div>
-                  <p
-                    className="text-[14px] text-[#313131]"
-                    style={{ fontWeight: 400 }}
-                  >
-                    Password Match
+                    {t("register_main_lowercase")}
                   </p>
                 </div>
               </div>
@@ -243,7 +235,7 @@ function FormRegister({}) {
                     className="text-[14px] text-[#313131]"
                     style={{ fontWeight: 400 }}
                   >
-                    Number
+                    {t("number")}
                   </p>
                 </div>
                 <div className="flex gap-3">
@@ -260,7 +252,7 @@ function FormRegister({}) {
                     className="text-[14px] text-[#313131]"
                     style={{ fontWeight: 400 }}
                   >
-                    Minimum 8 Characters
+                    {t("register_main_min_char")}
                   </p>
                 </div>
               </div>
@@ -287,19 +279,22 @@ function FormRegister({}) {
                   signIn
                 )
               )
-                .then(() => router.push("/"))
+                .then(() => {
+                  toast.success(t("success_login"));
+                  router.push("/");
+                })
                 .catch((err) => {
                   console.log(err);
                   toast.error("Login Error");
                 });
             }}
           >
-            Submit
+            {t("submit")}
           </button>
           <p className="lg:text-[18px] text-[16px] text-[#646464]">
-            Already have account?{" "}
+            {t("register_phone_confirmation_registered")}{" "}
             <Link href="/login" className="text-[#1C25E7]">
-              Login Now
+              {t("register_phone_login_now")}
             </Link>
           </p>
         </div>

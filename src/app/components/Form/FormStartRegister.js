@@ -3,11 +3,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
+import useLanguage from "@/app/useLanguage";
 
 function FormStartRegister({ onClick }) {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [validPhoneNumber, setValidPhoneNumber] = useState(true);
-
+  const { t } = useLanguage();
   const regexPhoneNumber = /^\+[1-9]\d{1,14}$/;
 
   const { loading } = useSelector((state) => state.userReducer);
@@ -25,30 +26,30 @@ function FormStartRegister({ onClick }) {
       {loading && <Loader />}
       <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10">
         <div className="flex flex-col gap-2">
-          <h1 className="text-headForm">Start Registering</h1>
+          <h1 className="text-headForm">{t("register_phone_title")}</h1>
           <p className="font-thin lg:text-[16px] text-[#646464]">
-            Please complete the information below
+            {t("register_phone_sub_title")}
           </p>
         </div>
 
         <div className="flex flex-col text-start w-full">
-          <label className="text-label">Phone Number</label>
+          <label className="text-label">{t("phone_number")}</label>
           <input
             type="text"
             className="text-input focus:outline-none pb-1 text-[18px] text-[#2E2D2D] bg-inherit"
-            placeholder="Phone Number"
+            placeholder={t("phone_number")}
             value={phoneNumber}
             onChange={handleChangePhoneNumber}
           />
-          {!validPhoneNumber && (
+          {!validPhoneNumber && phoneNumber !== "" && (
             <p className="text-[12px] text-red-500">
-              Invalid phone number format
+              {t("phone_number_error_hint")}
             </p>
           )}
         </div>
 
         <p className="lg:text-[18px] text-[16px] text-[#646464]">
-          We will send an OTP to your phone Number
+          {t("register_phone_otp_hint")}
         </p>
 
         <div className="flex flex-col gap-5 w-full">
@@ -61,12 +62,12 @@ function FormStartRegister({ onClick }) {
               dispatch(requestOtp(phoneNumber)).then(() => onClick());
             }}
           >
-            Submit
+            {t("submit")}
           </button>
           <p className="lg:text-[18px] text-[16px] text-[#646464]">
-            Already have an account?{" "}
+            {t("register_phone_confirmation_registered")}{" "}
             <Link href="/login" className="text-[#1C25E7]">
-              Login Now
+              {t("register_phone_login_now")}
             </Link>
           </p>
         </div>

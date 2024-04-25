@@ -4,11 +4,13 @@ import { useSelector } from "react-redux";
 import * as HomeComponent from "./components/home/Index";
 import Loader from "./components/Loader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useLanguage from "./useLanguage";
 
 export default function Home() {
   const auth = useAuthUser();
   const { profile, loading } = useSelector((state) => state.userReducer);
   const { personalDetail } = profile || {};
+  const { t } = useLanguage();
 
   const { firstName, gender } = personalDetail || {};
 
@@ -19,7 +21,7 @@ export default function Home() {
         {auth ? (
           <div className="w-full lg:px-28 px-5 py-10 ">
             <p className="text-[18px] font-semibold text-[#2E2D2D] mb-5">
-              Welcome
+              {t("welcome")}
               {firstName ? (
                 <span>
                   {", "}

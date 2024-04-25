@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { requestOtp, verifyOtp } from "@/app/store/actions/userAction";
 import { toast } from "sonner";
 import Loader from "../Loader";
+import useLanguage from "@/app/useLanguage";
 
 function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
   const { dataRegister, loading } = useSelector((state) => state.userReducer);
@@ -13,6 +14,7 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
   const [otp, setOtp] = useState(["", "", "", ""]);
   const inputRefs = [useRef(), useRef(), useRef(), useRef()];
   const [isDisabled, setIsDisabled] = useState(true);
+  const { t } = useLanguage();
 
   useEffect(() => {
     inputRefs[0].current.focus();
@@ -80,12 +82,12 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
       <div className="flex flex-col items-center justify-center text-center lg:px-44 px-5 gap-10 relative">
         <button className="absolute top-7 left-7 flex gap-3" onClick={onClick}>
           <OSSIcons name="LeftArrow" className="flex m-auto" />
-          <p className="text-[#2E2D2D] text-[18px] font-bold">Back</p>
+          <p className="text-[#2E2D2D] text-[18px] font-bold">{t("back")}</p>
         </button>
         <div className="flex flex-col gap-2">
-          <h1 className="text-headForm capitalize">Input OTP Code</h1>
+          <h1 className="text-headForm capitalize">{t("input_otp_title")}</h1>
           <p className="font-thin lg:text-[16px] text-[#646464]">
-            OTP Code sent to your phone number registered
+            {t("input_otp_sub_title")}
           </p>
         </div>
 
@@ -126,7 +128,7 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
                 });
             }}
           >
-            Submit
+            {t("submit")}
           </button>
           <p className="lg:text-[18px] text-[16px] text-[#646464]">
             {showResendButton ? (
@@ -134,10 +136,10 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
                 onClick={handleResendClick}
                 className="text-[#1C25E7] focus:outline-none font-bold"
               >
-                Resend Code Again
+                {t("otp_code_resend")}
               </button>
             ) : (
-              `You can request resend code in ${timer}s`
+              `${t("otp_countdown_msg")} ${timer}s`
             )}
           </p>
         </div>

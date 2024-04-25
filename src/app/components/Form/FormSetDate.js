@@ -16,6 +16,7 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import Loader from "../Loader";
+import useLanguage from "@/app/useLanguage";
 
 function FormSetDate({ onContinue }) {
   const user = useAuthUser();
@@ -26,7 +27,7 @@ function FormSetDate({ onContinue }) {
   const { loading } = useSelector((state) => state.userReducer);
   const [selectedDate, setSelectedDate] = useState(null);
   const [disabledDate, setIsDisabledDate] = useState(null);
-  const router = useRouter();
+  const { t } = useLanguage();
   const minDate = new AdapterDayjs().dayjs();
 
   const isDisabled = !selectedDate;
@@ -78,12 +79,10 @@ function FormSetDate({ onContinue }) {
       <div className="grid lg:grid-cols-2 grid-cols-1 my-10 gap-x-10">
         <div>
           <h1 className="lg:text-[28px] text-[24px] text-[#2E2D2D] font-semibold mb-2">
-            Select Date
+            {t("select_date")}
           </h1>
           <p className="text-[16px] text-[#646464]  lg:mb-0 mb-10">
-            Please note, there’s a limit of 100 appointments per day. If today
-            is fully booked, you can choose another available day and time. Once
-            submitted, you’ll receive a schedule confirmation from the officer.
+            {t("set_appointment_date_limit_per_day")}
           </p>
         </div>
         <div className="flex flex-col gap-5">
@@ -139,7 +138,7 @@ function FormSetDate({ onContinue }) {
               }
             }}
           >
-            {appointmentId ? "Submit" : "Continue"}
+            {appointmentId ? t("submit") : t("txt_continue")}
           </button>
         </div>
       </div>

@@ -10,11 +10,13 @@ import ModalSuccessResetPassword from "../components/Modal/ModalSuccessResetPass
 import { useSelector } from "react-redux";
 import Loader from "../components/Loader";
 import ModalSuccess from "../components/Modal/ModalSuccess";
+import useLanguage from "../useLanguage";
 
 function Login() {
   const { loading } = useSelector((state) => state.userReducer);
   const [formForgotPassword, setFormForgotPassword] = useState(false);
   const [formResetPassword, setFormResetPassword] = useState(false);
+  const { t } = useLanguage();
 
   const showModalSentLink = () => {
     modalLink.showModal();
@@ -60,8 +62,8 @@ function Login() {
           <ModalSendLinkPassword onClick={() => setFormResetPassword(true)} />
           <ModalSuccess
             id={"successResetPassword"}
-            title={"Password successfully reset"}
-            description={"Please log in again with the new password"}
+            title={t("reset_password_succeed_dialog_title")}
+            description={t("reset_password_succeed_dialog_desc")}
             onClick={() => {
               setFormForgotPassword(false);
               setFormResetPassword(false);

@@ -5,9 +5,8 @@ import Image from "next/image";
 import FormOtp from "../components/Form/FormOtp";
 import FormStartRegister from "../components/Form/FormStartRegister";
 import FormRegister from "../components/Form/FormRegister";
-import ModalVerifiedOtp from "../components/Modal/ModalVerifiedOtp";
 import ModalSuccess from "../components/Modal/ModalSuccess";
-import { useSelector } from "react-redux";
+import useLanguage from "../useLanguage";
 
 function Register() {
   const [password, setPassword] = useState("");
@@ -16,6 +15,7 @@ function Register() {
   const [showReenterPassword, setShowReenterPassword] = useState(false);
   const [formOtp, setFormOtp] = useState(false);
   const [formRegister, setFormRegister] = useState(false);
+  const { t } = useLanguage();
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -73,15 +73,14 @@ function Register() {
       <div className="lg:mx-0 mx-5">
         <ModalSuccess
           id="verified_otp"
-          title="Your Phone Verified"
-          description=" One more step to unlock full access. Create your account to register
-        in this website!"
+          title={t("otp_screen_phone_number_verified_title")}
+          description={t("otp_screen_phone_number_verified_sub_title")}
           onClick={() => setFormRegister(true)}
         />
         <ModalSuccess
           id="sent_otp"
-          title="We sent an OTP to your Phone Number"
-          description="Please check your short message and input the OTP Number to continue register"
+          title={t("otp_sent_msg")}
+          description={t("otp_input_instruction")}
           onClick={() => setFormOtp(true)}
         />
       </div>

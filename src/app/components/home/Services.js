@@ -22,7 +22,7 @@ import { getServicesTypeHandler } from "@/app/store/actions/serviceAction";
 import { toast } from "sonner";
 import useLanguage from "@/app/useLanguage";
 
-export const ServicesCard = ({ title, icon, desc, url }) => {
+export const ServicesCard = ({ title, icon, desc, url, code }) => {
   const user = useAuthUser();
   return (
     <Link href={url}>
@@ -117,7 +117,7 @@ const Services = () => {
         }
         return {
           icon: icon,
-          url: `/${e.name}`,
+          url: `/${e.name}?code=${e.code}`,
           title: e.name
             .split("-")
             .map((word) => word.charAt(0).toUpperCase() + word.slice(1))

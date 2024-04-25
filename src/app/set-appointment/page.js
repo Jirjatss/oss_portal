@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUserInformation } from "../store/actions/userAction";
 import { toast } from "sonner";
 import ModalSuccess from "../components/Modal/ModalSuccess";
+import useLanguage from "../useLanguage";
 
 const SetAppointment = () => {
   const user = useAuthUser();
@@ -18,6 +19,7 @@ const SetAppointment = () => {
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const reschedule = searchParams.get("reschedule");
+  const { t } = useLanguage();
 
   const [step, setStep] = useState(1);
 
@@ -58,7 +60,7 @@ const SetAppointment = () => {
           >
             <OSSIcons name="LeftArrow" />
             <p className="text-[18px] font-semibold text-[#2E2D2D]">
-              Set Appointment
+              {t("home_menu_set-appointment_title")}
             </p>
           </div>
           {!reschedule && (
@@ -70,7 +72,9 @@ const SetAppointment = () => {
                   } bg-[#000A80] rounded-[20px] h-[8.5px] absolute top-0`}
                 ></div>
               </div>
-              <p className="text-[16px] text-[#646464]">{step}/3 Steps</p>
+              <p className="text-[16px] text-[#646464]">
+                {step}/3 {t("step")}
+              </p>
             </div>
           )}
         </div>
@@ -79,12 +83,8 @@ const SetAppointment = () => {
         {step === 3 && <FormAppointmentProfile />}
         <ModalSuccess
           id="appointment_success"
-          title="Your Appointement Have Submitted"
-          description={
-            user
-              ? "Your Appointment is being reviewed by our team. Verification may take some time. Thank you for your patience!"
-              : "Your Appointment is being reviewed by our team. Verification will sent to your email, please check regularly."
-          }
+          title={t("dialog_data_submitted_title")}
+          description={t("dialog_data_submitted_desc")}
           onClick={() => {
             router.push(user ? "/my-applications" : "/");
           }}

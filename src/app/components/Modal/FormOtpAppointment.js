@@ -9,9 +9,12 @@ import { toast } from "sonner";
 import Loader from "../Loader";
 import { submitApplication } from "@/app/store/actions/applicationAction";
 import { setAppointment } from "@/app/store/actions/appointmentAction";
+import useLanguage from "@/app/useLanguage";
 
 function FormOtpAppointment({ data }) {
+  console.log("data:", data);
   const [timer, setTimer] = useState(30);
+  const { t } = useLanguage();
   const { dataRegister, loading } = useSelector((state) => state.userReducer);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [successSubmit, setSuccessSubmit] = useState(false);
@@ -77,10 +80,10 @@ function FormOtpAppointment({ data }) {
 
         <div className="mt-7 text-center flex flex-col gap-3">
           <h1 className="text-[26px] font-bold text-[#2E2D2D]">
-            Input OTP Code
+            {t("input_otp_title")}
           </h1>
           <p className="text-[16px] font-thin text-[#646464]">
-            OTP Code sent to your phone number registered
+            {t("input_otp_sub_title")}
           </p>
 
           <div className="flex justify-center">
@@ -131,12 +134,12 @@ function FormOtpAppointment({ data }) {
                   !showResendButton
                     ? "bg-[#DCDCDC] cursor-not-allowed text-[#646464]"
                     : "bg-[#FFFFFF] text-[#1C25E7]"
-                } px-4 text-[16px] py-2 rounded-[8px] mt-2 border-[2px] border-[#DCDCDC] hidden lg:flex`}
+                } px-4 text-[16px] py-2 rounded-[8px] mt-2 border-[2px] border-[#DCDCDC] hidden lg:flex justify-center text-center`}
                 formMethod="dialog"
               >
                 {!showResendButton
-                  ? `Request resend code in ${timer}s`
-                  : " Resend Code Again"}
+                  ? `${t("otp_countdown_msg")} ${timer}s`
+                  : t("otp_code_resend")}
               </button>
               <button
                 className={`${
@@ -175,7 +178,7 @@ function FormOtpAppointment({ data }) {
                     });
                 }}
               >
-                Submit
+                {t("submit")}
               </button>
               <p className="lg:text-[18px] text-[16px] text-[#646464] lg:hidden">
                 {showResendButton ? (
@@ -195,10 +198,10 @@ function FormOtpAppointment({ data }) {
                     }}
                     className="text-[#1C25E7] focus:outline-none font-semibold"
                   >
-                    Resend Code Again
+                    {t("otp_code_resend")}
                   </button>
                 ) : (
-                  `You can request resend code in ${timer}s`
+                  `${t("otp_countdown_msg")} ${timer}s`
                 )}
               </p>
             </div>

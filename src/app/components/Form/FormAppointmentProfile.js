@@ -14,6 +14,8 @@ function FormAppointmentProfile() {
   const user = useAuthUser();
   const dispatch = useDispatch();
   const { appointmentData } = useSelector((state) => state.appointmentReducer);
+  console.log("appointmentData:", appointmentData);
+
   const [isShowModal, setIsShowModal] = useState(false);
   const [input, setInput] = useState({});
   const [isDisabledButton, setIsDisabledButton] = useState(true);
@@ -102,37 +104,36 @@ function FormAppointmentProfile() {
         {loading && <Loader />}
         <div>
           <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-2">
-            Your Profile
+            {t("your_profile")}
           </h1>
           <p className="text-[16px] text-[#646464] lg:mb-0 mb-10">
-            Completing your profile will assist officers in accurately tracking
-            your attendance. Please ensure your profile is up-to-date.
+            {t("your_profile_desc")}
           </p>
         </div>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col">
-            <label className="text-label">First Name</label>
+            <label className="text-label"> {t("first_name")}</label>
             <input
               disabled={isDisabled}
               type="text"
               className={`text-input text-black placeholder-gray-400 ${
                 isDisabled && "cursor-not-allowed"
               }`}
-              placeholder="First Name"
+              placeholder={t("first_name")}
               value={input.firstName}
               name="firstName"
               onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-label">Last Name</label>
+            <label className="text-label">{t("last_name")}</label>
             <input
               disabled={isDisabled}
               type="text"
               className={`text-input text-black placeholder-gray-400 ${
                 isDisabled && "cursor-not-allowed"
               }`}
-              placeholder={"Last Name"}
+              placeholder={t("last_name")}
               value={input.lastName}
               name="lastName"
               onChange={(e) => handleChangeSelect(e.target)}
@@ -147,14 +148,14 @@ function FormAppointmentProfile() {
             selectedTopic={input.identityType}
           />
           <div className="flex flex-col">
-            <label className="text-label">Identity Number</label>
+            <label className="text-label">{t("identity_number")}</label>
             <input
               disabled={isDisabled}
               type="number"
               className={`text-input text-black placeholder-gray-400 number-to-text ${
                 isDisabled && "cursor-not-allowed"
               }`}
-              placeholder="Identify Number"
+              placeholder={t("identity_number")}
               name="identityNumber"
               value={input.identityNumber}
               onChange={(e) => handleChangeSelect(e.target)}
@@ -162,35 +163,35 @@ function FormAppointmentProfile() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-label">Email</label>
+            <label className="text-label">{t("email")}</label>
             <input
               disabled={isDisabled}
               type="email"
               className={`text-input text-black placeholder-gray-400 ${
                 isDisabled && "cursor-not-allowed"
               }`}
-              placeholder="email"
+              placeholder={t("email")}
               value={input.email}
               name="email"
               onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-label">Phone Number</label>
+            <label className="text-label">{t("phone_number")}</label>
             <input
               disabled={isDisabled}
               type="text"
               className={`text-input text-black placeholder-gray-400 ${
                 isDisabled && "cursor-not-allowed"
               }`}
-              placeholder="Phone Number"
+              placeholder={t("phone_number")}
               value={input.phoneNumber}
               name="phoneNumber"
               onChange={(e) => handleChangeSelect(e.target)}
             />
             {!validPhoneNumber && (
               <p className="text-[12px] text-red-500">
-                Invalid phone number format
+                {t("phone_number_error_hint")}
               </p>
             )}
           </div>
@@ -202,21 +203,16 @@ function FormAppointmentProfile() {
                 : "bg-[#1C25E7]"
             }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-5 font-semibold`}
             onClick={() => {
-              if (user) {
-                setData({
-                  ...appointmentData,
-                });
-              } else {
-                setData({
-                  ...appointmentData,
-                  firstName: input.firstName,
-                  lastName: input.lastName,
-                  identityType: input.identityType,
-                  identityNumber: input.identityNumber,
-                  email: input.email,
-                  phoneNumber: input.phoneNumber,
-                });
-              }
+              setData({
+                ...appointmentData,
+                firstName: input.firstName,
+                lastName: input.lastName,
+                identityType: input.identityType,
+                identityNumber: input.identityNumber,
+                email: input.email,
+                phoneNumber: input.phoneNumber,
+              });
+
               setIsShowModal(false);
               if (!user) {
                 dispatch(requestOtp(input.phoneNumber))
@@ -234,7 +230,7 @@ function FormAppointmentProfile() {
                   });
             }}
           >
-            Submit
+            {t("submit")}
           </button>
         </div>
       </div>

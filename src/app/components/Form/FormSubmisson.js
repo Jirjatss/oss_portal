@@ -295,7 +295,6 @@ const FormSubmission = ({ code }) => {
     checkedImages,
     image,
     onClick,
-    applicationId,
   }) => {
     return (
       <div className="border-[1px] border-[#DCDCDC] p-[20px] rounded-[20px] flex flex-col gap-5">
@@ -315,16 +314,15 @@ const FormSubmission = ({ code }) => {
           >
             <OSSIcons name="AddImage" />
             <p className="text-center text-[#646464] text-[16px]">
-              Upload in JPG, JPEG, PDF, PNG <br /> max 10 MB
+              {t("spec_files_to_upload")}
             </p>
             <button className="text-[#1C25E7] text-[18px] font-semibold">
-              Upload
+              {t("upload")}
             </button>
           </div>
         </div>
         <p className="text-[14px] text-[#646464] ml-1">
-          After uploaded, please check each attachment to indicate the document
-          is valid
+          {t("submit_application_re_check_doc_hint")}
         </p>
 
         <div className="flex flex-col gap-3">
@@ -381,12 +379,12 @@ const FormSubmission = ({ code }) => {
       <div className="grid grid-cols-1 lg:grid-cols-2  my-10 gap-x-10">
         <div>
           <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-5">
-            {id ? "Resubmit Document " : "Submit Document"}
+            {id ? t("re_submit_document") : t("submit_document")}
           </h1>
           <p className="text-[16px] text-[#646464]">
             {id
-              ? "Sorry, your applicant rejected because attachment invalid or lack of documents, please check feedback in your e-mail and reupload the requirement soon."
-              : "Please upload clear and legible copies of your photos and documents.Ensure all details are visible for accurate processing, and following how to apply instructions"}
+              ? t("re_submit_application_desc")
+              : t("submit_application_desc")}
           </p>
         </div>
         <div className="flex flex-col gap-5 lg:mt-0 mt-7">
@@ -412,41 +410,31 @@ const FormSubmission = ({ code }) => {
             }}
             selectedTopic={input.requester}
           />
-          {/* <InputDropdown
-            label={"Office Location"}
-            isDisabled={stateId}
-            topic={municipality?.filter((item) => [1, 2].includes(item.id))}
-            name="officeLocationCode"
-            handleChange={(e) => {
-              handleChangeSelect(e);
-            }}
-            selectedTopic={input.officeLocationCode}
-          /> */}
 
           {isOther && (
             <>
               <div className="flex flex-col">
-                <label className="text-label">First Name</label>
+                <label className="text-label">{t("first_name")}</label>
                 <input
                   type="text"
                   disabled={firstName}
                   className={`text-input text-black placeholder-gray-400 ${
                     firstName && "cursor-not-allowed"
                   }`}
-                  placeholder="First Name"
+                  placeholder={t("first_name")}
                   value={input.firstName}
                   name="firstName"
                   onChange={(e) => handleChangeSelect(e.target)}
                 />
               </div>
               <div className="flex flex-col">
-                <label className="text-label">Last Name</label>
+                <label className="text-label"> {t("last_name")}</label>
                 <input
                   type="text"
                   className={`text-input text-black placeholder-gray-400 ${
                     lastName && "cursor-not-allowed"
                   }`}
-                  placeholder={"Last Name"}
+                  placeholder={t("last_name")}
                   value={input.lastName}
                   name="lastName"
                   onChange={(e) => handleChangeSelect(e.target)}
@@ -459,7 +447,7 @@ const FormSubmission = ({ code }) => {
                 value={input?.DateOfBirth}
               />
               <InputDropdown
-                label={"Gender"}
+                label={t("gender")}
                 isDisabled={gender}
                 topic={genderForm}
                 handleChange={(e) => handleChangeSelect(e)}
@@ -500,12 +488,12 @@ const FormSubmission = ({ code }) => {
               {isChecked && <OSSIcons name={"Approve"} />}
             </div>
             <p className="text-[14px] text-[#6C737E]">
-              By sending this form I agree to the applicable{" "}
+              {t("submit_application_tnc_1")}
               <Link
                 href="/terms-conditions"
                 className="text-[#1C25E7] font-semibold cursor-pointer"
               >
-                terms and conditions
+                {t("submit_application_tnc_2")}
               </Link>
             </p>
           </div>
@@ -526,7 +514,7 @@ const FormSubmission = ({ code }) => {
                 });
             }}
           >
-            Submit
+            {t("submit")}
           </button>
         </div>
       </div>

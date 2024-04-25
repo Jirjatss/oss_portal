@@ -33,7 +33,7 @@ const Header = () => {
   const handleLogout = () => {
     signOut();
     router.push("/login");
-    toast.success("Success Logout");
+    toast.success(t("success_logout"));
   };
 
   useEffect(() => {

@@ -9,12 +9,13 @@ import { getMyApplications } from "@/app/store/actions/applicationAction";
 import { useRouter } from "next/navigation";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import Link from "next/link";
+import useLanguage from "@/app/useLanguage";
 
 function MyApplicant() {
   const user = useAuthUser();
   const { myApplications } = useSelector((state) => state.applicationReducer);
   const dispatch = useDispatch();
-  const router = useRouter();
+  const { t } = useLanguage();
   const isEmptyApplications = myApplications?.length === 0 || !myApplications;
 
   useEffect(() => {
@@ -40,15 +41,15 @@ function MyApplicant() {
                 alt={"Empty"}
               />
             </div>
-            <p className="text-[18px] text-[#363131] font-semibold">
-              My Applications
+            <p className="text-[18px] text-[#363131] font-semibold lg:max-w-[160px]">
+              {t("home_my_application_title")}
             </p>
           </div>
           <Link
             href="/my-applications"
             className="text-[#1C25E7] lg:text-[18px] text-[16px] font-semibold cursor-pointer"
           >
-            See All
+            {t("home_my_application_cta")}
           </Link>
         </div>
 
@@ -64,19 +65,19 @@ function MyApplicant() {
         <div className="flex justify-center items-center flex-col text-center gap-4">
           {myApplications?.length !== 0 && myApplications !== null ? (
             <p className="text-[18px] text-[#363131] font-semibold">
-              {myApplications?.length} Applications{" "}
+              {myApplications?.length} {t("applications")}{" "}
               <span className="text-[18px] text-[#646464] font-thin">
                 {" "}
-                on going, Please check further for detailed status information.
+                {t("home_my_application_desc_on_going_exist")}
               </span>
             </p>
           ) : (
             <>
               <p className="text-[18px] text-[#363131] font-semibold">
-                No Applications Yet
+                {t("no_applications")}
               </p>
               <p className="text-[16px] text-[#646464] font-thin">
-                Once you submitted applicants, you can track the status here
+                {t("home_my_application_desc_on_going_empty")}
               </p>
             </>
           )}

@@ -1,7 +1,9 @@
 import React from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
+import useLanguage from "@/app/useLanguage";
 
 function ModalSuccess({ onClick, title, description, id }) {
+  const { t } = useLanguage();
   return (
     <dialog id={id} className="modal">
       <div className=" bg-white flex flex-col px-10 py-7 rounded-[20px] relative lg:w-[594px] lg:mx-0 mx-5">
@@ -28,7 +30,7 @@ function ModalSuccess({ onClick, title, description, id }) {
               formMethod="dialog"
               onClick={onClick}
             >
-              Understand
+              {t("understand")}
             </button>
           </form>
         </div>

@@ -251,7 +251,9 @@ function FormIdentify({ onClick }) {
           onClick();
         }}
       >
-        {personalDetail?.firstName ? "Update Profile" : "Continue"}
+        {personalDetail?.firstName
+          ? t("update_profile_cta")
+          : t("txt_continue")}
       </button>
     </>
   );
