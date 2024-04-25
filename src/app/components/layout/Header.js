@@ -138,7 +138,7 @@ const Header = () => {
                       className="text-gray-900 w-full text-start"
                       key={e.label}
                       onClick={() => {
-                        if (e.label === "Logout") {
+                        if (e.label === t("logout")) {
                           handleLogout();
                           setAnchorEl(null);
                           setMenuOpen(false);
