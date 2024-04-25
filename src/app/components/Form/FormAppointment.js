@@ -111,7 +111,7 @@ function FormAppointment({ onContinue }) {
     )
       setInput({
         serviceType: serviceTypeParams,
-        serviceId: +serviceParams,
+        serviceId: serviceParams,
       });
     else if (
       !serviceTypeParams &&
