@@ -19,7 +19,7 @@ function MyApplicant() {
 
   useEffect(() => {
     const fetchData = () => {
-      if (user && user.status === "active") {
+      if (user) {
         dispatch(getMyApplications(user?.accessToken));
       }
     };
