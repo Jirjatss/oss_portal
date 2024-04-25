@@ -460,7 +460,7 @@ const FormSubmission = ({ code }) => {
           )}
 
           <InputDropdown
-            label={"Deliver Time"}
+            label={t("delivery_time")}
             topic={deliverTime}
             isDisabled={deliveryTime}
             name="deliverTime"
