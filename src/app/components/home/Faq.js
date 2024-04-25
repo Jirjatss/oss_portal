@@ -141,10 +141,8 @@ function Faq() {
       </div>
       <ModalSuccess
         id="faq_success"
-        title="Your Data Have Submitted"
-        description={
-          "Your inquiry will soon be received. Please check your email regularly to view the response."
-        }
+        title={t("dialog_data_submitted_title")}
+        description={t("dialog_data_submitted_desc")}
         onClick={() => {
           router.push("/");
         }}
