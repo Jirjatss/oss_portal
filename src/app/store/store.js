@@ -6,6 +6,7 @@ import regionReducer from "./reducers/regionReducer";
 import serviceReducer from "./reducers/serviceReducer";
 import applicationReducer from "./reducers/applicationReducer";
 import appointmentReducer from "./reducers/appointmentReducer";
+import languageReducer from "./reducers/languageReducer";
 const store = configureStore({
   reducer: {
     userReducer,
@@ -13,6 +14,7 @@ const store = configureStore({
     serviceReducer,
     applicationReducer,
     appointmentReducer,
+    languageReducer,
   },
 });
 

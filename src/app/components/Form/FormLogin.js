@@ -9,11 +9,11 @@ import { login } from "@/app/store/actions/userAction";
 import { toast } from "sonner";
 import useSignIn from "react-auth-kit/hooks/useSignIn";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-// import { useTranslation } from "next-i18next";
+import { useTranslation } from "next-i18next";
 
 function FormLogin({ forgotPassword }) {
-  // const { t, i18n } = useTranslation();
-  // console.log("i18n:", i18n);
+  const { t, i18n } = useTranslation();
+  console.log("i18n:", i18n);
 
   const user = useAuthUser();
   const dispatch = useDispatch();

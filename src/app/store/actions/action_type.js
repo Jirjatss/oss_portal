@@ -37,3 +37,7 @@ export const HIDE_VERIF = "hide_verif";
 export const GET_MY_APPOINTMENT = "getMyAppointment";
 export const SAVE_APPOINTMENT_DATA = "saveAppointmentData";
 export const SET_APPOINTMENT_SUCCESS = "setAppointmentSuccess";
+
+// lang
+export const GET_LANG = "getLang";
+export const SET_LANG = "setLang";

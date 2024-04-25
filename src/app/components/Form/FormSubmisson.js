@@ -19,6 +19,7 @@ import { formattedDate } from "@/app/universalFunction";
 import { toast } from "sonner";
 import axios from "axios";
 import ModalPreviewExisting from "../Modal/ModalPreviewExisting";
+import useLanguage from "@/app/useLanguage";
 
 const FormSubmission = ({ code }) => {
   const searchParams = useSearchParams();
@@ -27,6 +28,7 @@ const FormSubmission = ({ code }) => {
   const dispatch = useDispatch();
   const id = searchParams.get("id");
   const serviceId = searchParams.get("serviceId");
+  const { t } = useLanguage();
 
   const { profile } = useSelector((state) => state.userReducer);
   const { personalDetail } = profile || {};
@@ -58,7 +60,11 @@ const FormSubmission = ({ code }) => {
     image.images.length === 0 ||
     upload.length === 0;
 
-  const deliverTime = [{ name: `normal`, code: `normal`, id: 1 }];
+  const deliverTime = [
+    { name: `normal`, code: `normal`, id: 1 },
+    { name: `urgent`, code: `urgent`, id: 2 },
+    { name: `veryUrgent`, code: `veryUrgent`, id: 3 },
+  ];
   const requester = [
     { name: `self`, code: "self", id: 1 },
     { name: `child`, code: `child`, id: 2 },
@@ -361,7 +367,7 @@ const FormSubmission = ({ code }) => {
       {image?.images && <ModalPreview image={image.images[indexImage]} />}
       {newImage && <ModalPreviewExisting image={newImage} />}
 
-      {loading && <Loader message="Please wait, your data is submitting..." />}
+      {loading && <Loader />}
       <div className="grid grid-cols-1 lg:grid-cols-2  my-10 gap-x-10">
         <div>
           <h1 className="text-[28px] text-[#2E2D2D] font-semibold mb-5">
@@ -376,7 +382,7 @@ const FormSubmission = ({ code }) => {
         <div className="flex flex-col gap-5 lg:mt-0 mt-7">
           <InputDropdown
             isDisabled={detailById}
-            label={"Applying For"}
+            label={t("applying_for")}
             topic={services}
             name="applyingFor"
             handleChange={(e) => {
@@ -385,7 +391,7 @@ const FormSubmission = ({ code }) => {
             selectedTopic={input.applyingFor}
           />
           <InputDropdown
-            label={"Request For"}
+            label={t("request_for")}
             topic={requester}
             isDisabled={familyType}
             name="requester"

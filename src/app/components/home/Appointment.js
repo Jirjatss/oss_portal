@@ -4,9 +4,11 @@ import Link from "next/link";
 import Image from "next/image";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { Booking } from "../../../../public/assets/emoji/index";
+import useLanguage from "@/app/useLanguage";
 
 function Appointment() {
   const user = useAuthUser();
+  const { t } = useLanguage();
   return (
     <Link
       href="/set-appointment"
@@ -14,7 +16,7 @@ function Appointment() {
       id="set-appointment"
     >
       <h1 className="lg:text-[40px] text-[28px] capitalize w-[240px]">
-        <b>Presiza enkontru ho</b> ofisiál ida?
+        {t("appointment_title")}
       </h1>
       <div className="border-[1px] border-[#DCDCDC] rounded-[20px] lg:flex flex-1 p-6 gap-8 items-center hidden">
         <div className="bg-[#D9D7F9] rounded-[12.8px] w-[64px] h-[64px] flex justify-center items-center">
@@ -22,11 +24,10 @@ function Appointment() {
         </div>
         <div className="flex flex-col flex-1">
           <h1 className="text-[24px] font-bold leading-[48px]">
-            Marka Ajendamentu Online Dahuluk
+            {t("appointment_desc")}
           </h1>
           <p className="text-[16px] text-[#646464]">
-            Marka ajendamentu fasil liu ho ofisiál governu sira liu husi online
-            deit hodi hetan esperiénsia servisu ne’ebé lais tebes.
+            {t("appointment_desc_2")}
           </p>
         </div>
         <button className="">

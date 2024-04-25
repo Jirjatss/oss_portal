@@ -12,10 +12,12 @@ import FormOtpModal from "../components/Modal/FormOtp";
 import ModalSuccess from "../components/Modal/ModalSuccess";
 import { requestOtp, showVerif } from "../store/actions/userAction";
 import SubmitConfirmation from "../components/Modal/SubmitConfirmation";
+import useLanguage from "../useLanguage";
 
 function Verification() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useLanguage();
   const [isShowOtp, setIsShowOtp] = useState(false);
   const [step, setStep] = useState(1);
   const { profile } = useSelector((state) => state.userReducer);
@@ -44,13 +46,13 @@ function Verification() {
         <div
           className="flex gap-2 cursor-pointer"
           onClick={() => {
-            if (step === 1) router.back();
+            if (step === 1) router.push("/");
             else setStep(step - 1);
           }}
         >
           <OSSIcons name="LeftArrow" />
           <p className="text-[18px] font-semibold text-[#2E2D2D]">
-            Personal Information
+            {t("update_profile_title")}
           </p>
         </div>
         {!personalDetail?.firstName && (
@@ -62,7 +64,9 @@ function Verification() {
                 } bg-[#000A80] rounded-[20px] h-[8.5px] absolute top-0`}
               ></div>
             </div>
-            <p className="text-[16px] text-[#646464]">{step}/3 Steps</p>
+            <p className="text-[16px] text-[#646464]">
+              {step}/3 {t("step")}
+            </p>
           </div>
         )}
       </div>

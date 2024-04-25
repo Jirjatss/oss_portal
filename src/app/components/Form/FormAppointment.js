@@ -12,13 +12,20 @@ import {
 } from "@/app/store/actions/serviceAction";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { getUserInformation } from "@/app/store/actions/userAction";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import useLanguage from "@/app/useLanguage";
 
 function FormAppointment({ onContinue }) {
   const user = useAuthUser();
   const dispatch = useDispatch();
   const searchParams = useSearchParams();
   const { profile } = useSelector((state) => state.userReducer);
+  const { status } = profile || {};
   const { residenceDetail } = profile || {};
+  const router = useRouter();
+  const { t } = useLanguage();
 
   const { stateId } = residenceDetail || {};
   const serviceTypeParams = searchParams.get("serviceType");
@@ -35,7 +42,6 @@ function FormAppointment({ onContinue }) {
   const [officeLocation, setOfficeLocation] = useState(null);
 
   const isDisabled =
-    // !input.location ||
     !input.officeLocationCode || !input.serviceType || !input.serviceId;
 
   const getOfficeLocation = async () => {
@@ -77,7 +83,24 @@ function FormAppointment({ onContinue }) {
     if (input.officeLocationCode) {
       getOfficeLocation();
     }
+
+    console.log(input.officeLocationCode);
   }, [dispatch, input]);
+
+  useEffect(() => {
+    if (user) dispatch(getUserInformation(user?.accessToken));
+  }, []);
+
+  useEffect(() => {
+    if (user && status === "inactive") {
+      toast.error("Verification your email first");
+      router.push("/");
+    }
+    if (user && status === "needToFillPersonalInformation") {
+      toast.error("Verification your account first");
+      router.push("/personal-informations");
+    }
+  }, [user, status]);
 
   // useEffect(() => {
   //   if (stateId) {
@@ -122,7 +145,7 @@ function FormAppointment({ onContinue }) {
       </div>
       <div className="flex flex-col gap-7">
         <InputDropdown
-          label={"Office Location"}
+          label={t("office_location")}
           // isDisabled={stateId}
           topic={municipality}
           name="officeLocationCode"
@@ -132,7 +155,7 @@ function FormAppointment({ onContinue }) {
           selectedTopic={input.officeLocationCode}
         />
         <InputDropdown
-          label={"Office Representative"}
+          label={t("office_representative")}
           isDisabled={!input.officeLocationCode}
           topic={officeLocation}
           name="officeRepresentativeId"
@@ -142,7 +165,7 @@ function FormAppointment({ onContinue }) {
           selectedTopic={input.officeRepresentativeId}
         />
         <InputDropdown
-          label={"Services"}
+          label={t("applications")}
           isDisabled={serviceTypeParams}
           topic={servicesType}
           name="serviceType"
@@ -154,7 +177,7 @@ function FormAppointment({ onContinue }) {
 
         <InputDropdown
           isDisabled={!input.serviceType || serviceParams}
-          label={"Purpose"}
+          label={t("purpose")}
           topic={services}
           name="serviceId"
           handleChange={(e) => {
@@ -164,7 +187,7 @@ function FormAppointment({ onContinue }) {
         />
 
         <button
-          disabled={isDisabled}
+          //   disabled={isDisabled}
           className={`${
             isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
           }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-5 font-semibold`}

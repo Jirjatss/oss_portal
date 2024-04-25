@@ -3,6 +3,9 @@ import ReactHtmlParser from "react-html-parser";
 import { useState } from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import FormFaq from "../Form/FormFaq";
+import useLanguage from "@/app/useLanguage";
+import ModalSuccess from "../Modal/ModalSuccess";
+import { useRouter } from "next/navigation";
 
 function Faq() {
   const questions = [
@@ -59,71 +62,94 @@ function Faq() {
     });
   };
 
+  const { t } = useLanguage();
+  const router = useRouter();
+
   return (
-    <div
-      className="grid lg:grid-cols-2 grid-cols-1 justify-between gap-10 lg:py-24  pt-16"
-      id="contact-us"
-    >
-      <div>
-        <h1 className="lg:text-[40px] text-[28px] font-bold capitalize text-[#363131] mb-5">
-          Frequently Asked Questions
-        </h1>
-        <div className="flex flex-col gap-7">
-          {questions.map((e, idx) => (
-            <div
-              className="flex w-full"
-              key={idx}
-              onClick={() => toggleFaq(idx)}
-            >
+    <>
+      <div
+        className="grid lg:grid-cols-2 grid-cols-1 justify-between gap-10 lg:py-24  pt-16"
+        id="contact-us"
+      >
+        <div>
+          <h1 className="lg:text-[40px] text-[28px] font-bold capitalize text-[#363131] mb-5">
+            {t("faq_title")}
+          </h1>
+          <div className="flex flex-col gap-7">
+            {questions.map((e, idx) => (
               <div
-                className={`flex flex-col w-full ${
-                  selectedIndexes[idx] ? "" : "lg:h-[64px] h-[55px]"
-                } border-b border-[#DCDCDC]`}
+                className="flex w-full"
+                key={idx}
+                onClick={() => toggleFaq(idx)}
               >
                 <div
-                  className={`flex items-center justify-between gap-[15px] `}
+                  className={`flex flex-col w-full ${
+                    selectedIndexes[idx] ? "" : "lg:h-[64px] h-[55px]"
+                  } border-b border-[#DCDCDC]`}
                 >
-                  <p className="lg:text-[18px] text-[14px] text-[#646464] font-semibold">
-                    {e.question}
-                  </p>
-                  {selectedIndexes[idx] ? (
-                    <div className="flex lg:mr-2 mr-1">
-                      <img
-                        src="/assets/icons/dash.png"
-                        className="lg:w-4 lg:h-4 w-3 h-3 cursor-pointer "
-                      />
-                    </div>
-                  ) : (
-                    <>
-                      <div className="cursor-pointer lg:hidden">
-                        <OSSIcons name="Plus" styleDiv={{ width: "20px" }} />
+                  <div
+                    className={`flex items-center justify-between gap-[15px] `}
+                  >
+                    <p className="lg:text-[18px] text-[14px] text-[#646464] font-semibold">
+                      {t(`question_${idx + 1}`)}
+                    </p>
+                    {selectedIndexes[idx] ? (
+                      <div className="flex lg:mr-2 mr-1">
+                        <img
+                          src="/assets/icons/dash.png"
+                          className="lg:w-4 lg:h-4 w-3 h-3 cursor-pointer "
+                        />
                       </div>
-                      <div className="cursor-pointer lg:block hidden">
-                        <OSSIcons name="Plus" />
-                      </div>
-                    </>
-                  )}
-                </div>
-                <div
-                  className={`rounded-md bg-white shadow-xs transition-all ease-in-out duration-500 lg:min-w-[550px] w-5/6 ${
-                    selectedIndexes[idx] ? "max-h-[500px]" : "max-h-0"
-                  } overflow-hidden`}
-                >
-                  <div className="text-[#646464] lg:text-[16px] text-[12px] mb-5 mt-2 text-justify">
-                    {typeof e.answer === "string" ? (
-                      <p>{e.answer}</p>
                     ) : (
-                      e.answer
+                      <>
+                        <div className="cursor-pointer lg:hidden">
+                          <OSSIcons name="Plus" styleDiv={{ width: "20px" }} />
+                        </div>
+                        <div className="cursor-pointer lg:block hidden">
+                          <OSSIcons name="Plus" />
+                        </div>
+                      </>
                     )}
+                  </div>
+                  <div
+                    className={`rounded-md bg-white shadow-xs transition-all ease-in-out duration-500 lg:min-w-[550px] w-5/6 ${
+                      selectedIndexes[idx] ? "max-h-[500px]" : "max-h-0"
+                    } overflow-hidden`}
+                  >
+                    <div className="text-[#646464] lg:text-[16px] text-[12px] mb-5 mt-2 text-justify">
+                      {typeof e.answer !== "string" ? (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: t(`answer_${idx + 1}`),
+                          }}
+                        />
+                      ) : (
+                        <div
+                          dangerouslySetInnerHTML={{
+                            __html: t(`answer_${idx + 1}`),
+                          }}
+                        />
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+        <FormFaq />
       </div>
-      <FormFaq />
-    </div>
+      <ModalSuccess
+        id="faq_success"
+        title="Your Data Have Submitted"
+        description={
+          "Your inquiry will soon be received. Please check your email regularly to view the response."
+        }
+        onClick={() => {
+          router.push("/");
+        }}
+      />
+    </>
   );
 }
 

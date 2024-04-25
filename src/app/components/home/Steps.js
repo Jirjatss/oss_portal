@@ -5,23 +5,22 @@ import {
   FlowStep3,
 } from "../../../../public/assets/emoji";
 import Image from "next/image";
+import useLanguage from "@/app/useLanguage";
 
 const Steps = () => {
+  const { t } = useLanguage();
   const steps = [
     {
       icon: FlowStep1,
-      title: "Pasu 1",
-      desc: "Halo Kompletu Formuláriu No Aneksa Dokumentu Ne'ebé Presiza.",
+      title: "step_1_title",
     },
     {
       icon: FlowStep2,
-      title: "Pasu 2",
-      desc: "Submete ba Rejistu Online no Hein ba Aprovasaun.",
+      title: "step_2_title",
     },
     {
       icon: FlowStep3,
-      title: "Pasu 3",
-      desc: "Hetan Aprovasaun No Hein To'o Prosesu Ne'e Remata.",
+      title: "step_3_title",
     },
   ];
   return (
@@ -30,7 +29,7 @@ const Steps = () => {
       id="step"
     >
       <h1 className="lg:text-[40px] text-[28px] px-3 lg:leading-[57.6px] text-[#363131] text-center">
-        Aplikasaun Fasil Iha Pasu Tolu De’it!
+        {t(`landing_desc_2`)}
       </h1>
       <div className="lg:flex lg:flex-row flex-col mt-7 m-auto justify-between hidden">
         <div className="w-[220px] h-[214px] flex justify-center items-center flex-col gap-2">
@@ -39,11 +38,10 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              Pasu 1
+              {t(`step`)} 1
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
-              Halo Kompletu Formuláriu <br />
-              No Aneksa Dokumentu Ne’ebé Presiza.
+              {t(`step_1_title`)}
             </p>
           </div>
         </div>
@@ -54,10 +52,10 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              Pasu 2
+              {t(`step`)} 1
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
-              Submete ba Rejistu Online no Hein ba Aprovasaun.
+              {t(`step_2_title`)}
             </p>
           </div>
         </div>
@@ -68,10 +66,10 @@ const Steps = () => {
           </div>
           <div className="">
             <h1 className="text-[28px] text-[#363131] text-center font-bold">
-              Pasu 3
+              {t(`step`)} 1
             </h1>
             <p className="text-[18px] text-[#646464] text-center capitalize">
-              Hetan Aprovasaun No Hein To’o Prosesu Ne’e Remata.
+              {t(`step_3_title`)}
             </p>
           </div>
         </div>
@@ -99,9 +97,11 @@ const Steps = () => {
                   <div className="ms-12">
                     <h1 className="text-transparent">data</h1>
                     <p className="text-[#2E2D2D]  text-[24px] -mt-7 font-semibold">
-                      {title}
+                      {t(`step`)} {i + 1}
                     </p>
-                    <p className="text-[#646464] text-[14px] mt-3">{desc}</p>
+                    <p className="text-[#646464] text-[14px] mt-3">
+                      {t(title)}
+                    </p>
                   </div>
                 </li>
               </div>

@@ -5,11 +5,28 @@ import InputDropdown from "../TagComponents/InputDropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 import { getServicesTypeHandler } from "@/app/store/actions/serviceAction";
+import useLanguage from "@/app/useLanguage";
 
 function FormFaq() {
   const dispatch = useDispatch();
+  const { t } = useLanguage();
   const [input, setInput] = useState({});
   const { servicesType } = useSelector((state) => state.serviceReducer);
+
+  const handleChangeSelect = (e) => {
+    const { name, value } = e;
+    setInput({
+      ...input,
+      [name]: value,
+    });
+  };
+
+  const isDisabled =
+    !input.FirstName ||
+    !input.LastName ||
+    !input.message ||
+    !input.topic ||
+    !input.email;
 
   useEffect(() => {
     dispatch(getServicesTypeHandler()).catch((err) =>
@@ -24,41 +41,50 @@ function FormFaq() {
           className="lg:text-[32px] text-[28px] text-[#363131] capitalize"
           style={{ fontWeight: 700 }}
         >
-          Iha Pergunta Ruma?
+          {t("have_a_question")}
         </h1>
         <p className="lg:text-[16px] text-[12px] font-thin text-[#646464] lg:mt-2">
-          Favór husik pergunta saida deit ita boot hakarak husu iha ne’e.
+          {t("Please_leave_any_questions_you_have_here")}
         </p>
       </div>
       <div className="flex flex-col gap-6">
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-4">
           <div className="flex flex-col">
-            <label className="text-label">Naran Primeiru</label>
+            <label className="text-label">{t("first_name")}</label>
             <input
               type="text"
               className="text-input text-black placeholder-gray-400"
-              placeholder="Ita-nia naran primeiru"
+              placeholder={t("first_name")}
+              value={input.FirstName}
+              name="FirstName"
+              onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-label">Apelidu</label>
+            <label className="text-label">{t("last_name")}</label>
             <input
               type="text"
               className="text-input text-[#2E2D2D] placeholder-gray-400"
-              placeholder="Ita-nia apelidu"
+              placeholder={t("last_name")}
+              value={input.LastName}
+              name="LastName"
+              onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
         </div>
         <div className="flex flex-col">
-          <label className="text-label">E-mail</label>
+          <label className="text-label">{t("email")}</label>
           <input
             type="email"
             className="text-input text-black placeholder-gray-400"
-            placeholder="Ita-nia e-mail"
+            placeholder={t("email")}
+            value={input.email}
+            name="email"
+            onChange={(e) => handleChangeSelect(e.target)}
           />
         </div>
         <InputDropdown
-          label={"Asuntu"}
+          label={t("topic")}
           topic={servicesType}
           name="topic"
           handleChange={(e) => handleChangeSelect(e)}
@@ -71,7 +97,7 @@ function FormFaq() {
             rows="3"
             value={input.message}
             onChange={(e) => handleChangeSelect(e.target)}
-            placeholder="Deskreve Ita-nia hanoin iha ne'e."
+            placeholder={t("feedback")}
             maxLength={240}
             name="message"
           />
@@ -82,7 +108,13 @@ function FormFaq() {
       </div>
 
       <div className="grid lg:grid-cols-2 grid-col-1 gap-5">
-        <button className="bg-[#1C25E7] px-3 py-3 text-white flex-1 rounded-[8px]">
+        <button
+          disabled={isDisabled}
+          className={`${
+            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
+          } px-3 py-3 text-white flex-1 rounded-[8px]`}
+          onClick={() => faq_success.showModal()}
+        >
           <p className="text-[16px]">Submit</p>
         </button>
       </div>

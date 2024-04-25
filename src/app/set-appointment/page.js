@@ -53,7 +53,7 @@ const SetAppointment = () => {
             className="flex gap-2 cursor-pointer"
             onClick={() => {
               if (step > 1) setStep(step - 1);
-              else router.back();
+              else router.push("/");
             }}
           >
             <OSSIcons name="LeftArrow" />

@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 import * as HomeComponent from "./components/home/Index";
 import Loader from "./components/Loader";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
-// import { useTranslation } from "next-i18next";
+
 export default function Home() {
   const auth = useAuthUser();
-  // const { t } = useTranslation();
   const { profile, loading } = useSelector((state) => state.userReducer);
   const { personalDetail } = profile || {};
 
@@ -20,7 +19,7 @@ export default function Home() {
         {auth ? (
           <div className="w-full lg:px-28 px-5 py-10 ">
             <p className="text-[18px] font-semibold text-[#2E2D2D] mb-5">
-              Benvindu
+              Welcome
               {firstName ? (
                 <span>
                   {", "}

@@ -5,29 +5,32 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckIcon from "@mui/icons-material/Check";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setLang } from "@/app/store/actions/languageAction";
+
 // import { useTranslation } from "react-i18next";
 
 const LanguageSelector = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   // const { i18n } = useTranslation();
-  const [selectedLanguage, setSelectedLanguage] = useState("TL");
+  // const { setLanguage } = useLanguage();
+  const dispatch = useDispatch();
+  const { lang } = useSelector((state) => state.languageReducer);
+  const [selectedLanguage, setSelectedLanguage] = useState(lang);
 
   const languages = [
     {
       lang: "en",
       label: "EN",
-      id: 1,
     },
     {
       lang: "tl",
       label: "TL",
-      id: 2,
     },
     {
       lang: "pt",
       label: "PT",
-      id: 3,
     },
   ];
 
@@ -42,6 +45,9 @@ const LanguageSelector = () => {
   };
 
   const handleChangeLanguage = (lng) => {
+    // console.log(lng.lang);
+    dispatch(setLang(lng.lang));
+    // setLanguage(lng.lang);
     setSelectedLanguage(lng.lang);
     handleClose();
   };
@@ -55,7 +61,7 @@ const LanguageSelector = () => {
         aria-haspopup="true"
         aria-expanded={menuOpen ? "true" : undefined}
         onClick={handleClick}
-        className="text-gray-900 text-[16px]"
+        className="text-gray-900 text-[16px] font-semibold"
         endIcon={menuOpen ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
       >
         {selectedLanguage}

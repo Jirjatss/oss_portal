@@ -17,11 +17,13 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { formattedDate } from "@/app/universalFunction";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import useLanguage from "@/app/useLanguage";
 
 function FormIdentify({ onClick }) {
   const user = useAuthUser();
   const dispatch = useDispatch();
-  const router = useRouter();
+  // const router = useRouter();
+  const { t } = useLanguage();
   const { profile } = useSelector((state) => state.userReducer);
   const { region, municipality, city, town, loading } = useSelector(
     (state) => state.regionReducer
@@ -106,12 +108,12 @@ function FormIdentify({ onClick }) {
   ]);
 
   const genderForm = [
-    { name: "Male", code: "male", id: 1 },
-    { name: "Female", code: "female", id: 2 },
+    { name: "male", code: "male", id: 1 },
+    { name: "female", code: "female", id: 2 },
   ];
   const identityTypeForm = [
-    { name: "Citizen Card", code: "citizenCard" },
-    { name: "Passport", code: "passport" },
+    { name: "citizenCard", code: "citizenCard", id: 1 },
+    { name: "passport", code: "passport", id: 2 },
   ];
 
   return (
@@ -119,33 +121,33 @@ function FormIdentify({ onClick }) {
       {loading && <Loader />}
       <div>
         <h1 className="lg:text-[28px] text-[24px] font-semibold text-[#2E2D2D] mb-5">
-          {personalDetail?.firstName ? "Profile" : "Identify"}
+          {personalDetail?.firstName ? t("profile") : t("identity")}
         </h1>
         {!personalDetail?.firstName && (
-          <p className="text-[#646464] text-[16px] mb-10">
-            Please to complete your personal data for account completion.
+          <p className="text-[#646464] text-[16px] mb-10 capitalize">
+            {t("personal_desc")}
           </p>
         )}
       </div>
       <div className="flex flex-col gap-6 mb-10">
         <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
           <div className="flex flex-col">
-            <label className="text-label">First Name</label>
+            <label className="text-label">{t("first_name")}</label>
             <input
               type="text"
               className="text-input text-black placeholder-gray-400"
-              placeholder="First Name"
+              placeholder={t("first_name")}
               value={input.FirstName}
               name="FirstName"
               onChange={(e) => handleChangeSelect(e.target)}
             />
           </div>
           <div className="flex flex-col">
-            <label className="text-label">Last Name</label>
+            <label className="text-label">{t("last_name")}</label>
             <input
               type="text"
               className="text-input text-black placeholder-gray-400"
-              placeholder={"Last Name"}
+              placeholder={t("last_name")}
               value={input.LastName}
               name="LastName"
               onChange={(e) => handleChangeSelect(e.target)}
@@ -154,14 +156,14 @@ function FormIdentify({ onClick }) {
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
           <InputDropdown
-            label={"Gender"}
+            label={t("gender")}
             topic={genderForm}
             name="Gender"
             handleChange={(e) => handleChangeSelect(e)}
             selectedTopic={input.Gender}
           />
           <InputDropdown
-            label={"Identity Type"}
+            label={t("identity_type")}
             topic={identityTypeForm}
             name="IdentityType"
             handleChange={(e) => handleChangeSelect(e)}
@@ -170,11 +172,11 @@ function FormIdentify({ onClick }) {
         </div>
         <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
           <div className="flex flex-col">
-            <label className="text-label">Identity Number</label>
+            <label className="text-label">{t("identity_number")}</label>
             <input
               type="number"
               className="text-input text-black placeholder-gray-400 number-to-text"
-              placeholder="Identify Number"
+              placeholder={t("identity_number")}
               name="IdentityNumber"
               value={input.IdentityNumber}
               onChange={(e) => handleChangeSelect(e.target)}
@@ -190,19 +192,19 @@ function FormIdentify({ onClick }) {
       </div>
       <div>
         <h1 className="text-[18px] font-semibold text-[#2E2D2D] mb-8">
-          Place of birth
+          {t("place_of_birth")}
         </h1>
         <div className="flex flex-col gap-6 mb-16">
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
-              label={"Country"}
+              label={t("country")}
               topic={region}
               handleChange={(e) => handleChangeSelect(e)}
               name="region"
               selectedTopic={input?.region}
             />
             <InputDropdown
-              label={"State"}
+              label={t("state")}
               topic={municipality}
               isDisabled={!input.region && !countryCode}
               handleChange={(e) => handleChangeSelect(e)}
@@ -212,7 +214,7 @@ function FormIdentify({ onClick }) {
           </div>
           <div className="grid lg:grid-cols-2 grid-cols-1 lg:gap-10 gap-5">
             <InputDropdown
-              label={"City"}
+              label={t("city")}
               topic={city}
               handleChange={(e) => handleChangeSelect(e)}
               name="city"
@@ -220,7 +222,7 @@ function FormIdentify({ onClick }) {
               selectedTopic={input?.city}
             />
             <InputDropdown
-              label={"Town"}
+              label={t("town")}
               topic={town}
               handleChange={(e) => handleChangeSelect(e)}
               name="town"

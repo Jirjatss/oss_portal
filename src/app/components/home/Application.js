@@ -1,7 +1,9 @@
+import useLanguage from "@/app/useLanguage";
 import Image from "next/image";
 import React from "react";
 
 function Application() {
+  const { t } = useLanguage();
   return (
     <div className="bg-[#2E2D2D] lg:px-28 lg:mt-24 mt-10 flex lg:flex-row flex-col lg:gap-10 gap-5">
       <Image
@@ -18,8 +20,7 @@ function Application() {
       />
       <div className="flex flex-col m-auto gap-5 lg:px-0 px-5">
         <h1 className="lg:text-[32px] text-[24px] text-white">
-          Uza serbisu governu nian ne’e husi agora ba oin, husi fatin nebe
-          de’it, no iha tempu saida de’it!
+          {t("application_download")}
         </h1>
         <div className="lg:flex gap-3 hidden cursor-pointer">
           <Image

@@ -12,16 +12,18 @@ import { toast } from "sonner";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { Profile as ProfileImage } from "../../../../public/assets/emoji/index";
+import useLanguage from "@/app/useLanguage";
 
 const Header = () => {
   const signOut = useSignOut();
   const router = useRouter();
+  const { t } = useLanguage();
   const auth = useAuthUser();
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const pathname = usePathname();
-  const profile = [{ label: "Edit Perfíl" }, { label: "Sai" }];
+  const profile = [{ label: t("edit_profile") }, { label: t("logout") }];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -65,20 +67,20 @@ const Header = () => {
             </li>
             {!auth && (
               <li className="m-auto ">
-                <Link href="/#step">Oinsá atu Aplika?</Link>
+                <Link href="/#step">{t("how_to_apply")}</Link>
               </li>
             )}
             <li className="m-auto">
-              <Link href="/#services">Aplikasaun</Link>
+              <Link href="/#services">{t("applications")}</Link>
             </li>
             <li className="m-auto">
               <Link href={`${auth ? "/set-appointment" : "/#set-appointment"}`}>
-                Marka Ajendamentu
+                {t("home_menu_set-appointment_title")}
               </Link>
             </li>
             <li className="m-auto">
               <Link href="/#contact-us" style={{ scrollBehavior: "smooth" }}>
-                Kontaktu Ami
+                {t("contact_us")}
               </Link>
             </li>
           </ul>
@@ -136,12 +138,12 @@ const Header = () => {
                       className="text-gray-900 w-full text-start"
                       key={e.label}
                       onClick={() => {
-                        if (e.label === "Sai") {
+                        if (e.label === "Logout") {
                           handleLogout();
                           setAnchorEl(null);
                           setMenuOpen(false);
                         }
-                        if (e.label === "Edit Perfíl") {
+                        if (e.label === t("edit_profile")) {
                           router.push("/personal-informations");
                           setAnchorEl(null);
                           setMenuOpen(false);
@@ -163,12 +165,12 @@ const Header = () => {
               </li>
               <li className="m-auto">
                 <Link href="/login" className="text-[#1C25E7]">
-                  Login
+                  {t("login")}
                 </Link>
               </li>
               <li className="m-auto">
                 <button className="bg-[#1C25E7] text-white py-2 px-3 rounded-lg block m-auto">
-                  <Link href="/register">Rejistu</Link>
+                  <Link href="/register">{t("sign_up")}</Link>
                 </button>
               </li>
             </ul>
@@ -267,7 +269,7 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold mt-1"
                 >
-                  Edit Perfíl
+                  Edit Profile
                 </Link>
 
                 <li>
@@ -277,7 +279,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Aplikasaun
+                    {t("applications")}
                   </a>
                 </li>
                 <li>
@@ -287,7 +289,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Marka Ajendamentu
+                    {t("home_menu_set-appointment_title")}
                   </a>
                 </li>
                 <li>
@@ -297,7 +299,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Kontaktu Ami
+                    {t("contact_us")}
                   </a>
                 </li>
 
@@ -311,7 +313,7 @@ const Header = () => {
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Sai
+                    Logout
                   </a>
                 </li>
               </ul>
@@ -323,7 +325,7 @@ const Header = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold mt-1"
                   >
-                    Oinsá atu Aplika?
+                    {t("how_to_apply")}
                   </Link>
 
                   <li>
@@ -333,7 +335,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Aplikasaun
+                      {t("applications")}
                     </a>
                   </li>
                   <li>
@@ -345,7 +347,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Marka Ajendamentu
+                      {t("home_menu_set-appointment_title")}
                     </a>
                   </li>
                   <li>
@@ -355,7 +357,7 @@ const Header = () => {
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      Kontaktu Ami
+                      {t("contact_us")}
                     </a>
                   </li>
                 </ul>
@@ -365,14 +367,14 @@ const Header = () => {
                     className="text-[#1C25E7] m-auto font-semibold"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    Login
+                    {t("login")}
                   </Link>
 
                   <button
                     className="bg-[#1C25E7] text-white py-2 px-3 rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
-                    <Link href="/register">Rejistu</Link>
+                    <Link href="/register">{t("register")}</Link>
                   </button>
                 </div>
               </>

@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import CheckIcon from "@mui/icons-material/Check";
+import useLanguage from "@/app/useLanguage";
 
 function InputDropdown({
   label,
@@ -20,17 +21,34 @@ function InputDropdown({
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useLanguage();
+  const isDisable = [
+    t("country"),
+    t("state"),
+    t("city"),
+    t("town"),
+    t("applying_for"),
+    t("office_location"),
+    t("purpose"),
+    t("office_representative"),
+  ].some((value) => label.includes(value));
 
-  const listTopic = (topic || []).map((e) => ({
-    name: isSeparate
-      ? e.name
-          ?.split("-")
-          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(" ")
-      : e.name,
-    id: e.id,
-    value: e.code,
-  }));
+  const listTopic = (topic || []).map((e) => {
+    let name;
+    if (isDisable) {
+      name = e.name
+        ?.split("-")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+    } else {
+      name = t(`home_menu_${e.name}_title`);
+    }
+    return {
+      name: name,
+      id: e.id,
+      value: e.code,
+    };
+  });
 
   const handleClick = (e) => {
     setAnchorEl(e.currentTarget);
@@ -87,9 +105,9 @@ function InputDropdown({
             {selectedTopic &&
             listTopic.some((item) => {
               if (
-                label === "Office Representative" ||
-                label === "Office Location" ||
-                label === "Town"
+                label === t("office_representative") ||
+                label === t("office_location") ||
+                label === t("town")
               ) {
                 return item.id === selectedTopic;
               } else return item.value === selectedTopic;
@@ -97,9 +115,9 @@ function InputDropdown({
               ? listTopic
                   .filter((item) => {
                     if (
-                      label === "Office Location" ||
-                      label === "Office Representative" ||
-                      label === "Town"
+                      label === t("office_location") ||
+                      label === t("office_representative") ||
+                      label === t("town")
                     ) {
                       return item.id === selectedTopic;
                     } else return item.value === selectedTopic;
@@ -107,7 +125,7 @@ function InputDropdown({
                   .map((filteredItem, index) => (
                     <p key={index + filteredItem.name}>{filteredItem.name}</p>
                   ))
-              : `Favor hili ${label}`}
+              : `${t("select")} ${label}`}
           </span>
         </Button>
         <Menu
@@ -132,9 +150,9 @@ function InputDropdown({
               onClick={() => {
                 let value = e.value;
                 if (
-                  label === "Office Location" ||
-                  label === "Office Representative" ||
-                  label === "Town"
+                  label === t("office_location") ||
+                  label === t("office_representative") ||
+                  label === t("town")
                 )
                   value = e.id;
                 handleChangeTopic({ name: name, value: value });
@@ -154,7 +172,9 @@ function InputDropdown({
                     : "normal",
               }}
               selected={
-                label === "Office Location" || label === "Office Representative"
+                label === t("office_location") ||
+                label === t("office_representative") ||
+                label === t("town")
                   ? selectedTopic === e.id
                   : selectedTopic === e.name
               }

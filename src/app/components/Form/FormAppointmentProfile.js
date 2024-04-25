@@ -8,6 +8,7 @@ import FormOtpAppointment from "../Modal/FormOtpAppointment";
 import { requestOtp } from "@/app/store/actions/userAction";
 import Loader from "../Loader";
 import { toast } from "sonner";
+import useLanguage from "@/app/useLanguage";
 
 function FormAppointmentProfile() {
   const user = useAuthUser();
@@ -16,10 +17,11 @@ function FormAppointmentProfile() {
   const [isShowModal, setIsShowModal] = useState(false);
   const [input, setInput] = useState({});
   const [isDisabledButton, setIsDisabledButton] = useState(true);
-
+  const { t } = useLanguage();
   const isDisabled = user;
   const [data, setData] = useState({});
   const { profile, loading } = useSelector((state) => state.userReducer);
+
   const { personalDetail } = profile || {};
   const {
     firstName,
@@ -31,8 +33,8 @@ function FormAppointmentProfile() {
   } = personalDetail || {};
 
   const identityTypeForm = [
-    { name: "Citizen Card", code: "citizenCard", id: 1 },
-    { name: "Passport", code: "passport", id: 2 },
+    { name: "citizenCard", code: "citizenCard", id: 1 },
+    { name: "passport", code: "passport", id: 2 },
   ];
 
   const [validPhoneNumber, setValidPhoneNumber] = useState(true);
@@ -138,7 +140,7 @@ function FormAppointmentProfile() {
           </div>
           <InputDropdown
             isDisabled={isDisabled}
-            label={"Identity Type"}
+            label={t("identity_type")}
             topic={identityTypeForm}
             name="identityType"
             handleChange={(e) => handleChangeSelect(e)}

@@ -40,15 +40,15 @@ function MyApplicant() {
                 alt={"Empty"}
               />
             </div>
-            <p className="text-[14px] text-[#363131] font-semibold">
-              Ha’u-nia aplikasaun sira
+            <p className="text-[18px] text-[#363131] font-semibold">
+              My Applications
             </p>
           </div>
           <Link
             href="/my-applications"
-            className="text-[#1C25E7] lg:text-[14px] text-[14px] font-semibold cursor-pointer"
+            className="text-[#1C25E7] lg:text-[18px] text-[16px] font-semibold cursor-pointer"
           >
-            Haree hotu
+            See All
           </Link>
         </div>
 
@@ -63,22 +63,20 @@ function MyApplicant() {
 
         <div className="flex justify-center items-center flex-col text-center gap-4">
           {myApplications?.length !== 0 && myApplications !== null ? (
-            <p className="text-[14px] text-[#363131] font-semibold">
-              {myApplications?.length} Aplikasaun{" "}
-              <span className="text-[14px] text-[#646464] font-thin">
+            <p className="text-[18px] text-[#363131] font-semibold">
+              {myApplications?.length} Applications{" "}
+              <span className="text-[18px] text-[#646464] font-thin">
                 {" "}
-                La’o hela, bainhira ita submete tiha ona ita-nia aplikasaun,
-                favor haree nia estatutu iha ne’e.
+                on going, Please check further for detailed status information.
               </span>
             </p>
           ) : (
             <>
-              <p className="text-[14px] text-[#363131] font-semibold">
-                Seidauk iha aplikasaun ruma
+              <p className="text-[18px] text-[#363131] font-semibold">
+                No Applications Yet
               </p>
-              <p className="text-[12px] text-[#646464] font-thin">
-                Bainhira ita submete tiha ona ita-nia aplikasaun, favor haree
-                nia estatutu iha ne’e.
+              <p className="text-[16px] text-[#646464] font-thin">
+                Once you submitted applicants, you can track the status here
               </p>
             </>
           )}

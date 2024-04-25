@@ -16,12 +16,14 @@ import {
 } from "../../../../public/assets/emoji/index";
 import Image from "next/image";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
+import useLanguage from "@/app/useLanguage";
 
 function Verif() {
   const router = useRouter();
+  const { t } = useLanguage();
   const dispatch = useDispatch();
   const user = useAuthUser();
-
+  const { lang } = useSelector((state) => state.languageReducer);
   const [isVerifComplete, setIsVerifComplete] = useState(false);
   const { profile, isShowVerif } = useSelector((state) => state.userReducer);
 
@@ -29,14 +31,14 @@ function Verif() {
 
   useEffect(() => {
     if (user?.status === "inactive" && profile?.status === "inactive")
-      setTitle("Verifika uluk Ita-nia e-mail.");
+      setTitle(<>{t("home_need_verify_email_title")}</>);
     if (
       user?.status === "needToFillPersonalInformation" ||
       profile?.status === "needToFillPersonalInformation"
     )
-      setTitle("Foti aseitaimentu ba konta ida-ne'e primeru.");
-    if (isVerifComplete) setTitle("Verifikasaun Susesu!");
-  }, [user, profile]);
+      setTitle(<>{t("home_verification_title")}</>);
+    if (isVerifComplete) setTitle(<>{t("home_verification_succeed_title")}</>);
+  }, [user, profile, lang]);
 
   useEffect(() => {
     dispatch(getUserInformation(user?.accessToken));
@@ -59,19 +61,19 @@ function Verif() {
 
   const buttonTitle =
     user?.status === "inactive" && profile?.status === "inactive"
-      ? "Manda tan ba e-mail"
-      : "Verifikasaun";
+      ? "Resend to Email"
+      : "Verification";
 
-  // const titleDecider = () => {
-  //   if (profile?.status === "inactive" && !profile)
-  //     return "Verification your mail first";
-  //   if (
-  //     user?.status === "needToFillPersonalInformation" ||
-  //     profile?.status === "needToFillPersonalInformation"
-  //   )
-  //     return "Verification your account first";
-  //   if (isVerifComplete) return "Verification Successful!";
-  // };
+  const titleDecider = () => {
+    if (profile?.status === "inactive" && !profile)
+      return "Verification your mail first";
+    if (
+      user?.status === "needToFillPersonalInformation" ||
+      profile?.status === "needToFillPersonalInformation"
+    )
+      return "Verification your account first";
+    if (isVerifComplete) return "Verification Successful!";
+  };
 
   const iconDecider = () => {
     if (user?.status === "inactive") return ResendVerif;
@@ -87,16 +89,15 @@ function Verif() {
 
   const descriptionDecider = () => {
     if (user?.status === "inactive" && !profile)
-      return "Para poder utilizar todos os serviços, por favor complete primeiro os seus dados pessoais e só depois estará apto a continuar ";
+      return <>{t("home_need_verify_email_desc")}</>;
     if (
       user?.status === "needToFillPersonalInformation" ||
       profile?.status === "needToFillPersonalInformation" ||
       firstName === "" ||
       firstName === null
     )
-      return "To be able to use all the available facilities, please to complete your personal data first so you can eligible to continue.";
-    if (isVerifComplete)
-      return "Parabéns! Ita-boot nia dadus verifika tiha ona, ita boot iha ona asesu kompletu ba ami-nia instalasaun sira. Hahú esplora agora!";
+      return <>{t("home_verification_desc")}</>;
+    if (isVerifComplete) return <>{t("home_verification_succeed_desc")}</>;
   };
 
   if (!isShowVerif) return null;
@@ -122,7 +123,12 @@ function Verif() {
               {title}
             </h1>
             <div className="lg:-mt-2.5 hidden lg:flex">
-              <Image src={iconDecider()} width={30} height={30} alt={title} />
+              <Image
+                src={iconDecider()}
+                width={30}
+                height={30}
+                alt={titleDecider()}
+              />
             </div>
           </div>
           <p className="text-[#646464] text-[16px] -mt-2 lg:w-3/5">

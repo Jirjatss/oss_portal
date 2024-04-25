@@ -9,13 +9,9 @@ import { Toaster } from "sonner";
 import createStore from "react-auth-kit/createStore";
 import AuthProvider from "react-auth-kit/AuthProvider";
 import createRefresh from "react-auth-kit/createRefresh";
-import { appWithTranslation } from "next-i18next";
 
 import axios from "axios";
 import Loader from "./components/Loader";
-import nextI18nextConfig from "../../next-i18next.config";
-
-// import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 const App = ({ children }) => {
   useEffect(() => {
@@ -73,17 +69,17 @@ const App = ({ children }) => {
   });
 
   return (
-    // <Suspense fallback="loading">
-    <AuthProvider store={storeKit}>
-      <Provider store={store}>
-        <Navbar />
-        {children}
-        <Toaster position="bottom-left" richColors />
-        <Footer />
-      </Provider>
-    </AuthProvider>
-    // </Suspense>
+    <Suspense fallback={<Loader />}>
+      <AuthProvider store={storeKit}>
+        <Provider store={store}>
+          <Navbar />
+          {children}
+          <Toaster position="bottom-left" richColors />
+          <Footer />
+        </Provider>
+      </AuthProvider>
+    </Suspense>
   );
 };
 
-export default appWithTranslation(App);
+export default App;

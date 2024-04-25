@@ -47,15 +47,15 @@ function Service() {
   const ServicesHeader = () => {
     return (
       <>
-        <div className="flex lg:grid lg:grid-cols-4 lg:gap-3 gap-1 justify-start overflow-y-hidden overflow-x-auto border-b-[1px] border-b-[#DCDCDC]">
+        <div className="grid grid-cols-4 lg:gap-3 gap-1 justify-start  border-b-[1px] border-b-[#DCDCDC]">
           {services.map((e, i) => (
             <div
               key={i}
               className={`${
                 index === i
-                  ? "border-[#1C25E7] border-b-[2px] text-[#1C25E7] font-semibold"
+                  ? "border-[#1C25E7] border-b-[2px] text-[#1C25E7]"
                   : "text-[#646464]"
-              } cursor-pointer w-full  lg:text-[16px] text-[14px]`}
+              } cursor-pointer  lg:text-[16px] text-[14px]`}
               onClick={() => setIndex(i)}
             >
               <p className="mb-1 text-center lg:text-[16px] text-[14px]">
@@ -117,7 +117,7 @@ function Service() {
   };
 
   return (
-    <div className="lg:px-52 px-5 bg-white py-10 min-h-screen  w-screen overflow-hidden">
+    <div className="lg:px-52 px-5 bg-white py-10 min-h-screen  overflow-hidden">
       <div
         className="flex gap-2 cursor-pointer"
         onClick={() => {
@@ -134,7 +134,7 @@ function Service() {
         <FormSubmisson code={code} />
       ) : (
         <div className="flex gap-16 mt-7 ">
-          <div className="flex-1 flex-col w-screen overflow-hidden">
+          <div className="flex-1 flex-col w-screen lg:max-w-fit overflow-hidden">
             <h1 className="lg:text-[28px] font-semibold text-[#2E2D2D] mb-10">
               Category
             </h1>
