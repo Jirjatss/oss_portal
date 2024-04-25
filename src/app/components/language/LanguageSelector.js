@@ -28,6 +28,10 @@ const LanguageSelector = () => {
       lang: "tl",
       label: "TL",
     },
+    {
+      lang: "pt",
+      label: "PT",
+    },
   ];
 
   const handleClick = (e) => {

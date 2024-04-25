@@ -186,7 +186,6 @@ function FormAppointment({ onContinue }) {
               setAppointmentData({
                 officeLocationId: input.officeRepresentativeId,
                 serviceId: +input.serviceId,
-                applicationId: +input.serviceType,
               })
             );
             onContinue();

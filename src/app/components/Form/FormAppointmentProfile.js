@@ -14,7 +14,6 @@ function FormAppointmentProfile() {
   const user = useAuthUser();
   const dispatch = useDispatch();
   const { appointmentData } = useSelector((state) => state.appointmentReducer);
-  console.log("appointmentData:", appointmentData);
 
   const [isShowModal, setIsShowModal] = useState(false);
   const [input, setInput] = useState({});
