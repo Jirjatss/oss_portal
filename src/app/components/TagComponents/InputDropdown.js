@@ -27,9 +27,7 @@ function InputDropdown({
     t("state"),
     t("city"),
     t("town"),
-    t("applying_for"),
     t("office_location"),
-    t("purpose"),
     t("office_representative"),
   ].some((value) => label.includes(value));
 
@@ -40,6 +38,14 @@ function InputDropdown({
         ?.split("-")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
+    } else if (
+      [t("applying_for"), t("purpose")].some((val) => label.includes(val))
+    ) {
+      const splitStrings = e.name.split("-");
+      let label = splitStrings[0];
+      const title = splitStrings.slice(1).join("-");
+      if (label === "new") label = "new_text";
+      name = `${t(label)} ${t(`home_menu_${title}_title`)}`;
     } else {
       name = t(`home_menu_${e.name}_title`);
     }

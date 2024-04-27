@@ -38,8 +38,8 @@ function Service() {
   const title = pathname.replace(/^\//, "");
 
   useEffect(() => {
-    dispatch(getServicesHandler(code));
-  }, []);
+    if (code) dispatch(getServicesHandler(code));
+  }, [code]);
 
   const ServicesHeader = () => {
     return (
@@ -137,62 +137,6 @@ function Service() {
             </h1>
             {services && <ServicesHeader />}
             <div className="flex flex-col gap-10 mt-10">
-              {/* <div className="flex flex-col gap-3">
-                <h1 className="text-[18px] text-[#2E2D2D] font-semibold">
-                  📋 About Applications
-                </h1>
-                <p className="text-[16px] text-[#646464]">
-                  Explore our Applicant Service for {title}! Streamlining the
-                  application process, it ensures hassle-free access to
-                  essential services. From simplified documentation to efficient
-                  processing, we’re here to make managing your family’s needs
-                  easier. Apply today for a smoother administrative experience!
-                </p>
-              </div>
-              <div className="flex flex-col gap-3">
-                <h1 className="text-[18px] text-[#2E2D2D] font-semibold">
-                  🗂 What you need prepare for this?
-                </h1>
-                <ul className="list-disc ml-5 text-[16px] text-[#646464]">
-                  <li>Scan of original valid CNIC/ NICOP/ Smart card.</li>
-                  <li>
-                    Scan of the data page, two random pages asked by the system
-                    and the last ten passport pages of the original exhausted
-                    passport. Finger Prints Performa.
-                  </li>
-                  <li>
-                    Original scan of a color picture with white background
-                    having specification 350/467 Pixels in JPEG/JPG format and
-                    not more than 3MB size.
-                  </li>
-                  <li>
-                    The applicant has to submit a statement/declaration as per
-                    the prescribed format. (can be downloaded through the
-                    download tab after login to your account) that he/ she holds
-                    the original exhausted passport at the time of application
-                    and his passport pages have been exhausted due to frequent
-                    travel.
-                  </li>
-                </ul>
-              </div>
-              <div className="flex flex-col gap-3">
-                <h1 className="text-[18px] text-[#2E2D2D] font-semibold">
-                  ⏳ How Long It Will Take?
-                </h1>
-                <ul className="list-disc ml-5 text-[16px] text-[#646464]">
-                  <li>Duration submited : 3 Working Day</li>
-                  <li>
-                    Step following:
-                    <ul className="ml-5 list-disc">
-                      <li>Waiting for approval</li>
-                      <li>
-                        Request Approved - In Progress, Registration Completed
-                      </li>
-                      <li>Passport Delivered</li>
-                    </ul>
-                  </li>
-                </ul>
-              </div> */}
               {desc.map((e, i) => {
                 let icon;
                 if (i === 0) icon = "📋";

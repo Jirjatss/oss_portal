@@ -16,6 +16,7 @@ import { getUserInformation } from "@/app/store/actions/userAction";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import useLanguage from "@/app/useLanguage";
+import Loader from "../Loader";
 
 function FormAppointment({ onContinue }) {
   const user = useAuthUser();
@@ -23,44 +24,45 @@ function FormAppointment({ onContinue }) {
   const searchParams = useSearchParams();
   const { profile } = useSelector((state) => state.userReducer);
   const { status } = profile || {};
-  const { residenceDetail } = profile || {};
+
   const router = useRouter();
   const { t } = useLanguage();
 
-  const { stateId } = residenceDetail || {};
   const serviceTypeParams = searchParams.get("serviceType");
   const serviceParams = searchParams.get("service");
 
   const [input, setInput] = useState({});
-
+  const [ministryType, setMinistryType] = useState(null);
   const { municipality } = useSelector((state) => state.regionReducer);
 
   const { services, servicesType } = useSelector(
     (state) => state.serviceReducer
   );
 
-  const [officeLocation, setOfficeLocation] = useState(null);
-
   const isDisabled =
-    !input.officeLocationCode || !input.serviceType || !input.serviceId;
+    !input.officeLocationCode ||
+    !input.serviceType ||
+    !input.serviceId ||
+    !input.officeRepresentativeId;
 
   const getOfficeLocation = async () => {
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/office-locations?stateId=${input.officeLocationCode}`,
+        url: `https://api.ardhiansyah.com/office-locations?stateId=${input.officeLocationCode}&serviceTypeId=${input.serviceType}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
         },
       });
       const newData = data.data.map((e) => {
+        input.officeRepresentativeId = e.id;
         return {
           id: e.id,
           code: e.code,
           name: e.organizationName,
         };
       });
-      setOfficeLocation(newData);
+      setMinistryType(newData);
     } catch (error) {
       console.log(error);
     }
@@ -74,17 +76,45 @@ function FormAppointment({ onContinue }) {
     });
   };
 
+  const MinistryCard = ({ data, location }) => {
+    const officeLocation = location?.filter(
+      (e) => e.id === input.officeLocationCode
+    );
+    if (isDisabled || !input.serviceId) return null;
+    if (!data) {
+      return (
+        <div className="w-full flex items-center justify-center mt-2">
+          <img
+            src="/assets/images/loading.gif"
+            alt="Loading..."
+            className="w-10"
+          />
+        </div>
+      );
+    }
+
+    if (data && location)
+      return (
+        <div className="w-full border-[2px] border-[#D9D7F9] rounded-[16px] p-[16px] mt-2">
+          <p className="text-[#646464] text-[16px]">
+            {t("visit_ministry_office")}
+          </p>
+          <p className="text-[#2E2D2D] text-[18px]">
+            {t(data[0].name.split("-").join("_"))}, {officeLocation[0].name}
+          </p>
+        </div>
+      );
+  };
+
   useEffect(() => {
     dispatch(getRegionMunicipality(user?.accessToken));
     dispatch(getServicesTypeHandler());
     if (input.serviceType) {
       dispatch(getServicesHandler(input.serviceType, user?.accessToken));
     }
-    if (input.officeLocationCode) {
+    if (input.officeLocationCode && input.serviceId) {
       getOfficeLocation();
     }
-
-    console.log(input.officeLocationCode);
   }, [dispatch, input]);
 
   useEffect(() => {
@@ -108,12 +138,13 @@ function FormAppointment({ onContinue }) {
       serviceParams &&
       !input.serviceType &&
       !input.serviceId
-    )
+    ) {
       setInput({
         serviceType: serviceTypeParams,
         serviceId: serviceParams,
       });
-    else if (
+      console.log(input.serviceId, serviceParams);
+    } else if (
       !serviceTypeParams &&
       !serviceParams &&
       input.serviceType &&
@@ -122,6 +153,10 @@ function FormAppointment({ onContinue }) {
       setInput({});
     }
   }, [serviceTypeParams, serviceParams]);
+
+  useEffect(() => {
+    if (!serviceParams) input.serviceId = null;
+  }, [input.serviceType]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 my-10 gap-x-10">
@@ -135,27 +170,7 @@ function FormAppointment({ onContinue }) {
       </div>
       <div className="flex flex-col gap-7">
         <InputDropdown
-          label={t("office_location")}
-          // isDisabled={stateId}
-          topic={municipality}
-          name="officeLocationCode"
-          handleChange={(e) => {
-            handleChangeSelect(e);
-          }}
-          selectedTopic={input.officeLocationCode}
-        />
-        <InputDropdown
-          label={t("office_representative")}
-          isDisabled={!input.officeLocationCode}
-          topic={officeLocation}
-          name="officeRepresentativeId"
-          handleChange={(e) => {
-            handleChangeSelect(e);
-          }}
-          selectedTopic={input.officeRepresentativeId}
-        />
-        <InputDropdown
-          label={t("applications")}
+          label={t("service")}
           isDisabled={serviceTypeParams}
           topic={servicesType}
           name="serviceType"
@@ -175,16 +190,28 @@ function FormAppointment({ onContinue }) {
           }}
           selectedTopic={input.serviceId}
         />
+        <InputDropdown
+          label={t("office_location")}
+          // isDisabled={stateId}
+          topic={municipality}
+          name="officeLocationCode"
+          handleChange={(e) => {
+            handleChangeSelect(e);
+          }}
+          selectedTopic={input.officeLocationCode}
+        />
+
+        <MinistryCard data={ministryType} location={municipality} />
 
         <button
-          //   disabled={isDisabled}
+          disabled={isDisabled}
           className={`${
             isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
-          }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-5 font-semibold`}
+          }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-2 font-semibold`}
           onClick={() => {
             dispatch(
               setAppointmentData({
-                officeLocationId: input.officeRepresentativeId,
+                officeLocationId: +input.officeRepresentativeId,
                 serviceId: +input.serviceId,
               })
             );

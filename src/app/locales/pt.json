@@ -170,7 +170,10 @@
   "all": "",
   "submitted": "",
   "waiting_approval": "",
+  "waitingApproval": "",
   "rejected": "",
+  "reject": "",
+  "confirm": "Confirm",
   "completed": "",
   "delivered": "",
   "detail": "",
@@ -245,5 +248,13 @@
   "success_login": "Aceder bem-sucedido",
   "success_logout": "Sair com sucesso",
   "your_profile": "Seu perfil",
-  "your_profile_desc": "Completar seu perfil ajudará os oficiais a rastrear sua presença com precisão. Por favor, certifique-se de que seu perfil está atualizado."
+  "your_profile_desc": "Completar seu perfil ajudará os oficiais a rastrear sua presença com precisão. Por favor, certifique-se de que seu perfil está atualizado.",
+  "visit_ministry_office": "Visitar o Ministério",
+  "ministry_of_justice": "Ministério da Justiça",
+  "ministry_of_transport_and_communication": "Ministério dos Transportes e Comunicações",
+  "ministry_of_economic_affairs": "Ministério dos Assuntos Econômicos",
+  "ministry_of_administration_state": "Ministério da Administração Estatal",
+  "english": "Inglês",
+  "timor_leste": "Timor Leste",
+  "portuguese": "Português"
 }

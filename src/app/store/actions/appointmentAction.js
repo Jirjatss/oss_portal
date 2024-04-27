@@ -55,6 +55,7 @@ export const setAppointment = (val, access_token) => {
           },
           data: val,
         });
+        dispatch(setAppointmentSuccess());
       } else {
         const { data } = await axios({
           method: "POST",
@@ -62,7 +63,7 @@ export const setAppointment = (val, access_token) => {
           data: val,
         });
       }
-      dispatch(setAppointmentSuccess());
+
       dispatch({
         type: LOADING_FALSE,
       });

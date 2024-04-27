@@ -1,3 +1,5 @@
+import { useSelector } from "react-redux";
+
 export const formattedDate = (dateOfBirth) => {
   const date = new Date(dateOfBirth);
   const day = date.getDate();
@@ -70,8 +72,9 @@ export const formattedDateAppointment = (dateString) => {
   return `${day}, ${dayOfMonth} ${month} ${year}`;
 };
 
-export const dateFormatter = (dateString) => {
+export const dateFormatter = (dateString, lang) => {
   const date = new Date(dateString);
+
   const options = {
     day: "2-digit",
     month: "long",
@@ -80,6 +83,8 @@ export const dateFormatter = (dateString) => {
     hour: "2-digit",
     minute: "2-digit",
   };
-  const formattedDate = date.toLocaleDateString("en-GB", options);
+  let locale = "pt-TL";
+  if (lang === en) locale = "en-GB";
+  const formattedDate = date.toLocaleDateString(locale, options);
   return formattedDate.replace("at", "").trim();
 };

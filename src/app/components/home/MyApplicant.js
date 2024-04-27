@@ -14,8 +14,8 @@ import useLanguage from "@/app/useLanguage";
 function MyApplicant() {
   const user = useAuthUser();
   const { myApplications } = useSelector((state) => state.applicationReducer);
-  console.log("myApplications:", myApplications);
-  const existApplication = myApplications.filter(
+
+  const existApplication = myApplications?.filter(
     (e) => e.status !== "completed"
   );
   const dispatch = useDispatch();

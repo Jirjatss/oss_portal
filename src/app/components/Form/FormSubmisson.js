@@ -208,20 +208,22 @@ const FormSubmission = ({ code }) => {
     if (id && user) dispatch(getDetailApplication(id, user.accessToken));
   }, [id]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(getDetailApplicationSuccess(null));
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch(getDetailApplicationSuccess(null));
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (!user) {
       toast.error("Unauthorized");
       router.push("/");
     }
-    if (profile?.status !== "active") {
-      toast.error("Verification your account first");
-      router.push("/personal-informations");
+    if (user && profile) {
+      if (profile?.status !== "active") {
+        toast.error("Verification your account first");
+        router.push("/personal-informations");
+      }
       // console.log(profile?.status);
     }
   }, [user, profile]);
@@ -232,7 +234,8 @@ const FormSubmission = ({ code }) => {
 
   useEffect(() => {
     dispatch(getUserInformation(user?.accessToken));
-    if (code !== "") dispatch(getServicesHandler(code, user?.accessToken));
+    if (code && code !== "")
+      dispatch(getServicesHandler(code, user?.accessToken));
   }, [code]);
 
   useEffect(() => {

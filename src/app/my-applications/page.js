@@ -38,34 +38,42 @@ const MyApplications = () => {
   );
 
   const { myAppointments } = useSelector((state) => state.appointmentReducer);
-
-  const [filterStatus, setFilterStatus] = useState("All");
-  const [filterStatusAppointment, setFilterStatusAppointmen] = useState("All");
-
-  // useEffect(() => {
-  //   console.log("filterStatusAppointment:", filterStatusAppointment);
-  // }, [filterStatusAppointment]);
-
-  const [filterApps, setFilterApps] = useState("Service");
+  const { lang } = useSelector((state) => state.languageReducer);
+  const [filterStatus, setFilterStatus] = useState(t("all"));
+  const [filterStatusAppointment, setFilterStatusAppointment] = useState(
+    t("all")
+  );
+  const [filterApps, setFilterApps] = useState(t("service"));
 
   const filteredApplications = myApplications?.filter((app) => {
-    if (filterStatus === "All") return true;
-    if (filterStatus === "waiting approval")
+    if (filterStatus === t("all")) return true;
+    if (filterStatus === t("waiting_approval"))
       return app.status.includes("waitingApproval");
-    return app.status.includes(filterStatus);
+    if (filterStatus === t("completed"))
+      return app.status.includes("completed");
+    if (filterStatus === t("rejected")) return app.status.includes("rejected");
+    if (filterStatus === t("submitted"))
+      return app.status.includes("submitted");
   });
 
   const filteredAppointments = myAppointments?.filter((e) => {
-    if (filterStatusAppointment === "All") return true;
-    return e.status.includes(filterStatusAppointment);
+    console.log("e:", e);
+    if (filterStatusAppointment === t("all")) return true;
+    if (filterStatusAppointment === t("waiting_approval"))
+      return e.status.includes("waitingApproval");
+    if (filterStatusAppointment === t("reject"))
+      return e.status.includes("reject");
+    if (filterStatusAppointment === t("confirm"))
+      return e.status.includes("confirm");
   });
 
   const serviceTypeDecider = (serviceType) => {
-    const words = serviceType.split("-");
-    const capitalizedWords = words.map(
-      (word) => word.charAt(0).toUpperCase() + word.slice(1)
-    );
-    return capitalizedWords.join(" ");
+    const splitStrings = serviceType.split("-");
+    let label = splitStrings[0];
+    const title = splitStrings.slice(1).join("-");
+
+    if (label === "new") label = "new_text";
+    return `${t(label)} ${t(`home_menu_${title}_title`)}`;
   };
 
   useEffect(() => {
@@ -86,9 +94,15 @@ const MyApplications = () => {
     }
   }, [user]);
 
+  useEffect(() => {
+    setFilterApps(t("service"));
+    setFilterStatus(t("all"));
+    setFilterStatusAppointment(t("all"));
+  }, [lang]);
+
   const Header = () => {
     const [index, setIndex] = useState(0);
-    const status = ["Service", "Appoinment"];
+    const status = [t("service"), t("appointment")];
 
     useEffect(() => {
       const newIndex = status.findIndex((s) => s === filterApps);
@@ -125,13 +139,12 @@ const MyApplications = () => {
   const HeaderStatus = () => {
     const [index, setIndex] = useState(0);
     const status = [
-      "All",
-      "submitted",
-      "waiting approval",
-      "rejected",
-      "resubmitted",
-      "completed",
-      "delivered",
+      t("all"),
+      t("submitted"),
+      t("waiting_approval"),
+      t("rejected"),
+      // t("resubmitted"),
+      t("completed"),
     ];
 
     useEffect(() => {
@@ -143,31 +156,39 @@ const MyApplications = () => {
 
     return (
       <div className="flex lg:grid lg:grid-cols-7 lg:gap-3 gap-1 justify-start overflow-y-hidden overflow-x-auto lg:pb-0 pb-2">
-        {status.map((e, i) => (
-          <div
-            key={i}
-            className={`${
-              index === i
-                ? "border-[#2E2D2D] text-[#2E2D2D] font-semibold"
-                : "text-[#646464] border-[#DCDCDC]"
-            } cursor-pointer px-1 min-w-[150px]  lg:text-[16px] text-[14px] border-[1px] flex justify-center items-center lg:py-2 py-1 rounded-[8px] `}
-            onClick={() => {
-              setIndex(i);
-              setFilterStatus(e);
-            }}
-          >
-            <p className="text-center">
-              {e.charAt(0).toUpperCase() + e.slice(1)}
-            </p>
-          </div>
-        ))}
+        {status.map((e, i) => {
+          return (
+            <div
+              key={i}
+              className={`${
+                index === i
+                  ? "border-[#2E2D2D] text-[#2E2D2D] font-semibold"
+                  : "text-[#646464] border-[#DCDCDC]"
+              } cursor-pointer px-1 min-w-[150px]  lg:text-[16px] text-[14px] border-[1px] flex justify-center items-center lg:py-2 py-1 rounded-[8px] `}
+              onClick={() => {
+                setIndex(i);
+                setFilterStatus(e);
+              }}
+            >
+              <p className="text-center">
+                {e.charAt(0).toUpperCase() + e.slice(1)}
+              </p>
+            </div>
+          );
+        })}
       </div>
     );
   };
 
   const HeaderStatusAppointment = () => {
     const [index, setIndex] = useState(0);
-    const status = ["All", "waitingApproval", "reject", "completed", "absent"];
+    const status = [
+      t("all"),
+      t("waitingApproval"),
+      t("reject"),
+      t("confirm"),
+      "absent",
+    ];
 
     useEffect(() => {
       const newIndex = status.findIndex((s) => s === filterStatusAppointment);
@@ -188,7 +209,7 @@ const MyApplications = () => {
             } cursor-pointer px-1 min-w-[150px]  lg:text-[16px] text-[14px] border-[1px] flex justify-center items-center lg:py-2 py-1 rounded-[8px] `}
             onClick={() => {
               setIndex(i);
-              setFilterStatusAppointmen(e);
+              setFilterStatusAppointment(e);
             }}
           >
             <p className="text-center">
@@ -243,14 +264,18 @@ const MyApplications = () => {
         hour: "2-digit",
         minute: "2-digit",
       };
-      const formattedDate = date.toLocaleDateString("en-GB", options);
+      let code;
+      if (lang === "en") code = "GB";
+      if (lang === "pt" || lang === "tl") code = "TL";
+      const formattedDate = date.toLocaleDateString(`${lang}-${code}`, options);
       return formattedDate.replace("at", "").trim();
     };
 
     const statusDecider = (status) => {
-      if (status.includes("rejected")) return "Rejected";
-      if (status.includes("waitingApproval")) return "Waiting Approval";
-      return status.charAt(0).toUpperCase() + status.slice(1);
+      if (status.includes("rejected")) return t("rejected");
+      if (status.includes("waitingApproval")) return t("waiting_approval");
+      if (status.includes("completed")) return t("completed");
+      if (status.includes("submitted")) return t("submitted");
     };
 
     return (
@@ -272,13 +297,13 @@ const MyApplications = () => {
               alt={serviceType}
             />
           </div>
-          <div className="flex flex-col  gap-3 -ml-12 max-w-[170px] min-h-[80px]">
+          <div className="flex flex-col  gap-3 -ml-12 max-w-[200px] min-h-[80px]">
             <p className="text-[#646464] text-[16px]">{t("service_type")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
-              {serviceTypeDecider(serviceType)}
+              {t(`home_menu_${serviceType}_title`)}
             </p>
           </div>
-          <div className="flex flex-col  gap-3 -ml-12 min-h-[80px]">
+          <div className="flex flex-col  gap-3 -ml-8 max-w-[200px]  min-h-[80px]">
             <p className="text-[#646464] text-[16px]">{t("applying")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold leading-1">
               {serviceTypeDecider(service)}
@@ -345,7 +370,7 @@ const MyApplications = () => {
             <div className="flex flex-col justify-between lg:gap-3 gap-1">
               <p className="text-[#646464] text-[16px]">{t("service_type")}</p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
-                {serviceTypeDecider(serviceType)}
+                {t(`home_menu_${serviceType}_title`)}
               </p>
             </div>
             <div className="flex flex-col justify-between lg:gap-3 gap-1 items-end text-end">
@@ -417,53 +442,53 @@ const MyApplications = () => {
       service,
       status,
       id,
+      organizationName,
     } = appointments || {};
 
     return (
       <div className="border-[#DCDCDC] border-[1px] mt-8 p-[24px] rounded-[20px]">
         <div
-          className={`grid-cols-5 justify-center items-center gap-2 lg:grid hidden ${
+          className={`grid-cols-5 justify-center items-start gap-2 lg:grid hidden ${
             status.includes("reject") &&
             "lg:border-none border-b-[1px] border-[#DCDCDC] pb-4"
           }`}
         >
-          <div className="flex flex-col justify-between gap-2">
-            <p className="text-[#646464] text-[16px]">{t("location")}</p>
+          <div className="flex flex-col  max-w-[150px] gap-2 min-h-[80px]">
+            <p
+              className={`text-[#646464] text-[16px] ${
+                lang === "en" && "pb-6"
+              }`}
+            >
+              {t("office_location")}
+            </p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
-              {officeLocation}
+              {t(`${organizationName.split("-").join("_")}`)}, {officeLocation}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-2 max-w-[200px]">
+          <div className="flex flex-col justify-between  gap-2 -ml-12  max-w-[200px] min-h-[80px]">
             <p className="text-[#646464] text-[16px]">{t("service")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
-              {serviceTypeDecider(serviceType)}
+              {t(`home_menu_${serviceType}_title`)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-2 max-w-[200px]">
-            <p className="text-[#646464] text-[16px]">{t("purpose")}</p>
+          <div className="flex flex-col gap-2 -ml-8  max-w-[200px] min-h-[80px]">
+            <p className="text-[#646464] text-[16px] pb-5">{t("purpose")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
               {serviceTypeDecider(service)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-2">
+          <div className="flex flex-col min-h-[80px] justify-between gap-2">
             <p className="text-[#646464] text-[16px]">{t("date")}</p>
             <p className="text-[#2E2D2D] text-[16px] font-semibold">
-              {formattedDateAppointment(scheduledAt)}
+              {formattedDateAppointment(scheduledAt, lang)}
             </p>
           </div>
-          <div className="flex flex-col justify-between gap-2 ml-8">
+          <div className="flex flex-col min-h-[80px] justify-between gap-2 ml-8">
             <p className="text-[#646464] text-[16px]">
               {status === "confirm" ? t("code_booking") : t("status")}
             </p>
-            <p className="text-[#2E2D2D] text-[16px] font-semibold">
-              {status === "confirm"
-                ? bookingCode
-                : status
-                    .replace(/([A-Z])/g, " $1")
-                    .trim()
-                    .split("-")
-                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(" ")}
+            <p className="text-[#2E2D2D] text-[16px] justify-between font-semibold">
+              {status === "confirm" ? bookingCode : t(`${status}`)}
             </p>
           </div>
         </div>
@@ -472,13 +497,16 @@ const MyApplications = () => {
         <div className="flex flex-col justify-between items-center gap-2 lg:hidden">
           <div className="grid grid-cols-2 justify-between w-full border-b-[#DCDCDC] border-b-[1px] pb-4">
             <div className="flex flex-col justify-between gap-2 w-full">
-              <p className="text-[#646464] text-[16px]">{t("location")}</p>
+              <p className="text-[#646464] text-[16px]">
+                {t("office_location")}
+              </p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
+                {t(`${organizationName.split("-").join("_")}`)},{" "}
                 {officeLocation}
               </p>
             </div>
-            <div className="flex flex-col justify-between gap-2 text-end">
-              <p className="text-[#646464] text-[16px]">Date</p>
+            <div className="flex flex-col  gap-2 text-end">
+              <p className="text-[#646464] text-[16px] pb-6">Date</p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
                 {formattedDateAppointment(scheduledAt)}
               </p>
@@ -488,12 +516,12 @@ const MyApplications = () => {
             <div className="flex flex-col justify-between gap-2 w-full ">
               <p className="text-[#646464] text-[16px]">Service</p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
-                {serviceTypeDecider(serviceType)}
+                {t(`home_menu_${serviceType}_title`)}
               </p>
             </div>
             <div className="flex flex-col justify-between gap-2 w-full items-end">
               <p className="text-[#646464] text-[16px]">Purpose</p>
-              <p className="text-[#2E2D2D] text-[16px] font-semibold">
+              <p className="text-[#2E2D2D] text-[16px] font-semibold text-end">
                 {serviceTypeDecider(service)}
               </p>
             </div>
@@ -504,16 +532,7 @@ const MyApplications = () => {
                 {status === "confirm" ? t("code_booking") : t("status")}
               </p>
               <p className="text-[#2E2D2D] text-[16px] font-semibold">
-                {status === "confirm"
-                  ? bookingCode
-                  : status
-                      .replace(/([A-Z])/g, " $1")
-                      .trim()
-                      .split("-")
-                      .map(
-                        (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                      )
-                      .join(" ")}
+                {status === "confirm" ? bookingCode : t(`${status}`)}
               </p>
             </div>
           </div>
@@ -584,11 +603,11 @@ const MyApplications = () => {
           <div className="flex-1 flex-col w-screen overflow-hidden">
             <Header />
 
-            {filterApps === "Service" && (
+            {filterApps === t("service") && (
               <>
                 <HeaderStatus />
                 {filteredApplications?.length === 0 || !filteredApplications ? (
-                  <EmptyData string="Service" />
+                  <EmptyData string={t("service")} />
                 ) : (
                   filteredApplications?.map((e, idx) => (
                     <CardListApplications applications={e} key={idx} />
@@ -596,11 +615,11 @@ const MyApplications = () => {
                 )}
               </>
             )}
-            {filterApps !== "Service" && (
+            {filterApps === t("appointment") && (
               <>
                 <HeaderStatusAppointment />
                 {filteredAppointments?.length === 0 || !filteredAppointments ? (
-                  <EmptyData string="Appointment" />
+                  <EmptyData string={t("appointment")} />
                 ) : (
                   filteredAppointments.map((e, i) => (
                     <CardListAppointments key={i} appointments={e} />

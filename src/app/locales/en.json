@@ -171,7 +171,10 @@
   "all": "All",
   "submitted": "Submitted",
   "waiting_approval": "Waiting Approval",
+  "waitingApproval": "Waiting Approval",
   "rejected": "Rejected",
+  "reject": "Rejected",
+  "confirm": "Confirm",
   "completed": "Completed",
   "delivered": "Delivered",
   "detail": "Detail",
@@ -257,5 +260,13 @@
   "service_desc_title_2": "What you need prepare for this?",
   "service_desc_desc_2": "<ul class=\"list-disc pl-4 mt-1\"><li>Scan of original valid CNIC/ NICOP/ Smart card.</li><li> Scan of the data page, two random pages asked by the system and the last ten passport pages of the original exhausted passport. Finger Prints Performa.</li><li>Original scan of a color picture with white background having specification 350/467 Pixels in JPEG/JPG format and not more than 3MB size.</li><li>The applicant has to submit a statement/declaration as per the prescribed format. (can be downloaded through the download tab after login to your account) that he/ she holds the original exhausted passport at the time of application and his passport pages have been exhausted due to frequent travel.</li></ul>",
   "service_desc_title_3": "How Long It Will Take?",
-  "service_desc_desc_3": "<ul class=\"list-disc pl-4 mt-1\"><li>Duration submited : 3 Working Day</li><li>Step following: <ul class=\"list-disc ml-8 mt-1\"><li>Waiting for approval</li><li>Request Approved - In Progress, Registration Completed</li><li>Passport Delivered</li></ul></li></ul>"
+  "service_desc_desc_3": "<ul class=\"list-disc pl-4 mt-1\"><li>Duration submited : 3 Working Day</li><li>Step following: <ul class=\"list-disc ml-8 mt-1\"><li>Waiting for approval</li><li>Request Approved - In Progress, Registration Completed</li><li>Passport Delivered</li></ul></li></ul>",
+  "visit_ministry_office": "Visit Ministry Office",
+  "ministry_of_justice": "Ministry of Justice",
+  "ministry_of_transport_and_communication": "Ministry of Transport and Communication",
+  "ministry_of_economic_affairs": "Economic Affairs Ministry",
+  "ministry_of_administration_state": "Ministry of Administration State",
+  "english": "English",
+  "timor_leste": "Timor Leste",
+  "portuguese": "Portuguese"
 }

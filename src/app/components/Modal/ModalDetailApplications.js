@@ -1,8 +1,10 @@
 import React from "react";
 import { OSSIcons } from "../../../../public/assets/icons/parent";
 import { dateFormatter } from "@/app/universalFunction";
+import useLanguage from "@/app/useLanguage";
 
 function ModalDetailApplications({ data }) {
+  const { t } = useLanguage();
   function statusFormatted(status) {
     return status
       .replace(/([A-Z])/g, " $1")
@@ -10,10 +12,10 @@ function ModalDetailApplications({ data }) {
   }
   return (
     <dialog id="detailModal" className="modal">
-      <div className=" bg-white flex flex-col px-10 py-7 lg:rounded-[20px] lg:w-[594px] w-full lg:h-fit h-screen relative">
+      <div className=" bg-white flex flex-col px-10 py-7 lg:rounded-[20px] lg:w-[594px] relative max-h-[80vh] overflow-y-auto">
         <div className="flex lg:flex-row flex-row-reverse lg:justify-between justify-end gap-6 lg:mb-0 mb-5">
           <h1 className="-mt-1 lg:text-[25px] text-[18px] font-semibold text-[#2E2D2D] mb-5">
-            Detail Status
+            {t("detail_status")}
           </h1>
           <form method="dialog" className="border-none lg:-mt-.5">
             <button formMethod="dialog">

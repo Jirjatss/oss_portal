@@ -38,7 +38,7 @@ function FormAppointmentProfile() {
     { name: "passport", code: "passport", id: 2 },
   ];
 
-  const [validPhoneNumber, setValidPhoneNumber] = useState(true);
+  const [validPhoneNumber, setValidPhoneNumber] = useState(false);
 
   const validatePhoneNumber = (phoneNumber) => {
     const regexPhoneNumber = /^\+[1-9]\d{1,14}$/;
@@ -57,7 +57,11 @@ function FormAppointmentProfile() {
     }
   };
 
-  useEffect(() => {});
+  useEffect(() => {
+    if (user && phoneNumber) {
+      setValidPhoneNumber(true);
+    }
+  }, [user, phoneNumber]);
 
   useEffect(() => {
     if (user)
@@ -188,7 +192,7 @@ function FormAppointmentProfile() {
               name="phoneNumber"
               onChange={(e) => handleChangeSelect(e.target)}
             />
-            {!validPhoneNumber && (
+            {!validPhoneNumber && input.phoneNumber !== undefined && (
               <p className="text-[12px] text-red-500">
                 {t("phone_number_error_hint")}
               </p>

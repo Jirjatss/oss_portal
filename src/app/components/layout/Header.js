@@ -13,6 +13,8 @@ import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import useSignOut from "react-auth-kit/hooks/useSignOut";
 import { Profile as ProfileImage } from "../../../../public/assets/emoji/index";
 import useLanguage from "@/app/useLanguage";
+import { useDispatch, useSelector } from "react-redux";
+import { setLang } from "@/app/store/actions/languageAction";
 
 const Header = () => {
   const signOut = useSignOut();
@@ -25,6 +27,9 @@ const Header = () => {
   const pathname = usePathname();
   const profile = [{ label: t("edit_profile") }, { label: t("logout") }];
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { lang } = useSelector((state) => state.languageReducer);
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -59,7 +64,7 @@ const Header = () => {
         />
 
         <div className="relative z-10 m-0">
-          <ul className="flex gap-5 mt-1">
+          <ul className="flex gap-5 mt-2">
             <li className="m-auto">
               <Link href="/">
                 <Image src={logo} width={25} height={25} alt="" />
@@ -269,51 +274,93 @@ const Header = () => {
                   onClick={() => setIsMenuOpen(false)}
                   className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold mt-1"
                 >
-                  Edit Profile
+                  {t("edit_profile")}
                 </Link>
 
-                <li>
-                  <a
-                    href="/#services"
-                    onClick={() => setIsMenuOpen(false)}
-                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
-                    aria-current="page"
-                  >
-                    {t("applications")}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    onClick={() => setIsMenuOpen(false)}
-                    href={`${auth ? "/set-appointment" : "/#set-appointment"}`}
-                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
-                    aria-current="page"
-                  >
-                    {t("home_menu_set-appointment_title")}
-                  </a>
-                </li>
-                <li>
-                  <a
-                    onClick={() => setIsMenuOpen(false)}
-                    href="/#contact-us"
-                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
-                    aria-current="page"
-                  >
-                    {t("contact_us")}
-                  </a>
-                </li>
+                <Link
+                  href="/#services"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                  aria-current="page"
+                >
+                  {t("applications")}
+                </Link>
+                <Link
+                  onClick={() => setIsMenuOpen(false)}
+                  href={`${auth ? "/set-appointment" : "/#set-appointment"}`}
+                  className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                  aria-current="page"
+                >
+                  {t("home_menu_set-appointment_title")}
+                </Link>
+                <Link
+                  onClick={() => setIsMenuOpen(false)}
+                  href="/#contact-us"
+                  className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                  aria-current="page"
+                >
+                  {t("contact_us")}
+                </Link>
 
+                <Link
+                  href="/login"
+                  onClick={() => {
+                    setIsMenuOpen(false);
+                    handleLogout();
+                  }}
+                  className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                  aria-current="page"
+                >
+                  {t("logout")}
+                </Link>
                 <li>
                   <a
-                    href="/login"
-                    onClick={() => {
-                      setIsMenuOpen(false);
-                      handleLogout();
-                    }}
                     className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                     aria-current="page"
                   >
-                    Logout
+                    {t("language")}
+
+                    <ul
+                      className="flex justify-between items-center mt-1"
+                      onClick={() => {
+                        dispatch(setLang("en"));
+                      }}
+                    >
+                      <p
+                        className="block py-2 text-[16px] text-[#646464] font-thin"
+                        aria-current="page"
+                      >
+                        {t("english")}
+                      </p>
+                      <div
+                        className={`w-[24px] h-[24px] rounded-full ${
+                          lang === "en" ? "bg-[#1C25E7]" : "bg-transparent"
+                        } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
+                      >
+                        {lang === "en" && <OSSIcons name={"Approve"} />}
+                      </div>
+                    </ul>
+
+                    <ul
+                      className="flex justify-between items-center"
+                      onClick={() => {
+                        dispatch(setLang("tl"));
+                      }}
+                    >
+                      <p
+                        className="block py-2 text-[16px] text-[#646464] font-thin"
+                        aria-current="page"
+                      >
+                        {t("timor_leste")}
+                      </p>
+                      <div
+                        className={`w-[24px] h-[24px] rounded-full ${
+                          lang === "tl" ? "bg-[#1C25E7]" : "bg-transparent"
+                        } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
+                      >
+                        {lang === "tl" && <OSSIcons name={"Approve"} />}
+                      </div>
+                    </ul>
                   </a>
                 </li>
               </ul>
@@ -328,40 +375,82 @@ const Header = () => {
                     {t("how_to_apply")}
                   </Link>
 
+                  <Link
+                    href="/#services"
+                    onClick={() => setIsMenuOpen(false)}
+                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                    aria-current="page"
+                  >
+                    {t("applications")}
+                  </Link>
+                  <Link
+                    onClick={() => setIsMenuOpen(false)}
+                    href={`${auth ? "/set-appointment" : "/#set-appointment"}`}
+                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                    aria-current="page"
+                  >
+                    {t("home_menu_set-appointment_title")}
+                  </Link>
+                  <Link
+                    onClick={() => setIsMenuOpen(false)}
+                    href="/#contact-us"
+                    className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
+                    aria-current="page"
+                  >
+                    {t("contact_us")}
+                  </Link>
                   <li>
                     <a
-                      href="/#services"
-                      onClick={() => setIsMenuOpen(false)}
                       className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
                       aria-current="page"
                     >
-                      {t("applications")}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      onClick={() => setIsMenuOpen(false)}
-                      href={`${
-                        auth ? "/set-appointment" : "/#set-appointment"
-                      }`}
-                      className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
-                      aria-current="page"
-                    >
-                      {t("home_menu_set-appointment_title")}
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      onClick={() => setIsMenuOpen(false)}
-                      href="/#contact-us"
-                      className="block py-2 px-3 text-[16px] text-[#646464] border-b-[1px] border-[#DCDCDC] font-semibold"
-                      aria-current="page"
-                    >
-                      {t("contact_us")}
+                      {t("language")}
+
+                      <ul
+                        className="flex justify-between items-center mt-1"
+                        onClick={() => {
+                          dispatch(setLang("en"));
+                        }}
+                      >
+                        <p
+                          className="block py-2 text-[16px] text-[#646464] font-thin"
+                          aria-current="page"
+                        >
+                          {t("english")}
+                        </p>
+                        <div
+                          className={`w-[24px] h-[24px] rounded-full ${
+                            lang === "en" ? "bg-[#1C25E7]" : "bg-transparent"
+                          } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
+                        >
+                          {lang === "en" && <OSSIcons name={"Approve"} />}
+                        </div>
+                      </ul>
+
+                      <ul
+                        className="flex justify-between items-center"
+                        onClick={() => {
+                          dispatch(setLang("tl"));
+                        }}
+                      >
+                        <p
+                          className="block py-2 text-[16px] text-[#646464] font-thin"
+                          aria-current="page"
+                        >
+                          {t("timor_leste")}
+                        </p>
+                        <div
+                          className={`w-[24px] h-[24px] rounded-full ${
+                            lang === "tl" ? "bg-[#1C25E7]" : "bg-transparent"
+                          } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
+                        >
+                          {lang === "tl" && <OSSIcons name={"Approve"} />}
+                        </div>
+                      </ul>
                     </a>
                   </li>
                 </ul>
-                <div className="grid grid-cols-2 absolute bottom-24 gap-x-2 m-auto w-full px-4">
+                <div className="grid grid-cols-2 absolute bottom-36 gap-x-2 m-auto w-full px-4">
                   <Link
                     href="/login"
                     className="text-[#1C25E7] m-auto font-semibold"

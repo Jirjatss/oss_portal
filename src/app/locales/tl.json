@@ -170,7 +170,10 @@
   "all": "Hotu-hotu",
   "submitted": "Submetidu",
   "waiting_approval": "Hein aprovasaun",
+  "waitingApproval": "Hein aprovasaun",
   "rejected": "Rejeitadu",
+  "reject": "Rejeitadu",
+  "confirm": "Konfirma",
   "completed": "Kompleta",
   "delivered": "Entrega ona",
   "detail": "Detallu",
@@ -251,5 +254,13 @@
   "service_desc_title_2": "Saida mak tuir atu prepara?",
   "service_desc_desc_2": "<ul class=\"list-disc pl-4 mt-1\"><li>Scan CNIC/NICOP/Kartaun smart orijinal ne'ebé validu.</li><li>Scan ba pájina dadus, rua pájina random ne'ebé sistema iha hakarak, no dez pájina pasaporte orijinal ne'ebé remata. Performa iha impressaun digital.</li><li>Scan orijinal ba fotu kolor ho fuan mutin ho spésifikasaun 350/467 Pixels iha formatu JPEG/JPG no ladún le'os 3MB.</li><li>Aplikante tenki submete deklarasaun segundo formatu ne'ebé dezenvolve. (bele download iha aba download depois la'o ba iha konta) katak nia ka nia hakarak iha pasaporte orijinal ne'ebé remata iha tempu aplikasaun no pájina pasaporte ne'ebé remata tanba viajen hela.</li></ul>",
   "service_desc_title_3": "Tuir-bá tempu nee sei simu?",
-  "service_desc_desc_3": "<ul class=\"list-disc pl-4 mt-1\"><li>Durasaun fo: 3 loron servisu</li><li>Passus seguinte:<ul class=\"list-disc ml-8 mt-1\"><li>Iha fila atu aprovasaun</li><li>Pedidos Aprovada - Iha Progresu, Registru Konkliu</li><li>Pasaporte Entregadu.</li></ul></li></ul>"
+  "service_desc_desc_3": "<ul class=\"list-disc pl-4 mt-1\"><li>Durasaun fo: 3 loron servisu</li><li>Passus seguinte:<ul class=\"list-disc ml-8 mt-1\"><li>Iha fila atu aprovasaun</li><li>Pedidos Aprovada - Iha Progresu, Registru Konkliu</li><li>Pasaporte Entregadu.</li></ul></li></ul>",
+  "visit_ministry_office": "Bisita Iha Ministériu",
+  "ministry_of_justice": "Ministériu Justisa",
+  "ministry_of_transport_and_communication": "Ministériu Transporte no Komunikasaun",
+  "ministry_of_economic_affairs": "Ministériu Asuntu Ekonómiku",
+  "ministry_of_administration_state": "Ministériu Administrasaun Estadu",
+  "english": "Ingles",
+  "timor_leste": "Timor Leste",
+  "portuguese": "Portugés"
 }

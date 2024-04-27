@@ -16,6 +16,7 @@ const applicationReducer = (state = initialState, action) => {
       return {
         ...state,
         myApplications: action.payload,
+        detailById: null,
       };
 
     case GET_APPLICATION_DETAIL_STATUS:

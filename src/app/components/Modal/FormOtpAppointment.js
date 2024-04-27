@@ -160,13 +160,13 @@ function FormOtpAppointment({ data }) {
                     .then(() => {
                       setSuccessSubmit(true);
                       if (user) {
-                        dispatch(setAppointment(data, user?.accessToken)).then(
-                          () => {
-                            appointment_success.showModal();
-                          }
-                        );
+                        dispatch(
+                          setAppointment(data, user?.accessToken)
+                        ).finally(() => {
+                          appointment_success.showModal();
+                        });
                       } else {
-                        dispatch(setAppointment(data)).then(() => {
+                        dispatch(setAppointment(data)).finally(() => {
                           appointment_success.showModal();
                         });
                       }
