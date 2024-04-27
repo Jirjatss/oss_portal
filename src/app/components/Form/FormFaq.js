@@ -113,7 +113,10 @@ function FormFaq() {
           className={`${
             isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
           } px-3 py-3 text-white flex-1 rounded-[8px]`}
-          onClick={() => faq_success.showModal()}
+          onClick={() => {
+            faq_success.showModal();
+            setInput({});
+          }}
         >
           <p className="text-[16px]">Submit</p>
         </button>

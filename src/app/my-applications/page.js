@@ -57,7 +57,6 @@ const MyApplications = () => {
   });
 
   const filteredAppointments = myAppointments?.filter((e) => {
-    console.log("e:", e);
     if (filterStatusAppointment === t("all")) return true;
     if (filterStatusAppointment === t("waiting_approval"))
       return e.status.includes("waitingApproval");

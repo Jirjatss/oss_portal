@@ -450,7 +450,7 @@ const Header = () => {
                     </a>
                   </li>
                 </ul>
-                <div className="grid grid-cols-2 absolute bottom-36 gap-x-2 m-auto w-full px-4">
+                <div className="grid grid-cols-2 absolute bottom-44 gap-x-2 m-auto w-full px-4">
                   <Link
                     href="/login"
                     className="text-[#1C25E7] m-auto font-semibold"
