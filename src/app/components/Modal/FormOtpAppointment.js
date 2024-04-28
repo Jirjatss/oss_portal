@@ -133,7 +133,7 @@ function FormOtpAppointment({ data }) {
                 className={`${
                   !showResendButton
                     ? "bg-[#DCDCDC] cursor-not-allowed text-[#646464]"
-                    : "bg-[#FFFFFF] text-[#1C25E7]"
+                    : "bg-[#FFFFFF] text-[#8B0000]"
                 } px-4 text-[16px] py-2 rounded-[8px] mt-2 border-[2px] border-[#DCDCDC] hidden lg:flex justify-center text-center`}
                 formMethod="dialog"
               >
@@ -145,7 +145,7 @@ function FormOtpAppointment({ data }) {
                 className={`${
                   otp.some((element) => element === "")
                     ? "bg-[#DCDCDC] cursor-not-allowed text-[#646464]"
-                    : "bg-[#1C25E7] text-[#F3F3F3] "
+                    : "bg-[#8B0000] text-[#F3F3F3] "
                 }  lg:px-16 text-[16px] py-2  rounded-[8px] mt-2`}
                 formMethod={successSubmit && "dialog"}
                 disabled={otp.some((element) => element === "")}
@@ -196,7 +196,7 @@ function FormOtpAppointment({ data }) {
                           toast.error(err.response.data.errorMessage);
                         });
                     }}
-                    className="text-[#1C25E7] focus:outline-none font-semibold"
+                    className="text-[#8B0000] focus:outline-none font-semibold"
                   >
                     {t("otp_code_resend")}
                   </button>

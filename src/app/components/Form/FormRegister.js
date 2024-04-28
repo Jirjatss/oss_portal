@@ -264,7 +264,7 @@ function FormRegister({}) {
           <button
             className={`py-4 ${
               passwordValid && isValidEmail
-                ? "bg-[#1C25E7] "
+                ? "bg-[#8B0000] "
                 : "bg-[#DCDCDC] cursor-not-allowed"
             }  w-full rounded-[8px] text-white -mt-2`}
             disabled={!passwordValid || !isValidEmail}
@@ -293,7 +293,7 @@ function FormRegister({}) {
           </button>
           <p className="lg:text-[18px] text-[16px] text-[#646464]">
             {t("register_phone_confirmation_registered")}{" "}
-            <Link href="/login" className="text-[#1C25E7]">
+            <Link href="/login" className="text-[#8B0000]">
               {t("register_phone_login_now")}
             </Link>
           </p>

@@ -26,7 +26,7 @@ function ModalSuccess({ onClick, title, description, id }) {
           </p>
           <form method="dialog">
             <button
-              className="bg-[#1C25E7] px-16 text-[16px] py-2 text-[#F3F3F3] rounded-[8px] mt-2"
+              className="bg-[#8B0000] px-16 text-[16px] py-2 text-[#F3F3F3] rounded-[8px] mt-2"
               formMethod="dialog"
               onClick={onClick}
             >

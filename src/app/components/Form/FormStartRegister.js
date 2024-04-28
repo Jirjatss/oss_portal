@@ -56,7 +56,7 @@ function FormStartRegister({ onClick }) {
           <button
             disabled={isDisabled}
             className={`py-4 ${
-              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
+              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#8B0000] "
             }  w-full rounded-[8px] text-white  -mt-2`}
             onClick={() => {
               dispatch(requestOtp(phoneNumber)).then(() => onClick());
@@ -66,7 +66,7 @@ function FormStartRegister({ onClick }) {
           </button>
           <p className="lg:text-[18px] text-[16px] text-[#646464]">
             {t("register_phone_confirmation_registered")}{" "}
-            <Link href="/login" className="text-[#1C25E7]">
+            <Link href="/login" className="text-[#8B0000]">
               {t("register_phone_login_now")}
             </Link>
           </p>

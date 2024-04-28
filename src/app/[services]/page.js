@@ -50,7 +50,7 @@ function Service() {
               key={i}
               className={`${
                 index === i
-                  ? "border-[#1C25E7] border-b-[2px] text-[#1C25E7]"
+                  ? "border-[#8B0000] border-b-[2px] text-[#8B0000]"
                   : "text-[#646464]"
               } cursor-pointer  lg:text-[16px] text-[14px]`}
               onClick={() => setIndex(i)}
@@ -76,7 +76,7 @@ function Service() {
             {t("service_footer_desc")}
           </p>
           <button
-            className="bg-[#1C25E7] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold"
+            className="bg-[#8B0000] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold"
             onClick={onClick}
           >
             {t("service_footer_cta")}
@@ -98,7 +98,7 @@ function Service() {
             </p>
           </div>
           <button
-            className="bg-[#1C25E7] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold h-fit"
+            className="bg-[#8B0000] px-3 py-2 text-[#F3F3F3] rounded-lg max-w-fit mt-2.5 font-semibold h-fit"
             onClick={onClick}
           >
             {t("service_footer_cta")}

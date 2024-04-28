@@ -229,7 +229,7 @@ function FormResetPassword({ back, onSubmit }) {
 
       <button
         className={`py-4 ${
-          passwordValid ? "bg-[#1C25E7] " : "bg-[#DCDCDC] cursor-not-allowed"
+          passwordValid ? "bg-[#8B0000] " : "bg-[#DCDCDC] cursor-not-allowed"
         } w-full rounded-[8px] text-white -mt-2`}
         disabled={!passwordValid}
         onClick={() => {

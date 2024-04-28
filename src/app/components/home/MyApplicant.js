@@ -51,7 +51,7 @@ function MyApplicant() {
           </div>
           <Link
             href="/my-applications"
-            className="text-[#1C25E7] lg:text-[18px] text-[16px] font-semibold cursor-pointer"
+            className="text-[#8B0000] lg:text-[18px] text-[16px] font-semibold cursor-pointer"
           >
             {t("home_my_application_cta")}
           </Link>

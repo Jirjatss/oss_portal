@@ -37,7 +37,7 @@ function ModalDetailApplications({ data }) {
                   >
                     <span
                       className={`${
-                        i === data.length - 1 ? "bg-[#1C25E7]" : "bg-[#D9D7F9]"
+                        i === data.length - 1 ? "bg-[#8B0000]" : "bg-[#D9D7F9]"
                       } absolute flex items-center justify-center w-3 h-3  rounded-full -start-1 ring-4 ring-[#D9D7F9]`}
                     ></span>
                     <div className="ms-6">

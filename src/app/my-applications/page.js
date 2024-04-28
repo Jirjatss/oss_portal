@@ -118,7 +118,7 @@ const MyApplications = () => {
               key={i}
               className={`${
                 index === i
-                  ? "border-[#1C25E7] border-b-[2px] text-[#1C25E7] font-semibold"
+                  ? "border-[#8B0000] border-b-[2px] text-[#8B0000] font-semibold"
                   : "text-[#646464]"
               } cursor-pointer px-1 lg:w-[150px] text-[16px] `}
               onClick={() => {
@@ -245,10 +245,10 @@ const MyApplications = () => {
     const statusColorDecider = (status) => {
       if (status.includes("waitingApproval"))
         return `text-[#DBC300] bg-[#DBC300]`;
-      if (status.includes("delivered")) return `text-[#1C25E7] bg-[#1C25E7]`;
+      if (status.includes("delivered")) return `text-[#8B0000] bg-[#8B0000]`;
       if (status.includes("rejected")) return `text-[#D84E42] bg-[#D84E42]`;
       if (status.includes("submitted")) return `text-[#646464] bg-[#646464]`;
-      if (status.includes("completed")) return `text-[#1C25E7] bg-[#1C25E7]`;
+      if (status.includes("completed")) return `text-[#8B0000] bg-[#8B0000]`;
 
       return;
     };
@@ -325,7 +325,7 @@ const MyApplications = () => {
             </span>
           </div>
           <div
-            className="flex flex-col justify-between items-end text-[#1C25E7] font-semibold cursor-pointer"
+            className="flex flex-col justify-between items-end text-[#8B0000] font-semibold cursor-pointer"
             onClick={() => {
               dispatch(getDetailApplicationStatus(id, user.accessToken)).then(
                 () => detailModal.showModal()
@@ -355,7 +355,7 @@ const MyApplications = () => {
               />
             </div>
             <div
-              className="flex flex-col justify-between items-end text-[#1C25E7] font-semibold cursor-pointer"
+              className="flex flex-col justify-between items-end text-[#8B0000] font-semibold cursor-pointer"
               onClick={() => {
                 dispatch(getDetailApplicationStatus(id, user.accessToken)).then(
                   () => detailModal.showModal()
@@ -406,7 +406,7 @@ const MyApplications = () => {
             </p>
             <Link
               href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
-              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
+              className="bg-[#8B0000] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
               {t("application_completed_footer_cta")}
             </Link>
@@ -416,13 +416,13 @@ const MyApplications = () => {
           <div className="flex lg:flex-row flex-col lg:gap-4 gap-2 justify-end items-center mt-3">
             <Link
               href={`/set-appointment?serviceType=${serviceTypeId}&service=${serviceId}`}
-              className="border-[#DCDCDC] border-[1px] bg-[#FFFFFF] text-[#1C25E7] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
+              className="border-[#DCDCDC] border-[1px] bg-[#FFFFFF] text-[#8B0000] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
               {t("application_rejected_footer_cta_secondary")}
             </Link>
             <Link
               href={`/${serviceType}?id=${id}&serviceId=${serviceId}`}
-              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
+              className="bg-[#8B0000] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:max-w-fit text-center"
             >
               {t("application_rejected_footer_cta_primary")}
             </Link>
@@ -544,7 +544,7 @@ const MyApplications = () => {
             </p>
             <Link
               href={`/set-appointment?appointmentId=${id}&reschedule=true`}
-              className="bg-[#1C25E7] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:w-[180px] text-center"
+              className="bg-[#8B0000] text-[#F3F3F3] p-[8px] px-4 rounded-[8px] text-[16px] w-full lg:w-[180px] text-center"
             >
               {t("reschedule")}
             </Link>

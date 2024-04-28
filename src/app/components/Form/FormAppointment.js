@@ -206,7 +206,7 @@ function FormAppointment({ onContinue }) {
         <button
           disabled={isDisabled}
           className={`${
-            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
+            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#8B0000]"
           }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-2 font-semibold`}
           onClick={() => {
             dispatch(

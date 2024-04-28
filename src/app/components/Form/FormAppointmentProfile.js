@@ -203,7 +203,7 @@ function FormAppointmentProfile() {
             className={`${
               isDisabledButton
                 ? "bg-[#DCDCDC] cursor-not-allowed"
-                : "bg-[#1C25E7]"
+                : "bg-[#8B0000]"
             }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-5 font-semibold`}
             onClick={() => {
               setData({

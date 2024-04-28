@@ -101,7 +101,7 @@ function FormLogin({ forgotPassword }) {
         </div>
         <div className="flex justify-end">
           <button
-            className="text-[15px] text-[#1C25E7] mr-3 max-w-fit"
+            className="text-[15px] text-[#8B0000] mr-3 max-w-fit"
             onClick={forgotPassword}
           >
             {t("forgot_password")}
@@ -111,7 +111,7 @@ function FormLogin({ forgotPassword }) {
       <div className="flex flex-col gap-5 w-full">
         <button
           className={`py-4 ${
-            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
+            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#8B0000] "
           }  w-full rounded-[8px] text-white  -mt-2`}
           onClick={handleLogin}
           disabled={isDisabled}
@@ -120,7 +120,7 @@ function FormLogin({ forgotPassword }) {
         </button>
         <p className="lg:text-[18px] text-[16px] text-[#646464]">
           {t("login_hint_to_register")}{" "}
-          <Link href="/register" className="text-[#1C25E7]">
+          <Link href="/register" className="text-[#8B0000]">
             {t("login_cta_register")}
           </Link>
         </p>

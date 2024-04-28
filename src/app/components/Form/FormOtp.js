@@ -111,7 +111,7 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
           <button
             disabled={isDisabled}
             className={`py-4 ${
-              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
+              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#8B0000]"
             } w-full rounded-[8px] text-white -mt-2`}
             onClick={() => {
               dispatch(
@@ -134,7 +134,7 @@ function FormOtp({ onClick, onClickSubmit, onResendOtp }) {
             {showResendButton ? (
               <button
                 onClick={handleResendClick}
-                className="text-[#1C25E7] focus:outline-none font-bold"
+                className="text-[#8B0000] focus:outline-none font-bold"
               >
                 {t("otp_code_resend")}
               </button>

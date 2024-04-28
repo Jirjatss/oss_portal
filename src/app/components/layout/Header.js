@@ -169,12 +169,12 @@ const Header = () => {
                 <LanguageSelector />
               </li>
               <li className="m-auto">
-                <Link href="/login" className="text-[#1C25E7]">
+                <Link href="/login" className="text-[#8B0000]">
                   {t("login")}
                 </Link>
               </li>
               <li className="m-auto">
-                <button className="bg-[#1C25E7] text-white py-2 px-3 rounded-lg block m-auto">
+                <button className="bg-[#8B0000] text-white py-2 px-3 rounded-lg block m-auto">
                   <Link href="/register">{t("sign_up")}</Link>
                 </button>
               </li>
@@ -334,7 +334,7 @@ const Header = () => {
                       </p>
                       <div
                         className={`w-[24px] h-[24px] rounded-full ${
-                          lang === "en" ? "bg-[#1C25E7]" : "bg-transparent"
+                          lang === "en" ? "bg-[#8B0000]" : "bg-transparent"
                         } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
                       >
                         {lang === "en" && <OSSIcons name={"Approve"} />}
@@ -355,7 +355,7 @@ const Header = () => {
                       </p>
                       <div
                         className={`w-[24px] h-[24px] rounded-full ${
-                          lang === "tl" ? "bg-[#1C25E7]" : "bg-transparent"
+                          lang === "tl" ? "bg-[#8B0000]" : "bg-transparent"
                         } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
                       >
                         {lang === "tl" && <OSSIcons name={"Approve"} />}
@@ -420,7 +420,7 @@ const Header = () => {
                         </p>
                         <div
                           className={`w-[24px] h-[24px] rounded-full ${
-                            lang === "en" ? "bg-[#1C25E7]" : "bg-transparent"
+                            lang === "en" ? "bg-[#8B0000]" : "bg-transparent"
                           } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
                         >
                           {lang === "en" && <OSSIcons name={"Approve"} />}
@@ -441,7 +441,7 @@ const Header = () => {
                         </p>
                         <div
                           className={`w-[24px] h-[24px] rounded-full ${
-                            lang === "tl" ? "bg-[#1C25E7]" : "bg-transparent"
+                            lang === "tl" ? "bg-[#8B0000]" : "bg-transparent"
                           } border-[1px] border-[#DCDCDC]  cursor-pointer justify-center items-center flex`}
                         >
                           {lang === "tl" && <OSSIcons name={"Approve"} />}
@@ -450,17 +450,17 @@ const Header = () => {
                     </a>
                   </li>
                 </ul>
-                <div className="grid grid-cols-2 absolute bottom-44 gap-x-2 m-auto w-full px-4">
+                <div className="grid grid-cols-2 absolute bottom-48 gap-x-2 m-auto w-full px-4">
                   <Link
                     href="/login"
-                    className="text-[#1C25E7] m-auto font-semibold"
+                    className="text-[#8B0000] m-auto font-semibold"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {t("login")}
                   </Link>
 
                   <button
-                    className="bg-[#1C25E7] text-white py-2 px-3 rounded-lg"
+                    className="bg-[#8B0000] text-white py-2 px-3 rounded-lg"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <Link href="/register">{t("register")}</Link>

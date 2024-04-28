@@ -171,7 +171,7 @@ function FormUploadPhoto({ onClick }) {
                 )}
               </div>
               <p
-                className="text-center mt-2 text-[#1C25E7] font-semibold cursor-pointer"
+                className="text-center mt-2 text-[#8B0000] font-semibold cursor-pointer"
                 onClick={() =>
                   document.getElementById("citizenPhotoInput").click()
                 }
@@ -239,7 +239,7 @@ function FormUploadPhoto({ onClick }) {
                 )}
               </div>
               <p
-                className="text-center mt-2 text-[#1C25E7] font-semibold cursor-pointer"
+                className="text-center mt-2 text-[#8B0000] font-semibold cursor-pointer"
                 onClick={() =>
                   document.getElementById("identityDocumentInput").click()
                 }
@@ -252,7 +252,7 @@ function FormUploadPhoto({ onClick }) {
 
         <button
           className={`${
-            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
+            isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#8B0000] "
           } py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px] w-full lg:w-fit text-center justify-center`}
           disabled={isDisabled}
           onClick={() => {

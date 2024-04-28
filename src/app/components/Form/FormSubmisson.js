@@ -319,7 +319,7 @@ const FormSubmission = ({ code }) => {
             <p className="text-center text-[#646464] text-[16px]">
               {t("spec_files_to_upload")}
             </p>
-            <button className="text-[#1C25E7] text-[18px] font-semibold">
+            <button className="text-[#8B0000] text-[18px] font-semibold">
               {t("upload")}
             </button>
           </div>
@@ -357,7 +357,7 @@ const FormSubmission = ({ code }) => {
                 )}
                 <div
                   className={`w-[24px] h-[24px] border-[1px] border-[#DCDCDC] rounded-lg cursor-pointer justify-center items-center flex ${
-                    checkedImages.includes(index) && "bg-[#1C25E7]"
+                    checkedImages.includes(index) && "bg-[#8B0000]"
                   } ${image.isExisting && "bg-[#DCDCDC]"}`}
                   disabled={image.isExisting}
                   onClick={() => toggleImageCheck(index, image)}
@@ -484,7 +484,7 @@ const FormSubmission = ({ code }) => {
           <div className="flex gap-3 items-center mt-4">
             <div
               className={`w-[24px] h-[24px] border-[1px] border-[#DCDCDC] rounded-lg cursor-pointer justify-center items-center flex ${
-                isChecked && "bg-[#1C25E7]"
+                isChecked && "bg-[#8B0000]"
               }`}
               onClick={() => setIsChecked(!isChecked)}
             >
@@ -494,7 +494,7 @@ const FormSubmission = ({ code }) => {
               {t("submit_application_tnc_1")}
               <Link
                 href="/terms-conditions"
-                className="text-[#1C25E7] font-semibold cursor-pointer"
+                className="text-[#8B0000] font-semibold cursor-pointer"
               >
                 {t("submit_application_tnc_2")}
               </Link>
@@ -504,7 +504,7 @@ const FormSubmission = ({ code }) => {
           <button
             disabled={isDisabled}
             className={`${
-              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7]"
+              isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#8B0000]"
             }  px-3 py-4 text-[#F3F3F3] rounded-lg max-w-full mt-1 font-semibold`}
             onClick={() => {
               setIsShowModal(false);

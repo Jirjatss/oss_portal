@@ -17,7 +17,7 @@ const Hero = () => {
           </p>
           <Link
             href="/#services"
-            className="bg-[#1C25E7] text-white px-4 py-3 rounded-xl w-[300px] md:block m-auto hidden"
+            className="bg-[#8B0000] text-white px-4 py-3 rounded-xl w-[300px] md:block m-auto hidden"
           >
             {t(`hero_button`)}
           </Link>
@@ -27,7 +27,7 @@ const Hero = () => {
         <div className="absolute bottom-5 flex justify-center m-auto md:hidden text-center">
           <Link
             href="/#services"
-            className="bg-[#1C25E7] text-white px-4 py-3 rounded-xl w-[300px]"
+            className="bg-[#8B0000] text-white px-4 py-3 rounded-xl w-[300px]"
           >
             {t(`hero_button`)}
           </Link>

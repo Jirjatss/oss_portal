@@ -48,7 +48,7 @@ function FormForgotPassword({ onClick, onClickSubmit }) {
         className={`py-4 ${
           isDisabled || !isValidEmail
             ? "bg-[#DCDCDC] cursor-not-allowed"
-            : "bg-[#1C25E7]"
+            : "bg-[#8B0000]"
         }  w-full rounded-[8px] text-white lg:-mt-2 mt-5 capitalize`}
         disabled={isDisabled || !isValidEmail}
         onClick={() => {

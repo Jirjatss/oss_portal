@@ -179,7 +179,7 @@ function FormContact({ onClick }) {
       <button
         disabled={isDisabled}
         className={`${
-          isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#1C25E7] "
+          isDisabled ? "bg-[#DCDCDC] cursor-not-allowed" : "bg-[#8B0000] "
         } py-4 px-32 text-[#F3F3F3] flex m-auto rounded-[8px]`}
         onClick={() => {
           dispatch(
