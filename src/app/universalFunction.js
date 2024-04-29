@@ -84,7 +84,7 @@ export const dateFormatter = (dateString, lang) => {
     minute: "2-digit",
   };
   let locale = "pt-TL";
-  if (lang === en) locale = "en-GB";
-  const formattedDate = date.toLocaleDateString(locale, options);
+  if (lang === "en") locale = "en-GB";
+  const formattedDate = date.toLocaleDateString("en-GB", options);
   return formattedDate.replace("at", "").trim();
 };

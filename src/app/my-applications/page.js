@@ -248,7 +248,7 @@ const MyApplications = () => {
       if (status.includes("delivered")) return `text-[#8B0000] bg-[#8B0000]`;
       if (status.includes("rejected")) return `text-[#D84E42] bg-[#D84E42]`;
       if (status.includes("submitted")) return `text-[#646464] bg-[#646464]`;
-      if (status.includes("completed")) return `text-[#8B0000] bg-[#8B0000]`;
+      if (status.includes("completed")) return `text-[#1C25E7] bg-[#1C25E7]`;
 
       return;
     };

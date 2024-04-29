@@ -115,8 +115,11 @@ function FormFaq() {
           } px-3 py-3 text-white flex-1 rounded-[8px]`}
           onClick={() => {
             faq_success.showModal();
-            setInput({});
-            console.log(input);
+            input.FirstName = "";
+            input.LastName = "";
+            input.message = "";
+            input.topic = null;
+            input.email = "";
           }}
         >
           <p className="text-[16px]">Submit</p>

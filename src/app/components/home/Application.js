@@ -5,7 +5,7 @@ import React from "react";
 function Application() {
   const { t } = useLanguage();
   return (
-    <div className="bg-[#2E2D2D] lg:px-28 lg:mt-24 mt-10 flex lg:flex-row flex-col lg:gap-10 gap-5">
+    <div className="bg-[#8B0000] lg:px-28 lg:mt-24 mt-10 flex lg:flex-row flex-col lg:gap-10 gap-5">
       <Image
         src="/assets/images/app.png"
         className="h-[340px] lg:block hidden"
@@ -24,7 +24,7 @@ function Application() {
         </h1>
         <div className="lg:flex gap-3 hidden cursor-pointer">
           <Image
-            src="/assets/images/appstore.png"
+            src="/assets/images/googlestore.png"
             width={220}
             height={10}
             alt=""
@@ -32,7 +32,7 @@ function Application() {
         </div>
         <div className="grid grid-cols-2 gap-3 lg:hidden pb-7 cursor-pointer">
           <Image
-            src="/assets/images/appstore.png"
+            src="/assets/images/googlestore.png"
             width={250}
             height={150}
             alt=""
