@@ -44,8 +44,14 @@ function InputDropdown({
       const splitStrings = e.name.split("-");
       let label = splitStrings[0];
       const title = splitStrings.slice(1).join("-");
-      if (label === "new") label = "new_text";
-      name = `${t(label)} ${t(`home_menu_${title}_title`)}`;
+      if (label === "new") {
+        label = "new_text";
+        name = `${t(`home_menu_${title}_title`)} ${t(label)} `;
+      } else if (label === "renew") {
+        name = `${t(label)} ${t(`home_menu_${title}_title`)}`;
+      } else {
+        name = `${t(`home_menu_${title}_title`)} ${t(label)} `;
+      }
     } else {
       name = t(`home_menu_${e.name}_title`);
     }

@@ -55,9 +55,15 @@ function Service() {
               } cursor-pointer  lg:text-[16px] text-[14px]`}
               onClick={() => setIndex(i)}
             >
-              <p className="mb-1 text-center lg:text-[16px] text-[14px]">
-                {t(`${e.label}`)} <br /> {t(`${e.name}`)}
-              </p>
+              {e.label === "renew" ? (
+                <p className="mb-1 text-center lg:text-[16px] text-[14px]">
+                  {t(`${e.label}`)} <br /> {t(`${e.name}`)}
+                </p>
+              ) : (
+                <p className="mb-1 text-center lg:text-[16px] text-[14px]">
+                  {t(`${e.name}`)} <br /> {t(`${e.label}`)}
+                </p>
+              )}
             </div>
           ))}
         </div>

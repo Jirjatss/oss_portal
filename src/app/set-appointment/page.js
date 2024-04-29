@@ -73,7 +73,7 @@ const SetAppointment = () => {
                 ></div>
               </div>
               <p className="text-[16px] text-[#646464]">
-                {step}/3 {t("step")}
+                {t("step")} {step}/3
               </p>
             </div>
           )}
