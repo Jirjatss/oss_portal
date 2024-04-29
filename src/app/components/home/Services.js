@@ -27,7 +27,9 @@ export const ServicesCard = ({ title, icon, desc, url, code }) => {
   return (
     <Link href={url}>
       <div
-        className={`w-full lg:min-h-[300px] min-h-[170px] border-[1px] border-[#DCDCDC] rounded-[20px] ${
+        className={`w-full ${
+          user ? "lg:min-h-[300px]" : "min-h-[350px]"
+        } min-h-[270px] border-[1px] border-[#DCDCDC] rounded-[20px] ${
           user ? "lg:px-[15px] p-4" : "lg:p-[20px] p-4"
         } flex flex-col lg:gap-[24px] gap-2 col-span-1 cursor-pointer`}
       >
