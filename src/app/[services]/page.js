@@ -55,7 +55,7 @@ function Service() {
     return (
       <>
         <div
-          className={`grid grid-cols-${width} lg:gap-3 gap-1 justify-start ${
+          className={`grid grid-cols-4 lg:gap-3 gap-1 justify-start ${
             pathname === "/commercial-registration"
               ? "lg:w-4/4"
               : width > 3
