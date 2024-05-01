@@ -9,6 +9,7 @@ import ModalSuccess from "../components/Modal/ModalSuccess";
 import { useDispatch, useSelector } from "react-redux";
 import { getServicesHandler } from "../store/actions/serviceAction";
 import useLanguage from "../useLanguage";
+import { dataServices } from "../constant/services";
 
 function Service() {
   const auth = useAuthUser();
@@ -20,15 +21,21 @@ function Service() {
   const code = searchParams.get("code");
   const { t } = useLanguage();
   const [isSubmission, setIsSubmission] = useState(false);
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState("new_text");
   const { services } = useSelector((state) => state.serviceReducer);
-  const desc = ["", "", ""];
 
-  const newServices = services?.map((e) => {
+  const [desc, setDesc] = useState(
+    `new_text_home_menu_${pathname.slice(1)}_title_desc`
+  );
+
+  const data = dataServices.filter((e) => e.name === pathname.slice(1));
+
+  const newServices = data[0]?.data?.map((e) => {
     const splitStrings = e.name.split("-");
     let label = splitStrings[0];
     const title = splitStrings.slice(1).join("-");
     if (label === "new") label = "new_text";
+
     return {
       label: label,
       name: `home_menu_${title}_title`,
@@ -36,36 +43,52 @@ function Service() {
   });
 
   const title = pathname.replace(/^\//, "");
+  console.log("pathname:", pathname);
+  const [width, setWidth] = useState(newServices.length);
 
   useEffect(() => {
     if (code) dispatch(getServicesHandler(code));
   }, [code]);
 
   const ServicesHeader = () => {
+    if (data[0].data.length === 0) return null;
     return (
       <>
-        <div className="grid grid-cols-4 lg:gap-3 gap-1 justify-start lg:w-3/4 w-full border-b-[1px] border-b-[#DCDCDC]">
-          {newServices?.map((e, i) => (
-            <div
-              key={i}
-              className={`${
-                index === i
-                  ? "border-[#8B0000] border-b-[2px] text-[#8B0000]"
-                  : "text-[#646464]"
-              } cursor-pointer  lg:text-[16px] text-[14px]`}
-              onClick={() => setIndex(i)}
-            >
-              {e.label === "renew" ? (
-                <p className="mb-1 text-center lg:text-[16px] text-[14px]">
-                  {t(`${e.label}`)} <br /> {t(`${e.name}`)}
-                </p>
-              ) : (
-                <p className="mb-1 text-center lg:text-[16px] text-[14px]">
-                  {t(`${e.name}`)} <br /> {t(`${e.label}`)}
-                </p>
-              )}
-            </div>
-          ))}
+        <div
+          className={`grid grid-cols-${width} lg:gap-3 gap-1 justify-start ${
+            pathname === "/commercial-registration"
+              ? "lg:w-4/4"
+              : width > 3
+              ? "lg:w-3/4"
+              : `lg:w-${width}/4`
+          }   w-full border-b-[1px] border-b-[#DCDCDC]`}
+        >
+          {newServices?.map((e, i) => {
+            return (
+              <div
+                key={i}
+                className={`${
+                  index === e.label
+                    ? "border-[#8B0000] border-b-[2px] text-[#8B0000]"
+                    : "text-[#646464]"
+                } cursor-pointer  lg:text-[16px] text-[14px]`}
+                onClick={() => {
+                  setIndex(e.label);
+                  setDesc(`${e.label}_${e.name}_desc`);
+                }}
+              >
+                {e.label === "renew" ? (
+                  <p className="mb-1 text-center lg:text-[16px] text-[14px]">
+                    {t(`${e.label}`)} <br /> {t(`${e.name}`)}
+                  </p>
+                ) : (
+                  <p className="mb-1 text-center lg:text-[16px] text-[14px]">
+                    {t(`${e.name}`)} <br /> {t(`${e.label}`)}
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
       </>
     );
@@ -94,7 +117,7 @@ function Service() {
   const SubmissionMobile = ({ onClick }) => {
     return (
       <>
-        <div className="bg-white rounded-[20px] p-[20px] border-[1px] border-[#DCDCDC] lg:hidden flex flex-row lg:gap-1 gap-5 lg:w-[206px] h-fit mt-7">
+        <div className="bg-white justify-between  p-[20px] border-[1px] border-[#DCDCDC] lg:hidden flex flex-row lg:gap-1 gap-5 lg:w-[206px] h-fit  fixed bottom-0 w-screen -ml-5">
           <div className="flex flex-col">
             <h1 className="text-[18px] font-semibold text-[#2E2D2D]">
               {t("service_footer_title")}
@@ -137,38 +160,30 @@ function Service() {
         <FormSubmisson code={code} />
       ) : (
         <div className="flex gap-16 mt-7 ">
-          <div className="flex-1 flex-col w-screen lg:max-w-fit overflow-hidden">
+          <div className="flex-1 flex-col w-screen overflow-hidden item flex">
             <h1 className="lg:text-[28px] font-semibold text-[#2E2D2D] mb-10">
               {t("category")}
             </h1>
             {services && <ServicesHeader />}
-            <div className="flex flex-col gap-10 mt-10">
-              {desc.map((e, i) => {
-                let icon;
-                if (i === 0) icon = "📋";
-                if (i === 1) icon = "🗂";
-                if (i === 2) icon = "⏳";
-                return (
-                  <div className="flex flex-col gap-3" key={i}>
-                    <h1 className="text-[18px] text-[#2E2D2D] font-semibold">
-                      {icon} {t(`service_desc_title_${i + 1}`)}
-                    </h1>
-                    <p className="text-[16px] text-[#646464]">
-                      <div
-                        dangerouslySetInnerHTML={{
-                          __html: t(`service_desc_desc_${i + 1}`),
-                        }}
-                      />
-                    </p>
-                  </div>
-                );
-              })}
-            </div>
-            <SubmissionMobile onClick={startSubmission} />
+            {data[0].data.length > 0 ? (
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: t(`${desc}`),
+                }}
+              />
+            ) : (
+              <div
+                className="lg:min-h-[340px] lg:text-[24px]  font-semibold w-full justify-center items-center text-center flex m-auto min-h-[200px]"
+                dangerouslySetInnerHTML={{
+                  __html: t(`service_empty`),
+                }}
+              />
+            )}
           </div>
           <Submission onClick={startSubmission} />
         </div>
       )}
+      <SubmissionMobile onClick={startSubmission} />
 
       <ModalSuccess
         id="success_submission"

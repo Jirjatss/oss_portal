@@ -22,26 +22,26 @@ import { getServicesTypeHandler } from "@/app/store/actions/serviceAction";
 import { toast } from "sonner";
 import useLanguage from "@/app/useLanguage";
 
-export const ServicesCard = ({ title, icon, desc, url, code }) => {
+export const ServicesCard = ({ title, icon, desc, url }) => {
   const user = useAuthUser();
   return (
     <Link href={url}>
       <div
         className={`w-full ${
-          user ? "lg:min-h-[300px]" : "lg:min-h-[350px]"
-        } min-h-[280px] border-[1px] border-[#DCDCDC] rounded-[20px] ${
+          user ? "min-h-[300px]" : "lg:min-h-[350px]"
+        } min-h-[300px] border-[1px] border-[#DCDCDC] rounded-[20px] ${
           user ? "lg:px-[15px] p-4" : "lg:p-[20px] p-4"
         } flex flex-col lg:gap-[24px] gap-2 col-span-1 cursor-pointer`}
       >
         <div className="flex justify-between">
           <div
-            className={`lg:w-[64px] lg:h-[64px] items-start flex justify-start ${
-              title === "Set Appointment"
-                ? "lg:bg-[#F0EFFD]"
-                : "lg:bg-[#E7953E]"
-            }  rounded-[12.8px] flex justify-center items-center`}
+            className={`lg:w-[64px] lg:h-[64px] h-[54px] w-[54px] bg-[#F0EFFD] lg:rounded-[12.8px] rounded-md flex justify-center items-center`}
           >
-            <Image src={icon} width={40} height={40} alt={title} />
+            <img
+              src={icon.src}
+              alt={title}
+              className="lg:w-[44px] :h-[44px] w-[34px] h-[34px]"
+            />
           </div>
           <button className="lg:hidden block">
             <OSSIcons name="RightArrow" styleDiv={{ width: "25px" }} />

@@ -97,7 +97,9 @@ const Header = () => {
                 <LanguageSelector />
               </li>
               <li className="m-auto">
-                <OSSIcons name={"Bell"} />
+                <Link href="/notification" className="flex m-auto">
+                  <OSSIcons name={"Bell"} fill="#2E2D2D" />
+                </Link>
               </li>
               <li className="m-auto">
                 <Button
@@ -199,7 +201,9 @@ const Header = () => {
           </Link>
           {auth ? (
             <div className="flex justify-end">
-              <OSSIcons name={"Bell"} fill="#2E2D2D" />
+              <Link href="/notification" className="flex m-auto">
+                <OSSIcons name={"Bell"} fill="#2E2D2D" />
+              </Link>
               <button
                 onClick={toggleMenu}
                 type="button"

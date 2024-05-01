@@ -6,9 +6,17 @@ import useLanguage from "@/app/useLanguage";
 function ModalDetailApplications({ data }) {
   const { t } = useLanguage();
   function statusFormatted(status) {
-    return status
-      .replace(/([A-Z])/g, " $1")
-      .replace(/^./, (str) => str.toUpperCase());
+    if (status === "submitted") return `${t("submitted")}`;
+    if (status === "resubmitted") return `${t("resubmitted")}`;
+    if (status === "waitingApprovalFromFrontOffice")
+      return `${t("waiting_from_fo")}`;
+    if (status === "rejectedFromFrontOffice") return `${t("rejected_from_fo")}`;
+    if (status === "approvedFromFrontOffice") return `${t("approved_from_fo")}`;
+    if (status === "waitingApprovalFromBackOffice")
+      return `${t("waiting_from_bo")}`;
+    if (status === "rejectedFromBackOffice") return `${t("rejected_from_bo")}`;
+    if (status === "approvedFromBackOffice") return `${t("approved_from_bo")}`;
+    if (status === "completed") return `${t("completed")}`;
   }
   return (
     <dialog id="detailModal" className="modal">
