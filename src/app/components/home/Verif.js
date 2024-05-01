@@ -31,47 +31,34 @@ function Verif() {
   const [title, setTitle] = useState(null);
 
   useEffect(() => {
-    if (user?.status === "inactive" && profile?.status === "inactive")
+    if (user.status === "inactive")
       setTitle(<>{t("home_need_verify_email_title")}</>);
-    if (
-      user?.status === "needToFillPersonalInformation" ||
-      profile?.status === "needToFillPersonalInformation"
-    )
+    if (user.status === "needToFillPersonalInformation")
       setTitle(<>{t("home_verification_title")}</>);
     if (isVerifComplete) setTitle(<>{t("home_verification_succeed_title")}</>);
-  }, [user, profile, lang]);
+  }, [user, lang]);
 
   useEffect(() => {
-    dispatch(getUserInformation(user?.accessToken));
+    if (user) dispatch(getUserInformation(user?.accessToken));
   }, [user]);
 
   const { personalDetail } = profile || {};
   const { firstName } = personalDetail || {};
 
   useEffect(() => {
-    if (
-      firstName !== null &&
-      firstName !== "" &&
-      firstName !== undefined &&
-      profile?.status !== "needToFillPersonalInformation" &&
-      profile?.status !== "inactive"
-    )
-      setIsVerifComplete(true);
+    if (user?.status === "active") setIsVerifComplete(true);
     else setIsVerifComplete(false);
   }, [firstName]);
 
   const buttonTitle =
-    user?.status === "inactive" && profile?.status === "inactive"
+    user?.status === "inactive"
       ? t("home_need_verify_email_resend")
       : t("home_verification_cta");
 
   const titleDecider = () => {
     if (profile?.status === "inactive" && !profile)
       return "Verification your mail first";
-    if (
-      user?.status === "needToFillPersonalInformation" ||
-      profile?.status === "needToFillPersonalInformation"
-    )
+    if (user?.status === "needToFillPersonalInformation")
       return "Verification your account first";
     if (isVerifComplete) return "Verification Successful!";
   };
@@ -80,7 +67,6 @@ function Verif() {
     if (user?.status === "inactive") return ResendVerif;
     if (
       user?.status === "needToFillPersonalInformation" ||
-      profile?.status === "needToFillPersonalInformation" ||
       firstName === "" ||
       firstName === null
     )
@@ -93,7 +79,6 @@ function Verif() {
       return <>{t("home_need_verify_email_desc")}</>;
     if (
       user?.status === "needToFillPersonalInformation" ||
-      profile?.status === "needToFillPersonalInformation" ||
       firstName === "" ||
       firstName === null
     )
@@ -140,12 +125,9 @@ function Verif() {
               <button
                 className="bg-[#8B0000] px-7 py-2 rounded-lg text-[#F3F3F3] inline-block"
                 onClick={() => {
-                  if (
-                    user?.status === "inactive" &&
-                    profile?.status === "inactive"
-                  ) {
+                  if (user?.status === "inactive") {
                     dispatch(getTokenHandler(user?.accessToken)).then(() =>
-                      toast.success("Please check your email")
+                      toast.success(t("check_email"))
                     );
                   } else {
                     router.push("/personal-informations");
