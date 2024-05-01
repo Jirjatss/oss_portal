@@ -20,10 +20,10 @@ const LanguageSelector = () => {
   const [selectedLanguage, setSelectedLanguage] = useState(lang);
 
   const languages = [
-    {
-      lang: "en",
-      label: "EN",
-    },
+    // {
+    //   lang: "en",
+    //   label: "EN",
+    // },
     {
       lang: "tl",
       label: "TL",

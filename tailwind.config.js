@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       backgroundImage: (theme) => ({
         hero: 'url("/assets/images/imageTop.png")',
-        "hero-mobile": 'url("/assets/images/imageTopMobile.jpg")',
+        "hero-mobile": 'url("/assets/images/imageTopMobile.jfif")',
       }),
 
       fontFamily: {

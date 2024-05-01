@@ -7,14 +7,14 @@ function Application() {
   return (
     <div className="bg-[#8B0000] lg:px-28 lg:mt-24 mt-10 flex lg:flex-row flex-col lg:gap-10 gap-5">
       <Image
-        src="/assets/images/app.png"
+        src="/assets/images/appBalkaun.png"
         className="h-[340px] lg:block hidden"
         width={900}
         height={325}
         alt=""
       />
       <img
-        src="/assets/images/app.png"
+        src="/assets/images/appBalkaun.png"
         className="h-full w-full lg:hidden"
         alt=""
       />

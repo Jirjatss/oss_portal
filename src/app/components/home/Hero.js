@@ -8,11 +8,12 @@ const Hero = () => {
     <div className="relative">
       <div className="flex md:h-[640px] lg:bg-hero bg-hero-mobile bg-cover py-24">
         <div className="absolute inset-0 bg-white opacity-70 lg:hidden h-[640px]"></div>
+
         <div className="flex m-auto h-[344px] w-[560px] flex-col text-center gap-5 relative z-10">
-          <h1 className="lg:text-[48px] text-[32px] lg:px-3 lg:leading-[57.6px] leading-[38.4px] text-[#363131] px-5">
+          <h1 className="lg:text-[48px] text-[32px] lg:px-3 lg:leading-[57.6px] leading-[38.4px] text-[#363131] px-5 font-semibold lg:font-thin">
             {t(`landing_desc_1`)}
           </h1>
-          <p className="lg:text-[24px] text-[16px] text-[#646464] mb-2 px-2">
+          <p className="lg:text-[24px] text-[16px] text-[#646464] mb-2 px-2 font-semibold lg:font-thin">
             {t(`landing_desc_1_desc`)}
           </p>
           <Link

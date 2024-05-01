@@ -22,18 +22,7 @@ export default function Home() {
           <div className="w-full lg:px-28 px-5 py-10 ">
             <p className="text-[18px] font-semibold text-[#2E2D2D] mb-5">
               {t("welcome")}
-              {firstName ? (
-                <span>
-                  {", "}
-                  {firstName !== "" || firstName === null
-                    ? gender === "male"
-                      ? `Mr. ${firstName}`
-                      : `Mrs. ${firstName}`
-                    : ""}
-                </span>
-              ) : (
-                <>!</>
-              )}
+              {firstName ? <span>, {firstName}</span> : <>!</>}
             </p>
             <div className="lg:flex gap-5 hidden">
               <div className="w-3/4 flex flex-col gap-7">

@@ -267,7 +267,11 @@ const MyApplications = () => {
       if (lang === "en") code = "GB";
       if (lang === "pt" || lang === "tl") code = "TL";
       const formattedDate = date.toLocaleDateString(`${lang}-${code}`, options);
-      return formattedDate.replace("at", "").trim();
+
+      if (lang === "pt" || lang === "tl") {
+        return formattedDate.replace("nang", "").trim();
+      }
+      if (lang === "en") return formattedDate.replace("at", "").trim();
     };
 
     const statusDecider = (status) => {

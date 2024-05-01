@@ -324,7 +324,7 @@ const Header = () => {
                   >
                     {t("language")}
 
-                    <ul
+                    {/* <ul
                       className="flex justify-between items-center mt-1"
                       onClick={() => {
                         dispatch(setLang("en"));
@@ -343,7 +343,7 @@ const Header = () => {
                       >
                         {lang === "en" && <OSSIcons name={"Approve"} />}
                       </div>
-                    </ul>
+                    </ul> */}
 
                     <ul
                       className="flex justify-between items-center"

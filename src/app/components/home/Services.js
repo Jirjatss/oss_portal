@@ -40,7 +40,7 @@ export const ServicesCard = ({ title, icon, desc, url }) => {
             <img
               src={icon.src}
               alt={title}
-              className="lg:w-[44px] :h-[44px] w-[34px] h-[34px]"
+              className="lg:w-[44px] lg:h-[44px] w-[34px] h-[34px]"
             />
           </div>
           <button className="lg:hidden block">

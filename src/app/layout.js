@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "OSS Portal",
-  description: "",
+  description: "One Stop Solution Services | Balkaun Uniku",
 };
 
 export default function RootLayout({ children }) {
