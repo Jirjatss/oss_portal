@@ -9,6 +9,7 @@ import axios from "axios";
 import Loader from "../components/Loader";
 import { toast } from "sonner";
 import { useSelector } from "react-redux";
+import { url } from "../constant/url";
 
 function Notification() {
   const router = useRouter();
@@ -21,7 +22,7 @@ function Notification() {
   const getMyLog = async () => {
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/me/logs",
+        url: `${url}/me/logs`,
         headers: {
           Authorization: `Bearer ${user?.accessToken}`,
         },

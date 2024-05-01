@@ -13,6 +13,7 @@ import {
   SHOW_VERIF,
 } from "./action_type";
 import { loading } from "./regionAction";
+import { url } from "@/app/constant/url";
 
 export const getUserSuccess = (payload) => {
   return { type: GET_USER, payload };
@@ -51,7 +52,7 @@ export const login = (val, signIn) => {
     try {
       const { data } = await axios({
         method: "post",
-        url: "https://api.ardhiansyah.com/auth/login",
+        url: `${url}/auth/login`,
         data: val,
       });
       if (
@@ -86,7 +87,7 @@ export const getUserInformation = (access_token) => {
   return async (dispatch) => {
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/me",
+        url: `${url}/me`,
         headers: {
           accept: "application/json",
           Authorization: access_token,
@@ -109,7 +110,7 @@ export const requestOtp = (phone_number) => {
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://api.ardhiansyah.com/auth/otp/request",
+        url: `${url}/auth/otp/request`,
         data: {
           phoneNumber: phone_number,
         },
@@ -134,7 +135,7 @@ export const verifyOtp = (val) => {
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://api.ardhiansyah.com/auth/otp/verify",
+        url: `${url}/auth/otp/verify`,
         data: val,
       });
       dispatch({
@@ -155,7 +156,7 @@ export const registerHandler = (val, signIn) => {
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://api.ardhiansyah.com/auth/register",
+        url: `${url}/auth/register`,
         data: val,
       });
       const loginVal = {
@@ -175,18 +176,17 @@ export const registerHandler = (val, signIn) => {
   };
 };
 
-export const activateUser = (token, accessToken) => {
+export const activateUser = (token) => {
   return async (dispatch) => {
     dispatch(loading());
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://api.ardhiansyah.com/auth/activate",
+        url: `${url}/auth/activate`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
           "Content-Type": "application/json",
-          Authorization: accessToken,
         },
         data: {
           token: token,
@@ -219,7 +219,7 @@ export const submitPersonalInformations = (val, access_token) => {
         });
 
         const { data } = await axios.put(
-          "https://api.ardhiansyah.com/personal-informations",
+          `${url}/personal-informations`,
           formData,
           {
             headers: {
@@ -252,7 +252,7 @@ export const editProfile = (val, access_token) => {
         });
 
         const { data } = await axios.put(
-          "https://api.ardhiansyah.com/personal-informations",
+          `${url}/personal-informations`,
           formData,
           {
             headers: {
@@ -286,7 +286,7 @@ export const getTokenHandler = (access_token) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/auth/resend-activation-token",
+        url: `${url}/auth/resend-activation-token`,
         headers: {
           Authorization: `${access_token}`,
         },
@@ -318,7 +318,7 @@ export const forgotPasswordHandler = (email) => {
     try {
       const { data } = await axios({
         method: "POST",
-        url: "https://api.ardhiansyah.com/auth/forget-password",
+        url: `${url}/auth/forget-password`,
         data: { email: email },
       });
 
@@ -344,7 +344,7 @@ export const resetPasswordHandler = (val) => {
       // console.log(val);
       const { data } = await axios({
         method: "POST",
-        url: "https://api.ardhiansyah.com/auth/reset-password",
+        url: `${url}/auth/reset-password`,
         data: val,
       });
       dispatch({

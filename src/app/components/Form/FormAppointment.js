@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import useLanguage from "@/app/useLanguage";
 import Loader from "../Loader";
+import { url } from "@/app/constant/url";
 
 function FormAppointment({ onContinue }) {
   const user = useAuthUser();
@@ -48,7 +49,7 @@ function FormAppointment({ onContinue }) {
   const getOfficeLocation = async () => {
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/office-locations?stateId=${input.officeLocationCode}&serviceTypeId=${input.serviceType}`,
+        url: `${url}/office-locations?stateId=${input.officeLocationCode}&serviceTypeId=${input.serviceType}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",

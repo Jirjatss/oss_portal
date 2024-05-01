@@ -7,34 +7,56 @@ import { useDispatch } from "react-redux";
 import { activateUser, getUserInformation } from "../store/actions/userAction";
 import useAuthUser from "react-auth-kit/hooks/useAuthUser";
 import { toast } from "sonner";
+import useSignIn from "react-auth-kit/hooks/useSignIn";
+import { url } from "../constant/url";
 
 function VerificationEmail() {
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
   const user = useAuthUser();
-  const router = useRouter();
   const [successVerif, setSuccessVerif] = useState(false);
   const dispatch = useDispatch();
+  const signIn = useSignIn();
+
+  const refreshToken = async () => {
+    try {
+      const object = {
+        accessToken: user?.accessToken,
+        refreshToken: user?.refreshToken,
+      };
+      const { data } = await axios.post(`${url}/auth/refresh-token`, object);
+      signIn({
+        auth: {
+          token: data?.data.accessToken,
+          type: "Bearer",
+        },
+        refresh: data?.data.refreshToken,
+        userState: data.data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    if (successVerif) {
+    if (successVerif && user) {
       window.location.href = "/";
+    }
+    if (successVerif && !user) {
+      window.location.href = "/login";
     }
   }, [successVerif]);
 
-  return (
-    <div className="bg-white min-h-screen flex lg:px-28 px-5 pt-4">
-      <div
-        onClick={() => {
-          dispatch(activateUser(token, user?.access_token))
-            .then(() => setSuccessVerif(true))
-            .catch((err) => toast.error("Failed to verification your email"));
-        }}
-        className="text-blue-700 cursor-pointer"
-      >
-        Verification your email
-      </div>
-    </div>
-  );
+  useEffect(() => {
+    dispatch(activateUser(token))
+      .then(() => {
+        setSuccessVerif(true);
+        refreshToken();
+      })
+      .catch((err) => toast.error("Failed to verification your email"));
+  }, []);
+
+  return <div className="bg-white min-h-screen flex lg:px-28 px-5 pt-4"></div>;
 }
 
 export default VerificationEmail;

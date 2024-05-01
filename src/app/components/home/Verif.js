@@ -144,10 +144,8 @@ function Verif() {
                     user?.status === "inactive" &&
                     profile?.status === "inactive"
                   ) {
-                    dispatch(getTokenHandler(user?.accessToken)).then(
-                      (token) => {
-                        router.push(`/verification-email?token=${token}`);
-                      }
+                    dispatch(getTokenHandler(user?.accessToken)).then(() =>
+                      toast.success("Please check your email")
                     );
                   } else {
                     router.push("/personal-informations");

@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import ModalPreviewExisting from "../Modal/ModalPreviewExisting";
 import useLanguage from "@/app/useLanguage";
+import { url } from "@/app/constant/url";
 
 const FormSubmission = ({ code }) => {
   const searchParams = useSearchParams();
@@ -187,7 +188,7 @@ const FormSubmission = ({ code }) => {
   const getApplicationFilesDetail = async (filesId) => {
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/applications/${id}/files/${filesId}`,
+        url: `${url}/applications/${id}/files/${filesId}`,
         responseType: "arraybuffer",
       });
 

@@ -17,6 +17,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import Loader from "../Loader";
 import useLanguage from "@/app/useLanguage";
+import { url } from "@/app/constant/url";
 
 function FormSetDate({ onContinue }) {
   const user = useAuthUser();
@@ -38,7 +39,7 @@ function FormSetDate({ onContinue }) {
   const getDetailAppointment = async () => {
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/appointments/${appointmentId}`,
+        url: `${url}/appointments/${appointmentId}`,
         headers: {
           Authorization: `Bearer ${user?.accessToken}`,
         },

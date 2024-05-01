@@ -6,6 +6,7 @@ import {
   LOADING_FALSE,
 } from "./action_type";
 import { loading } from "./regionAction";
+import { url } from "@/app/constant/url";
 
 export const submitApplication = (val, access_token) => {
   return async (dispatch) => {
@@ -24,15 +25,11 @@ export const submitApplication = (val, access_token) => {
           formData.append(`Files`, file);
         });
 
-        const { data } = await axios.post(
-          "https://api.ardhiansyah.com/applications",
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${access_token}`,
-            },
-          }
-        );
+        const { data } = await axios.post(`${url}/applications`, formData, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
         dispatch({
           type: LOADING_FALSE,
         });
@@ -56,15 +53,11 @@ export const editMyApplication = (id, val, access_token) => {
         formData.append(`Files`, file);
       });
 
-      const { data } = await axios.put(
-        `https://api.ardhiansyah.com/applications/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        }
-      );
+      const { data } = await axios.put(`${url}/applications/${id}`, formData, {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
       dispatch({
         type: LOADING_FALSE,
       });
@@ -82,7 +75,7 @@ export const getMyApplications = (access_token) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/me/applications",
+        url: `${url}/me/applications`,
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -112,7 +105,7 @@ export const getDetailApplicationStatus = (id, access_token) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/me/applications/${id}/log`,
+        url: `${url}/me/applications/${id}/log`,
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -138,7 +131,7 @@ export const getDetailApplication = (id, access_token) => {
   return async (dispatch) => {
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/applications/${id}`,
+        url: `${url}/applications/${id}`,
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

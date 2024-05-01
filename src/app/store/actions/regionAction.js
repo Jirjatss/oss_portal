@@ -8,6 +8,7 @@ import {
   LOADING_FALSE,
   LOGOUT,
 } from "./action_type";
+import { url } from "@/app/constant/url";
 
 export const loading = () => {
   return { type: LOADING };
@@ -22,7 +23,7 @@ export const getRegionCountry = (access_token) => {
     // dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/regions/country",
+        url: `${url}/regions/country`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -49,7 +50,7 @@ export const getRegionMunicipality = (access_token) => {
     // dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/regions/state",
+        url: `${url}/regions/state`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -75,7 +76,7 @@ export const getRegionPostAdministrative = (access_token, query) => {
     // dispatch(loading());
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/regions/district?${query}`,
+        url: `${url}/regions/district?${query}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",
@@ -101,7 +102,7 @@ export const getRegionSucos = (access_token, query) => {
     // dispatch(loading());
     try {
       const { data } = await axios({
-        url: `https://api.ardhiansyah.com/regions/sub-district?${query}`,
+        url: `${url}/regions/sub-district?${query}`,
         headers: {
           "ngrok-skip-browser-warning": true,
           accept: "application/json",

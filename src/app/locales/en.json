@@ -311,5 +311,6 @@
   "is_approved": "is Approved",
   "is_approved_bo": "is Approved",
   "is_appointment_submitted": "is Submitted",
-  "is_choose_another_time": "is Rejected please choose another time"
+  "is_choose_another_time": "is Rejected please choose another time",
+  "Failed to verification your email": "Failed to verification your email"
 }

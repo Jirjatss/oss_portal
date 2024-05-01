@@ -6,6 +6,7 @@ import {
   SET_APPOINTMENT_SUCCESS,
 } from "./action_type";
 import { loading } from "./regionAction";
+import { url } from "@/app/constant/url";
 
 export const setAppointmentData = (payload) => {
   return { type: SAVE_APPOINTMENT_DATA, payload };
@@ -20,7 +21,7 @@ export const getMyAppointments = (access_token) => {
     dispatch(loading());
     try {
       const { data } = await axios({
-        url: "https://api.ardhiansyah.com/me/appointments",
+        url: `${url}/me/appointments`,
         headers: {
           Authorization: `Bearer ${access_token}`,
         },
@@ -49,7 +50,7 @@ export const setAppointment = (val, access_token) => {
       if (access_token) {
         const { data } = await axios({
           method: "POST",
-          url: "https://api.ardhiansyah.com/appointments",
+          url: `${url}/appointments`,
           headers: {
             Authorization: `Bearer ${access_token}`,
           },
@@ -59,7 +60,7 @@ export const setAppointment = (val, access_token) => {
       } else {
         const { data } = await axios({
           method: "POST",
-          url: "https://api.ardhiansyah.com/appointments",
+          url: `${url}/appointments`,
           data: val,
         });
       }
@@ -83,7 +84,7 @@ export const rescheduleAppointment = (id, val, access_token) => {
       // console.log(id, val, access_token);
       const { data } = await axios({
         method: "PUT",
-        url: `https://api.ardhiansyah.com/appointments/${id}`,
+        url: `${url}/appointments/${id}`,
         headers: {
           Authorization: `Bearer ${access_token}`,
         },

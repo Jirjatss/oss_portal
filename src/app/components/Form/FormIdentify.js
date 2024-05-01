@@ -218,7 +218,7 @@ function FormIdentify({ onClick }) {
               topic={city}
               handleChange={(e) => handleChangeSelect(e)}
               name="city"
-              isDisabled={!input.municipality && !stateCode}
+              isDisabled={!city && !stateCode}
               selectedTopic={input?.city}
             />
             <InputDropdown
@@ -226,7 +226,7 @@ function FormIdentify({ onClick }) {
               topic={town}
               handleChange={(e) => handleChangeSelect(e)}
               name="town"
-              isDisabled={!input.city && !stateCode}
+              isDisabled={!town && !stateCode}
               selectedTopic={input.town}
             />
           </div>

@@ -12,6 +12,7 @@ import createRefresh from "react-auth-kit/createRefresh";
 
 import axios from "axios";
 import Loader from "./components/Loader";
+import { url } from "./constant/url";
 
 const App = ({ children }) => {
   useEffect(() => {
@@ -37,10 +38,7 @@ const App = ({ children }) => {
           accessToken: param.authToken,
           refreshToken: param.refreshToken,
         };
-        const { data } = await axios.post(
-          "https://api.ardhiansyah.com/auth/refresh-token",
-          object
-        );
+        const { data } = await axios.post(`${url}/auth/refresh-token`, object);
 
         return {
           isSuccess: true,
